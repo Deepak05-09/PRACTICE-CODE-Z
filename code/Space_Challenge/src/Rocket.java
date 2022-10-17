@@ -1,4 +1,5 @@
 class Rocket implements SpaceShip{
+    private int limit=10000;
     
     public int budget(){
       return 9;
@@ -13,6 +14,8 @@ class Rocket implements SpaceShip{
         return true;
     }
     public void carry(Item object){
-        
+        if(canCarry(object)){
+         limit-=object.weight;
+     } 
     } 
 }
