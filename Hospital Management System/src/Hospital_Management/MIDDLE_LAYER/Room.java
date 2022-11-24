@@ -39,6 +39,7 @@ public class Room
       this.floor=floor;
       availability="Available";
     }
+    
     public double getRoomCharge(RoomType roomtype){
         return roomtype.charge;
     }

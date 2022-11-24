@@ -3,7 +3,6 @@ package Hospital_Management.MIDDLE_LAYER;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.UI.Input;
@@ -11,9 +10,9 @@ import Hospital_Management.UI.Input;
 public class Receptionist extends Employee implements User
 {   
     static int id=2;
-    public static Receptionist receptionist;
 
-    Receptionist(String name,String id,String ph_no,Date dob,int age,Sex sex,String mail,String address,String education,String Password){
+
+    Receptionist(String name,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String Password){
         setName(name);
         setId(id);
         setAge(age);
@@ -32,74 +31,131 @@ public class Receptionist extends Employee implements User
    
     
     @Override
-    public  Boolean login(String id,String password) {
-       if(Storage.storage.existsUser(id)){
-          if(password.equals(getPassword())){
-              return true;
-          }
+    public  Boolean login(String id,String password)
+    {
+        if(Storage.storage.existsUser(id))
+        {
+            if(password.equals(getPassword()))
+            {
+                return true;
+            }
         }
+
       return false;
     }
 
     @Override
-    public  Boolean logout() {
+    public  Boolean logout() 
+    {
        return true;
     }
 
     @Override
-    public void changePassword(String password) {
+    public void changePassword(String password) 
+    {
         this.setPassword(password);
     }
 
-    public void addPatient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no){
-        if(Input.confirmation()){
-           Patient patient=new Patient(name, age, sex, bloodGroup, weight, height, ph_no);
-           Storage.storage.store(patient);
+    public void addPatient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
+    {
+        if(Input.confirmation())
+        {
+            Patient patient=new Patient(name, age, sex, bloodGroup, weight, height, ph_no,allergy);
+            Storage.storage.store(patient);
         }
     }
     
-    public void updateDetails(String patientId,String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no){
-           Patient patient=Storage.storage.getPatient(patientId);
-           if(patient!=null){
-           if(name!=null&&!name.equals("")) { patient.setName(name);}
-           if(age>0) { patient.setAge(age);}
-           if(sex!=null) { patient.setSex(sex);}
-           if(bloodGroup!=null) { patient.setBloodgroup(bloodGroup);}
-           if(weight>0) { patient.setWeight(weight);}
-           if(height>0) { patient.setHeight(height);}
-           Storage.storage.update(patient);
-           }
+    // public void updateDetails(String patientId,String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no)
+    // {
+    //        Patient patient=Storage.storage.getPatient(patientId);
+    //        if(patient!=null){
+    //        if(name!=null&&!name.equals("")) { patient.setName(name);}
+    //        if(age>0) { patient.setAge(age);}
+    //        if(sex!=null) { patient.setSex(sex);}
+    //        if(bloodGroup!=null) { patient.setBloodgroup(bloodGroup);}
+    //        if(weight>0) { patient.setWeight(weight);}
+    //        if(height>0) { patient.setHeight(height);}
+    //        Storage.storage.update(patient);
+    //        }
+    // }
+
+    public Patient search(String patientid)
+    {   
+        return Storage.storage.getPatient(patientid);
     }
 
-    public Patient search(String patientid){
-       return Storage.storage.getPatient(patientid);
-    }
+    // public ArrayList<Doctor> doctorAvailability(LocalDate date)
+    // {
+        
+        
+    //     return Storage.storage.availableDoctors.get(date);
+        
+    // }
 
-    public ArrayList<String> doctorAvailability(){
-        ArrayList<String> Available_doctors=new ArrayList<>();
-        for(Doctor doctor: Storage.storage.getDoctorList().values()){
-         if(doctor.getAvailability()==true){
-          Available_doctors.add(doctor.getName()+" ID: "+doctor.getId());
-         }
-       }
-     return Available_doctors;
-    }
-    public void addVisitors(){
+    public void addVisitors()
+    {
         Visitors visitor=new Visitors(Input.name(),Input.age(), Input.ph_no(),Input.address(),Input.patientId());
         Storage.storage.store(visitor);
     }
 
-    public void createAppointment(String patientId,String doctorId,String time){
+    public void createAppointment(LocalDate date,String patientId,String doctorId,int time)
+    {  
        Doctor doctor=Storage.storage.doctorList.get(doctorId);
-       doctor.appoinments.add(new Appointment(patientId, doctorId, time));
+       Appointment[]slot=doctor.appointments.get(date);
+    
+        Appointment appointment= new Appointment(patientId, doctorId, time,date);
+       slot[time]=appointment;
+       doctor.appointments.put(date, slot);
+       Storage.storage.store(appointment);
+       
+    }
+    
+    
+    
+    public  void CancelAppointment(LocalDate date,String name,String time,String doctorId) {
+      Storage.storage.CancelAppointment(date, name, time,doctorId);
+    }
+    
+    // //get all appointment on the given date
+    // public  ArrayList<Appointment> getAppointment(LocalDate date){
+    //   return  Storage.storage.getAppointment(date);
+    // }
+
+    // public ArrayList<Appointment> getAppointment(LocalDate date,String patientId){
+    //     return Storage.storage.getAppointment(date, patientId);
+    // }
+
+    // public ArrayList<Appointment> getAppointment(String patientId){
+    //    return Storage.storage.getAppointment(patientId);
+    // }
+
+    // public  Appointment[] getAppointment(Doctor doctor, LocalDate date){
+    //     Appointment[] arr=doctor.appointments.get(date);
+    //     if(arr==null){
+    //         doctor.appointments.put(date, new Appointment[5]);
+    //     }
+    //     else{
+    //         return arr;
+    //     }
+    //     return getAppointment(doctor, date);
+    // }
+
+    public ArrayList<Visitors> showVisitorsList()
+    {
+        return Storage.storage.getVisitorList();
     }
 
-    public ArrayList<Visitors> showVisitorsList(){
-         return Storage.storage.getVisitorList();
+    public boolean isPatientExists(String id){
+        return Storage.storage.isPatientExists(id);
     }
 
-    public  String toString(){
-        return " NAME: "+this.getName()+" ID: "+this.getId()+" ROLE: "+this.getRole()+" AGE: "+this.getAge()+" MAIL: "+this.getMail()+" EDUCATION :"+this.getEducation()+" DATE JOINED :"+this.getDateJoined()+" SEX: "+this.getSex()+" PASSWORD: "+this.getPassword();
+    // public Doctor getDoctor(String id){
+    //      return (Doctor)Storage.storage.getEmployee(id);
+    // }
+
+    public  String toString()
+    {
+        return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
     
 }

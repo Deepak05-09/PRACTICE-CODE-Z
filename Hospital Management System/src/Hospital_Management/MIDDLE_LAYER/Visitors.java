@@ -11,7 +11,8 @@ public class Visitors
     private LocalTime visitTime;
     private String visitingPatient;
 
-    Visitors(String name,int age,String ph_no,String address,String patient){
+    Visitors(String name,int age,String ph_no,String address,String patient)
+    {
        setName(name);
        setAge(age);
        setPh_no(ph_no);

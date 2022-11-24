@@ -1,17 +1,18 @@
 package Hospital_Management.MIDDLE_LAYER;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 import Hospital_Management.DATA_LAYER.Storage;
-import Hospital_Management.UI.Input;
+
 
 public class Cashier extends Employee implements User
 {   
     static int id=2;
-    public static Cashier cashier;
     
-    Cashier(String name,String id,String ph_no,Date dob,int age,Sex sex,String mail,String address,String education,String password){
+    
+    Cashier(String name,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
+    {
         setName(name);
         setId(id);
         setAge(age);
@@ -27,37 +28,52 @@ public class Cashier extends Employee implements User
     }
     public static Cashier cashier2=new Cashier("Cashier", "CA1", "6666666666", null, 34, Sex.FEMALE, "cashier@123", "addressbndnbd", "B.com", "Cashier123");
     
-    public Cashier() {
+    public Cashier() 
+    {
+
     }
     
 
     
     
     @Override
-    public  Boolean login(String id,String password) {
-       if(Storage.storage.existsUser(id)){
-          if(password.equals(getPassword())){
-              return true;
-          }
+    public  Boolean login(String id,String password) 
+    {
+       if(Storage.storage.existsUser(id))
+       {
+            if(password.equals(getPassword()))
+            {
+                return true;
+            }
         }
       return false;
     }
 
     @Override
-    public  Boolean logout() {
+    public  Boolean logout()
+    {
        return true;
     }
 
     @Override
-    public void changePassword(String password) {
+    public void changePassword(String password)
+    {
         this.setPassword(password);
-        
     }
     
-    public Bill generateBill(){
-        return new Bill(Input.patientId(),Input.roomFees(),Input.consultantFees(),Input.medicineFees(),this.getName());
+    public Bill generateBill(String patientId,double roomFees,double consultantFees,double medicineFees)
+    {   
+        
+        return new Bill(patientId, roomFees, consultantFees, medicineFees,this.getName() );
     }
-    public String toString(){
-        return " NAME: "+this.getName()+" ID: "+this.getId()+" ROLE: "+this.getRole()+" AGE: "+this.getAge()+" MAIL: "+this.getMail()+" EDUCATION :"+this.getEducation()+" DATE JOINED :"+this.getDateJoined()+" SEX: "+this.getSex()+" PASSWORD: "+this.getPassword();
+    
+    public boolean isPatientExists(String id)
+    {
+       return Storage.storage.isPatientExists(id);
+    }
+
+    public String toString()
+    {
+        return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
 }

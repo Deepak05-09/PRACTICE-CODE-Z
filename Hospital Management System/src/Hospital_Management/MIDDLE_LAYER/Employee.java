@@ -1,7 +1,7 @@
 package Hospital_Management.MIDDLE_LAYER;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import Hospital_Management.DATA_LAYER.Storage;
 
@@ -12,7 +12,7 @@ public abstract class Employee
     private String password;
     private String ph_no;
     private LocalDate joined;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private int age;
     private Sex sex;
     private String mail;
@@ -39,7 +39,7 @@ public abstract class Employee
     public void setDateJoined(LocalDate localDate){
         this.joined=localDate;
     }
-    public void setDateOfBirth(Date date){
+    public void setDateOfBirth(LocalDate date){
         this.dateOfBirth=date;
     }
     public void setAge(int age){
@@ -78,7 +78,7 @@ public abstract class Employee
     public LocalDate getDateJoined(){
         return this.joined;
     }
-    public Date getDateOfBirth(){
+    public LocalDate getDateOfBirth(){
         return this.dateOfBirth;
     }
     public int getAge(){
@@ -100,34 +100,47 @@ public abstract class Employee
         return this.role;
     }
    
-    public Boolean checkIn() {
-            if(!isCheckedIn()){
-             Storage.storage.checkIn(this.getId());
-             return true;
-            }
+    public Boolean checkIn() 
+    {
+        if(!isCheckedIn())
+        {
+            Storage.storage.checkIn(this.getId(),LocalDate.now(),System.currentTimeMillis());
+            return true;
+        }
+
         return false;
     }
 
     
-    public boolean checkOut() {
-          if(isCheckedIn()){
-           Storage.storage.checkOut(this.getId());
-           return true;
-          }
-         return false;   
+    public boolean checkOut()
+     {
+        if(isCheckedIn())
+        {
+            Storage.storage.checkOut(this.getId(),LocalDate.now(),System.currentTimeMillis());
+            return true;
+        }
+
+        return false;   
     }
 
-    private boolean isCheckedIn(){
+    private boolean isCheckedIn()
+    {
         ArrayList<Attendance> list=Storage.storage.getAttendanceReport().get(LocalDate.now());
-        if(list!=null){
-          for(Attendance attendance: list){
-            if(attendance.user_id.equals(this.getId())){
-                if(attendance.checkIn!=null){
-                 return true;
+
+        if(list!=null)
+        {
+            for(Attendance attendance: list)
+            {
+                if(attendance.user_id.equals(this.getId()))
+                {
+                    if(attendance.active==true)
+                    {
+                        return true;
+                    }
                 }
             }
-          }
         }
+    
         return false;
     }
     /*-------------------------------------------*/

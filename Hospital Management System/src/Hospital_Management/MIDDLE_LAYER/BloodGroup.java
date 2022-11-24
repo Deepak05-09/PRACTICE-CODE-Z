@@ -6,10 +6,13 @@ public enum BloodGroup
    
    private final int value;
 
-   private  BloodGroup(int value){
+   private  BloodGroup(int value)
+   {
       this.value=value;
    }
-   public  int value(){
+
+   public  int value()
+   {
       return this.value;
    }
 
