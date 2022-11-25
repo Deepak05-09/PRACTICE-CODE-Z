@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import Hospital_Management.DATA_LAYER.Storage;
 
 
-public class Cashier extends Employee implements User
+public class Cashier extends Employee 
 {   
     static int id=2;
     
@@ -23,42 +23,14 @@ public class Cashier extends Employee implements User
         setMail(mail);
         setAddress(address);
         setEducation(education);
-        setPassword(password);
+        changePassword(password);
         setRole("Cashier");
     }
-    public static Cashier cashier2=new Cashier("Cashier", "CA1", "6666666666", null, 34, Sex.FEMALE, "cashier@123", "addressbndnbd", "B.com", "Cashier123");
+    public static Cashier cashier2=new Cashier("Cashier", "CA1", "6666666666", null, 34, Sex.FEMALE, "cashier@gmail.com", "addressbndnbd", "B.com", "Cashier123");
     
     public Cashier() 
     {
 
-    }
-    
-
-    
-    
-    @Override
-    public  Boolean login(String id,String password) 
-    {
-       if(Storage.storage.existsUser(id))
-       {
-            if(password.equals(getPassword()))
-            {
-                return true;
-            }
-        }
-      return false;
-    }
-
-    @Override
-    public  Boolean logout()
-    {
-       return true;
-    }
-
-    @Override
-    public void changePassword(String password)
-    {
-        this.setPassword(password);
     }
     
     public Bill generateBill(String patientId,double roomFees,double consultantFees,double medicineFees)
@@ -67,10 +39,7 @@ public class Cashier extends Employee implements User
         return new Bill(patientId, roomFees, consultantFees, medicineFees,this.getName() );
     }
     
-    public boolean isPatientExists(String id)
-    {
-       return Storage.storage.isPatientExists(id);
-    }
+    
 
     public String toString()
     {

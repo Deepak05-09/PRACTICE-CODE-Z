@@ -1,9 +1,7 @@
 package Hospital_Management.MIDDLE_LAYER;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Hospital_Management.DATA_LAYER.Storage;
 
 public class Patient
 {
@@ -122,26 +120,7 @@ public class Patient
         return this;
     }
 
-    public void createAppointment(LocalDate date,String patientId,String doctorId,int time)
-    {  
-       Doctor doctor=Storage.storage.doctorList.get(doctorId);
-       Appointment[]slot=doctor.appointments.get(date);
-   
-        Appointment appointment= new Appointment(patientId, doctorId, time,date);
-       slot[time]=appointment;
-       doctor.appointments.put(date, slot);
-       Storage.storage.store(appointment);
-    }
-
-    public  void CancelAppointment(LocalDate date,String name,String time,String doctorId) {
-        Storage.storage.CancelAppointment(date, name, time,doctorId);
-      }
-
-      public ArrayList<Appointment> viewAppointment(){
-        return Storage.storage.getAppointment(id);
-     }
-
-      public ArrayList<Report> viewReports() {
+    public ArrayList<Report> viewReports() {
         return this.report;
      }
 

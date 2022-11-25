@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Admin extends Employee implements User
+public class Admin extends Employee
 {
      static int id=2;
-   
-    
 
-    public static Admin mainAdmin=new Admin("Deepak", "AD1", "9999999999",  null, 21, Sex.MALE, "deepak@gmail.com", "123,Chinniampalayam,Coimbatore", "B.E-ECE", "Admin123");
+    public static Admin mainAdmin=new Admin("Deepak", "AD1", "9999999999",  null, 21, Sex.MALE, "admin@gmail.com", "123,Chinniampalayam,Coimbatore", "B.E-ECE", "Admin123");
     
     public Admin(String name ,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
@@ -28,36 +26,8 @@ public class Admin extends Employee implements User
         setMail(mail);
         setAddress(address);
         setEducation(education);
-        setPassword(password);
+        changePassword(password);
         setRole("Admin");
-    }
-    
-   
-    
-    @Override
-    public  Boolean login(String id,String password)
-    {
-       if(Storage.storage.existsUser(id))
-       {
-          if(password.equals(this.getPassword()))
-          {
-            return true;
-          }
-        }
-
-      return false;
-    }
-
-    @Override
-    public  Boolean logout() 
-    {
-       return true;
-    }
-
-    @Override
-    public  void changePassword(String password) 
-    {
-        this.setPassword(password);
     }
     
     public void createNewAdmin(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
@@ -65,22 +35,20 @@ public class Admin extends Employee implements User
         if(Input.confirmation())
         {
          Admin admin=new Admin(name ,"AD"+id,ph_no,dob,age,sex,mail,address,education,password);
-         Account account=new Account(admin, password);
          Storage.storage.store(admin);
-         Storage.storage.addUser(admin.getId(),account);
+         Storage.userDetails.add(new User(admin));
 
         }
 
     }
 
-    public void addDoctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String speciality,String password)
+    public void addDoctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password)
     {
         if(Input.confirmation())
         {
          Doctor doctor=new Doctor(name,"DR"+Doctor.id++, ph_no, dob, age, sex, mail, address, education, speciality, password); 
-         Account account=new Account(doctor, password);
-         Storage.storage.addUser(doctor.getId(),account);
-         Storage.storage.store(doctor);
+         Storage.userDetails.add(new User(doctor));
+         Storage.doctorList.add(doctor);
         }
 
     }
@@ -90,8 +58,7 @@ public class Admin extends Employee implements User
         if(Input.confirmation())
         {
          Receptionist receptionist=new Receptionist(name,"RE"+Receptionist.id++, ph_no, dob, age, sex, mail, address, education, password);
-         Account account=new Account(receptionist, password);
-         Storage.storage.addUser(receptionist.getId(),account);
+         Storage.userDetails.add(new User(receptionist));
          Storage.storage.store(receptionist);
         }
 
@@ -102,8 +69,7 @@ public class Admin extends Employee implements User
         if(Input.confirmation())
         {
          Cashier cashier=new Cashier(name,"CA"+Cashier.id++, ph_no, dob, age, sex, mail, address, education, password);
-         Account account=new Account(cashier, password);
-         Storage.storage.addUser(cashier.getId(),account);
+         Storage.userDetails.add(new User(cashier));
          Storage.storage.store(cashier);
         }
 
@@ -130,7 +96,7 @@ public class Admin extends Employee implements User
 
     public Patient viewPatient(String id)
     {
-        return Storage.storage.getPatient(id);
+        return Storage.patientList.getPatient(id);
     }
     
     public  ArrayList<Employee>viewAll()
@@ -144,11 +110,6 @@ public class Admin extends Employee implements User
         return list;
     }
 
-    // public ArrayList<Room> roomStatus()
-    // {
-    //     return Storage.storage.getRoomsList();
-    // }
-
     public String viewprofile()
     {
         return this.toString();
@@ -159,16 +120,8 @@ public class Admin extends Employee implements User
         return Storage.storage.getAttendanceReport();
     }
 
-    // public static boolean confirmation(boolean value){
-    //     return value;
-    // }
-
-    public ArrayList<Appointment> getAppointment(LocalDate date){
-       return Storage.storage.getAppointment(date);
-    }
-
     public ArrayList<Doctor> searchDoctor(String name){
-        return Storage.storage.getDoctor(name);
+        return Storage.doctorList.getDoctor(name);
     }
     
     public String toString()

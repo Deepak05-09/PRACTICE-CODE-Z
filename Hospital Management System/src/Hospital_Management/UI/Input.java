@@ -1,10 +1,10 @@
 package Hospital_Management.UI;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Scanner;
 
 import Hospital_Management.MIDDLE_LAYER.BloodGroup;
+import Hospital_Management.MIDDLE_LAYER.Department;
 import Hospital_Management.MIDDLE_LAYER.Sex;
 
 
@@ -245,7 +245,7 @@ public class Input {
     public static String address()
     {
         print("\n----Enter Address---");
-        String address="Door No :"+doorNo()+"\nAddress : "+addressLine1()+"\nCity : "+city()+"\nState : "+state()+"\nCountry : "+country()+"\nZip code : "+postCode();
+        String address=doorNo()+", "+addressLine1()+", "+city()+", "+state()+", "+country()+" Zip code : "+postCode();
         return address;
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
@@ -296,14 +296,17 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String speciality()
+    public static Department speciality()
     {
-        print("\nEnter Doctor's Speciality :");
+        print("\nChoose Doctor's Speciality ");
+        for(int i=0;i<Department.values().length;i++){
+            print("\n"+(i+1)+". "+Department.values()[i]);
+        }
         String speciality=getFromUser();
 
-        if(Validate.onlyString(speciality))
+        if(Validate.onlyNumber(speciality)&&Integer.parseInt(speciality)!=0&&Integer.parseInt(speciality)<=Department.values().length)
         {
-            return speciality;
+            return Department.values()[Integer.parseInt(speciality)-1];
         }
         else
         {

@@ -9,7 +9,6 @@ public class Report {
  private LocalDate generatedOn;
  private String generatedBy;
  private String description;
-//  private String treatementNeeded;
  private String treatementProvided;
  private String MedicinePrescribed;
  private boolean needRoom;

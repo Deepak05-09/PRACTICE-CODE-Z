@@ -1,15 +1,11 @@
 package Hospital_Management;
 
-
-
-
-import Hospital_Management.UI.Home;
-
+import Hospital_Management.UI.HomePage;
 
 public class App {
 
     private static void run(){
-        Home.start();
+        HomePage.start();
     }
     public static void main(String[] args) throws Exception {
     

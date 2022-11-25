@@ -30,7 +30,7 @@ public abstract class Employee
     public void setId(String id){
         this.id=id;
     }
-    public void setPassword(String password){
+    public void changePassword(String password){
         this.password=password;
     }
     public void setPhnNo(String ph_no){

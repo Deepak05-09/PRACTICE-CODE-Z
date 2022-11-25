@@ -4,19 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Hospital_Management.MIDDLE_LAYER.Account;
+//import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
+import Hospital_Management.MIDDLE_LAYER.Checker;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
 import Hospital_Management.MIDDLE_LAYER.Report;
-import Hospital_Management.MIDDLE_LAYER.Utils;
 
 public class DoctorPage {
     
-    static void doctorFeatures()
+   public Doctor user;
+    
+     public void doctorFeatures()
     {
-        Home.employeefeatures();
+        HomePage.employeefeatures();
         print("6. GENERATE REPORT\n7. VIEW PATIENT REPORT\n8. STATUS\n9. VIEW APPOINTMENTS");
-        Home.printLine();
+        HomePage.printLine();
 
         choice();
 
@@ -24,9 +26,9 @@ public class DoctorPage {
         {
             case "1":
             {  
-              Account.user=null;
+               user=null;
                print("\n......THANK YOU.....");
-               Home.menu();
+               HomePage.menu();
                break;
             }
 
@@ -94,9 +96,9 @@ public class DoctorPage {
      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-     private static void checkIn()
+     private  void checkIn()
      {
-        if(((Doctor) Account.user).checkIn())
+        if(user.checkIn())
         {
             print("\nSuccessfully Checked In\n");
         }
@@ -108,9 +110,9 @@ public class DoctorPage {
      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
   
-    private static void checkOut()
+    private  void checkOut()
     {
-        if(((Doctor) Account.user).checkOut())
+        if(user.checkOut())
         {
             print("\nSuccessfully Checked Out");
         }
@@ -122,14 +124,14 @@ public class DoctorPage {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    private static void changePassword(){
+    private  void changePassword(){
       print("\nEnter Your Current Password : ");
-      if(((Doctor) Account.user).getPassword().equals(Input.getFromUser())){
+      if(user.getPassword().equals(Input.getFromUser())){
          print("\nEnter new Password :");
          String password=Input.password();
          print("\nRe-Type Your new Password :");
          if(password.equals(Input.getFromUser())){
-          ((Doctor) Account.user).changePassword(password);
+          user.changePassword(password);
             print("\nPassWord Changed Successfully");
          }
          else{
@@ -143,27 +145,12 @@ public class DoctorPage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   //  private static void viewPatient()
-   //  {
-   //     String id=Input.patientId();
-
-   //    if(((Doctor) Account.user).isPatientExists(id))
-   //    {
-   //       Patient patient=((Doctor) Account.user).viewPatient(id);
-   //       ReceptionistPage.viewPatientDetails(patient);
-   //    }
-   //    else
-   //    {
-   //       print("\nOops....!   There is No Patient in That ID");
-   //    }
-
-   //  }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    private static void ViewProfile()
+    private void ViewProfile()
    {
-      Doctor doctor=((Doctor) Account.user).viewProfile();
-      Home.printLine();
+      Doctor doctor=user.viewProfile();
+      HomePage.printLine();
       print("\n01. Name            : "+doctor.getName());
       print("\n02. ID              : "+doctor.getId());
       print("\n03. MAIL            : "+doctor.getMail());
@@ -176,7 +163,7 @@ public class DoctorPage {
       print("\n10. Address         : "+doctor.getAddress());
       print("\n11. Education       : "+doctor.getEducation());
       print("\nSELECT\n\n1. EDIT PROFILE\n2. BACK");
-      Home.printLine();
+      HomePage.printLine();
 
       switch(Input.getFromUser())
       {
@@ -189,7 +176,7 @@ public class DoctorPage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   private static void editProfile()
+   private void editProfile()
    {  print("\n\"ID, Date Joined & Role\" Cannot be Edited");
       print("\nSELECT OPTION FROM PROFILE TO EDIT  OR PRESS \"0\" TO BACK");
 
@@ -199,7 +186,7 @@ public class DoctorPage {
 
          case "1":
          {
-           ((Doctor) Account.user).setName(Input.name());
+           user.setName(Input.name());
             print("\nName Updated Successfully....");
             editProfile();
             break;
@@ -214,7 +201,7 @@ public class DoctorPage {
 
          case "3":
          {
-           ((Doctor) Account.user).setMail(Input.mail());
+           user.setMail(Input.mail());
             print("\nMail Updated Successfully....");
             editProfile();
             break;
@@ -222,7 +209,7 @@ public class DoctorPage {
 
          case "4":
          {
-           ((Doctor) Account.user).setPhnNo(Input.ph_no());
+           user.setPhnNo(Input.ph_no());
             print("\nPhone number Updated Successfully....");
             editProfile();
             break;
@@ -230,7 +217,7 @@ public class DoctorPage {
 
          case "5":
          {
-           ((Doctor) Account.user).setDateOfBirth(Input.dateOfBirth());
+           user.setDateOfBirth(Input.dateOfBirth());
             print("\nDate.Of.Birth Updated Successfully....");
             editProfile();
             break;
@@ -238,7 +225,7 @@ public class DoctorPage {
           
          case "6":
          {
-           ((Doctor) Account.user).setAge(Input.employeeAge());;
+           user.setAge(Input.employeeAge());;
             print("\nAge Updated Successfully....");
             editProfile();
             break;
@@ -246,7 +233,7 @@ public class DoctorPage {
 
          case "7":
          {
-           ((Doctor) Account.user).setSex(Input.sex());;
+           user.setSex(Input.sex());;
             print("\nGender Updated Successfully....");
             editProfile();
             break;
@@ -268,7 +255,7 @@ public class DoctorPage {
 
          case "10":
          {
-           ((Doctor) Account.user).setAddress(Input.address());;
+           user.setAddress(Input.address());;
             print("\nAddress Updated Successfully....");
             editProfile();
             break;
@@ -276,7 +263,7 @@ public class DoctorPage {
 
          case "11":
          {
-           ((Doctor) Account.user).setEducation(Input.education());;
+           user.setEducation(Input.education());;
             print("\nEducation Updated Successfully....");
             editProfile();
             break;
@@ -287,13 +274,13 @@ public class DoctorPage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
       
-     private static void generateReport()
+     private void generateReport()
      {
          print("\nEnter Patient's Id to Generate report");
                String id=Input.getFromUser();
-               if(Utils.isPatientExists(id))
+               if(Checker.ispatientExists(id))
                {
-              ((Doctor) Account.user).generatReport( id, Input.reason(), Input.treatementProvided(),Input.prescribe());
+              user.generatReport( id, Input.reason(), Input.treatementProvided(),Input.prescribe());
                print("\n\nReport Generated SuccessFully" );
                }
                else
@@ -304,14 +291,14 @@ public class DoctorPage {
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-     private static void viewPatientReport()
+     private void viewPatientReport()
      {
       print("\nEnter ID to view Patient's Report");
       String id=Input.patientId();
          
-      if(Utils.isPatientExists(id))
+      if(Checker.ispatientExists(id))
       {
-               ArrayList<Report> list=((Doctor) Account.user).viewPatientReport(id);
+               ArrayList<Report> list=user.viewPatientReport(id);
                
                if(list.isEmpty()||list==null){
                   print("\nNo Reports Available For this Patient");
@@ -349,7 +336,7 @@ public class DoctorPage {
       }
      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-     private static  void printReport(Report report)
+     private  void printReport(Report report)
      {
         print("\n--------------- REPORT ---------------");
         print("\n\nReport ID         :"+report.getId());
@@ -358,10 +345,10 @@ public class DoctorPage {
         print("\nDescription         :"+report.getdescription());
         print("\nTreatement Provided :"+report.getTreatementProvided());
         print("\nMedicine Prescribed :"+report.getMedicinePrescribed());
-        Home.printLine();
+        HomePage.printLine();
      }
 
-     private static void changeStatus(){
+     private void changeStatus(){
            print("Note : Only above 7 days availability can be Changed from Current date");
            print("\n1. "+LocalDate.now().plusDays(7)+" "+LocalDate.now().plusDays(7).getDayOfWeek());
            print("\n2. "+LocalDate.now().plusDays(8)+" "+LocalDate.now().plusDays(8).getDayOfWeek());
@@ -375,49 +362,49 @@ public class DoctorPage {
             switch(Input.getFromUser()){
                case "1":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(7));
+                 user.setNonAvailable(LocalDate.now().plusDays(7));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(7));
                   
                   break;
                } 
                case "2":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(8));
+                 user.setNonAvailable(LocalDate.now().plusDays(8));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(8));
                   
                   break;
                } 
                case "3":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(9));
+                 user.setNonAvailable(LocalDate.now().plusDays(9));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(9));
                   
                   break;
                } 
                case "4":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(10));
+                 user.setNonAvailable(LocalDate.now().plusDays(10));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(10));
                  
                   break;
                } 
                case "5":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(11));
+                 user.setNonAvailable(LocalDate.now().plusDays(11));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(11));
                  
                   break;
                } 
                case "6":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(12));
+                 user.setNonAvailable(LocalDate.now().plusDays(12));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(12));
                  
                   break;
                } 
                case "7":
                {
-                 ((Doctor) Account.user).setNonAvailable(LocalDate.now().plusDays(13));
+                 user.setNonAvailable(LocalDate.now().plusDays(13));
                   print("\nStatus Changed to Not Available on "+LocalDate.now().plusDays(13));
                  
                   break;
@@ -430,8 +417,8 @@ public class DoctorPage {
             }
      }
 
-     private static void viewAppointments(){
-           HashMap<LocalDate, Appointment[]> AppointDate=((Doctor) Account.user).viewAppointments();
+     private void viewAppointments(){
+           HashMap<LocalDate, Appointment[]> AppointDate=user.viewAppointments();
           
            ArrayList<LocalDate> list=new ArrayList<>();
          
@@ -459,23 +446,23 @@ public class DoctorPage {
             }
             else{
                LocalDate date=list.get(Integer.parseInt(choice)-1);
-               Appointment[] appoint=((Doctor) Account.user).viewAppointments(date);
+               Appointment[] appoint=user.ViewAppointment(date);
                for(Appointment a:appoint){
                   if(a!=null)
-                  print("Patient id : "+a.getPatientId()+" Time : "+a.getTime());
+                  print("Patient id : "+a.getPatientName()+" Mobile no :"+a.getPmbl_no()+" Time : "+a.getTime());
                }
             }  
          }
      }
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
-     private static void print(String string)
+     private void print(String string)
      {
         System.out.println(string);
      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
    
-      private static void choice()
+      private void choice()
       {
         print("\nEnter Your Choice :\n");
       }

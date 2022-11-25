@@ -1,25 +1,28 @@
 package Hospital_Management.UI;
 
-import Hospital_Management.MIDDLE_LAYER.Account;
+
 import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Cashier;
+import Hospital_Management.MIDDLE_LAYER.Checker;
 
 
 public class CashierPage {
 
-    public static void cashierFeatures(){
+   public Cashier user;
 
-        Home.employeefeatures();
+    public void cashierFeatures(){
+
+        HomePage.employeefeatures();
         print("6. GENERATE BILL\n");
-        Home.printLine();
+        HomePage.printLine();
 
         switch(Input.getFromUser())
         {
             case "1":
             {
                 print("\n......THANK YOU.....");
-                Account.user=null;
-                Home.menu();
+                user=null;
+                HomePage.menu();
                  break;
             } 
 
@@ -66,9 +69,9 @@ public class CashierPage {
        }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private static void checkIn()
+       private void checkIn()
        {
-        if(((Cashier) Account.user).checkIn())
+        if(user.checkIn())
         {
            print("\nSuccessfully Checked In\n");
         }
@@ -80,9 +83,9 @@ public class CashierPage {
        }
 //---------------------------------------------------------------------------------------------------------------------------------------//
     
-      private static void checkOut()
+      private void checkOut()
       {
-        if(((Cashier) Account.user).checkOut())
+        if(user.checkOut())
         {
            print("\nSuccessfully Checked Out");
         }
@@ -94,14 +97,14 @@ public class CashierPage {
       }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-      private static void changePassword(){
+      private void changePassword(){
          print("\nEnter Your Current Password : ");
-         if(((Cashier) Account.user).getPassword().equals(Input.getFromUser())){
+         if(user.getPassword().equals(Input.getFromUser())){
             print("\nEnter new Password :");
             String password=Input.password();
             print("\nRe-Type Your new Password :");
             if(password.equals(Input.getFromUser())){
-               ((Cashier) Account.user).changePassword(password);
+               user.changePassword(password);
                print("\nPassWord Changed Successfully");
             }
             else{
@@ -115,21 +118,21 @@ public class CashierPage {
       }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-      private static void ViewProfile(){
-      Home.printLine();
-      print("\n01. Name            : "+((Cashier) Account.user).getName());
-      print("\n02. ID              : "+((Cashier) Account.user).getId());
-      print("\n03. MAIL            : "+((Cashier) Account.user).getMail());
-      print("\n04. Ph.No           : "+((Cashier) Account.user).getPhnNo());
-      print("\n05. Date.of.Birth   : "+((Cashier) Account.user).getDateOfBirth());
-      print("\n06. Age             : "+((Cashier) Account.user).getAge());
-      print("\n07. Gender          : "+((Cashier) Account.user).getSex());
-      print("\n08. Date Joined     : "+((Cashier) Account.user).getDateJoined());
-      print("\n09. Role            : "+((Cashier) Account.user).getRole());
-      print("\n10. Address         : "+((Cashier) Account.user).getAddress());
-      print("\n11. Education       : "+((Cashier) Account.user).getEducation());
+      private void ViewProfile(){
+      HomePage.printLine();
+      print("\n01. Name            : "+user.getName());
+      print("\n02. ID              : "+user.getId());
+      print("\n03. MAIL            : "+user.getMail());
+      print("\n04. Ph.No           : "+user.getPhnNo());
+      print("\n05. Date.of.Birth   : "+user.getDateOfBirth());
+      print("\n06. Age             : "+user.getAge());
+      print("\n07. Gender          : "+user.getSex());
+      print("\n08. Date Joined     : "+user.getDateJoined());
+      print("\n09. Role            : "+user.getRole());
+      print("\n10. Address         : "+user.getAddress());
+      print("\n11. Education       : "+user.getEducation());
       print("\nSELECT\n\n1. EDIT PROFILE\n2. BACK");
-      Home.printLine();
+      HomePage.printLine();
 
       switch(Input.getFromUser())
       {
@@ -142,7 +145,7 @@ public class CashierPage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   private static void editProfile(){
+   private void editProfile(){
       print("\n\"ID, Date Joined & Role\" Cannot be Edited");
       print("\nSELECT OPTION FROM PROFILE TO EDIT  OR PRESS \"0\" TO BACK");
 
@@ -152,7 +155,7 @@ public class CashierPage {
 
          case "1":
          {
-            ((Cashier) Account.user).setName(Input.name());
+            user.setName(Input.name());
             print("\nName Updated Successfully....");
             editProfile();
             break;
@@ -167,7 +170,7 @@ public class CashierPage {
 
          case "3":
          {
-            ((Cashier) Account.user).setMail(Input.mail());
+            user.setMail(Input.mail());
             print("\nMail Updated Successfully....");
             editProfile();
             break;
@@ -175,7 +178,7 @@ public class CashierPage {
 
          case "4":
          {
-            ((Cashier) Account.user).setPhnNo(Input.ph_no());
+            user.setPhnNo(Input.ph_no());
             print("\nPhone number Updated Successfully....");
             editProfile();
             break;
@@ -183,7 +186,7 @@ public class CashierPage {
 
          case "5":
          {
-            ((Cashier) Account.user).setDateOfBirth(Input.dateOfBirth());
+            user.setDateOfBirth(Input.dateOfBirth());
             print("\nDate.Of.Birth Updated Successfully....");
             editProfile();
             break;
@@ -191,7 +194,7 @@ public class CashierPage {
           
          case "6":
          {
-            ((Cashier) Account.user).setAge(Input.employeeAge());;
+            user.setAge(Input.employeeAge());;
             print("\nAge Updated Successfully....");
             editProfile();
             break;
@@ -199,7 +202,7 @@ public class CashierPage {
 
          case "7":
          {
-            ((Cashier) Account.user).setSex(Input.sex());;
+            user.setSex(Input.sex());;
             print("\nGender Updated Successfully....");
             editProfile();
             break;
@@ -221,7 +224,7 @@ public class CashierPage {
 
          case "10":
          {
-            ((Cashier) Account.user).setAddress(Input.address());;
+            user.setAddress(Input.address());;
             print("\nAddress Updated Successfully....");
             editProfile();
             break;
@@ -229,7 +232,7 @@ public class CashierPage {
 
          case "11":
          {
-            ((Cashier) Account.user).setEducation(Input.education());;
+            user.setEducation(Input.education());;
             print("\nEducation Updated Successfully....");
             editProfile();
             break;
@@ -239,14 +242,14 @@ public class CashierPage {
       }
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-   public static void printBill(){
+   public void printBill(){
       
       print("\nEnter ID to generate Bill :");
       String id=Input.patientId();
 
-      if(((Cashier) Account.user).isPatientExists(id)){
+      if(Checker.ispatientExists(id)){
 
-         Bill bill=((Cashier) Account.user).generateBill(id,Input.roomFees(),Input.consultantFees(),Input.medicineFees());
+         Bill bill=user.generateBill(id,Input.roomFees(),Input.consultantFees(),Input.medicineFees());
          
          print("\n----------------------------- BILL -----------------------------");
          print("\n\nBill id           : "+bill.billId);
@@ -267,7 +270,7 @@ public class CashierPage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private static void print(String string)
+       private void print(String string)
        {
         System.out.println(string);
        }

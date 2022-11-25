@@ -3,20 +3,23 @@ package Hospital_Management.UI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Hospital_Management.MIDDLE_LAYER.Account;
+//import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
+import Hospital_Management.MIDDLE_LAYER.Department;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
+import Hospital_Management.MIDDLE_LAYER.DoctorList;
 import Hospital_Management.MIDDLE_LAYER.Patient;
 import Hospital_Management.MIDDLE_LAYER.Report;
-import Hospital_Management.MIDDLE_LAYER.Utils;
+
 
 public class PatientPage {
       
-    
-    public static void menu(){
-        Home.printLine();
+    public Patient user;
+
+    public void menu(){
+        HomePage.printLine();
         print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6.LOGOUT");
-        Home.printLine();
+        HomePage.printLine();
         
         System.out.println("\nENTER YOUR CHOICE :");
         switch(Input.getFromUser()){
@@ -47,9 +50,9 @@ public class PatientPage {
             }
             
             case "6" :{
-                Account.user=null;
+               user=null;
                 print("\n......LOGGED OUT.....");
-                Home.menu();
+                HomePage.menu();
                 break;
             }
             default :{
@@ -60,20 +63,20 @@ public class PatientPage {
         }
     }
 
-        public static void viewProfile()
+        public void viewProfile()
     {  
         print("--------------- PATIENTS'S DETAILS -----------------");
-        print("\n01. ID          :"+((Patient) Account.user).getId());
-        print("\n02. Name        :"+((Patient) Account.user).getName());
-        print("\n03. Age         :"+((Patient) Account.user).getAge());
-        print("\n04. Gender      :"+((Patient) Account.user).getSex());
-        print("\n05. Blood Group :"+((Patient) Account.user).getBloodtype());
-        print("\n06. Height      :"+((Patient) Account.user).getHeight());
-        print("\n07. Weight      :"+((Patient) Account.user).getWeight());
-        print("\n08. Phone No    :"+((Patient) Account.user).getPh_no());
-        print("\n09. Allergy To  :"+((Patient) Account.user).getAllergyTo());
+        print("\n01. ID          :"+user.getId());
+        print("\n02. Name        :"+user.getName());
+        print("\n03. Age         :"+user.getAge());
+        print("\n04. Gender      :"+user.getSex());
+        print("\n05. Blood Group :"+user.getBloodtype());
+        print("\n06. Height      :"+user.getHeight());
+        print("\n07. Weight      :"+user.getWeight());
+        print("\n08. Phone No    :"+user.getPh_no());
+        print("\n09. Allergy To  :"+user.getAllergyTo());
         print("\nSELECT\n\n1. EDIT PROFILE\n2. BACK");
-        Home.printLine();
+        HomePage.printLine();
 
         switch(Input.getFromUser())
         {
@@ -85,7 +88,7 @@ public class PatientPage {
         } 
     }
 
-    private static void updateDetails()
+    private void updateDetails()
     {
         print("\nNote : \" ID cannot be Edited\"");
         print("\nSelect from Profile to Edit or PRESS \"0\" to BACK");
@@ -107,7 +110,7 @@ public class PatientPage {
 
             case "2":
             {
-                ((Patient) Account.user).setName(Input.name());
+                user.setName(Input.name());
                 print("\nName Updated Successfully...");
                 updateDetails();
                 break;
@@ -115,7 +118,7 @@ public class PatientPage {
 
             case "3":
             {
-                ((Patient) Account.user).setAge(Input.age());
+                user.setAge(Input.age());
                 print("\nAge Updated Successfully...");
                 updateDetails();
                 break;
@@ -123,7 +126,7 @@ public class PatientPage {
 
             case "4":
             {
-                ((Patient) Account.user).setSex(Input.sex());
+                user.setSex(Input.sex());
                 print("\nGender Updated Successfully...");
                 updateDetails();
                 break;
@@ -131,7 +134,7 @@ public class PatientPage {
 
             case "5":
             {
-                ((Patient) Account.user).setBloodgroup(Input.bloodGroup());
+                user.setBloodgroup(Input.bloodGroup());
                 print("\nBlood Group Updated Successfully...");
                 updateDetails();
                 break;
@@ -139,7 +142,7 @@ public class PatientPage {
 
             case "6":
             {
-                ((Patient) Account.user).setHeight(Input.height());
+                user.setHeight(Input.height());
                 print("\nHeight Updated Successfully...");
                 updateDetails();
                 break;
@@ -147,7 +150,7 @@ public class PatientPage {
 
             case "7":
             {
-                ((Patient) Account.user).setWeight(Input.weight());
+                user.setWeight(Input.weight());
                 print("\nWeight Updated Successfully...");
                 updateDetails();
                 break;
@@ -155,7 +158,7 @@ public class PatientPage {
 
             case "8":
             {
-                ((Patient) Account.user).setPh_no(Input.ph_no());
+                user.setPh_no(Input.ph_no());
                 print("\nPhone Number Updated Successfully...");
                 updateDetails();
                 break;
@@ -163,7 +166,7 @@ public class PatientPage {
 
             case "9":
             {
-                ((Patient) Account.user).setAllergyTo(Input.allergies());
+                user.setAllergyTo(Input.allergies());
                 print("\nupdated Successfully....");
                 updateDetails();
                 break;
@@ -174,14 +177,14 @@ public class PatientPage {
         }
     }
 
-    private static void changePassword(){
+    private void changePassword(){
         print("\nEnter Your Current Password : ");
-        if(((Patient) Account.user).getPassword().equals(Input.getFromUser())){
+        if(user.getPassword().equals(Input.getFromUser())){
         print("\nEnter new Password :");
         String password=Input.password();
         print("\nRe-Type Your new Password :");
         if(password.equals(Input.getFromUser())){
-            ((Patient) Account.user).changePassword(password);
+            user.changePassword(password);
             print("\nPassWord Changed Successfully");
         }
         else{
@@ -194,118 +197,147 @@ public class PatientPage {
         }
     }
 
-    private static void bookAppointment(){
+    private void bookAppointment(){
         
-        LocalDate date=printDate();
-        if(date==null){
-        menu();
-        }
-        else{
-        doctorAvailability(date);
-        // print("\nEnter Patient ID : ");
-        // String patientId=Input.getFromUser();
-        // if(!Receptionist.receptionist.isPatientExists(patientId)){
-        //    print("\nNo Patient Exists in that ID..");
-        // }
-        // else{
-            print("\nEnter Doctor ID : ");
-            String doctorId=Input.getFromUser();
+        Department department=selectDepartment();
 
-            if(containsDoctorId(doctorId,date)){
-                //  print("\nEnter Patient ID : ");
-                //  String patientId=Input.getFromUser();
-
-                    int slot=selectSlot(Utils.getDoctor(doctorId), date);
-
-                    if(slot>=0){
-
-                    ((Patient) Account.user).createAppointment(date,((Patient) Account.user).getId(), doctorId,slot);
-                    print("\nAppointment created Successfully for patient Id :"+((Patient) Account.user).getId()+" on "+date);
-                    }
-                    else{
-                    print("\nSorry Cannot Book Appointment retry...");
-                    }
+        if(department!=null){
+ 
+          LocalDate date=printDate(department);
+ 
+          if(date!=null){
+ 
+             doctorAvailability(date,department);
+             print("\nEnter Doctor ID : ");
+             String doctorId=Input.getFromUser();
+ 
+                if(containsDoctorId(doctorId,date,department)){
+ 
+                   int slot=selectSlot(DoctorList.get(doctorId), date);
+ 
+                      if(slot>=0){
+ 
+                         Appointment.createAppointment(date,user.getName(), user.getPh_no(),doctorId,slot);
+                         print("\nAppointment created Successfully on "+date);
+                      }
+                      else{
+                         print("\nSorry Cannot Book Appointment retry...");
+                      }
+                   }
                 }
-            else{
-                print("Please Enter correct Id..");
-            }
-            }
+          }
+          else{
+             print("\nInvalid Input.");
+          }
+      
     }
 
-    private static boolean containsDoctorId(String id,LocalDate date){
-        ArrayList<Doctor> list=Utils.doctorAvailability(date);
-        for(Doctor doctor:list){
-        
-        if(doctor.getId().equals(id)){
-        return true;
+    private Department selectDepartment(){
+        print("\nSELECT DEPARTMENT ");
+  
+        for(int i=0;i<Department.values().length;i++){
+           print("\n"+(i+1)+". "+Department.values()[i]);
         }
+  
+        String choice=Input.getFromUser();
+        
+        if(Validate.onlyNumber(choice)&&Integer.parseInt(choice)!=0&&Integer.parseInt(choice)<=Department.values().length){
+           return Department.values()[Integer.parseInt(choice)-1];
+        }
+        return null;
+    }
+
+    private boolean containsDoctorId(String id,LocalDate date,Department department){
+        ArrayList<Doctor> list=DoctorList.get(date,department);
+        for(Doctor doctor:list){
+           
+          if(doctor.getId().equals(id)){
+           return true;
+          }
         }
         return false;
-    }
+      }
 
-    private static void doctorAvailability(LocalDate date)
-    {
-        ArrayList<Doctor> list=Utils.doctorAvailability(date);
-
-        if(!list.isEmpty())
-        {
+      private void doctorAvailability(LocalDate date,Department department)
+      {
+         ArrayList<Doctor> list=DoctorList.get(date,department);
+   
+         if(!list.isEmpty()&&list!=null)
+         {
             print("\nAvailable Doctor(s) is/are\n");
-
+   
             for(Doctor doctor:list)
             {
-                print("ID: "+doctor.getId()+" Name : "+doctor.getName());
+               print("ID: "+doctor.getId()+" Name : "+doctor.getName());
             }
-        }
-        else
-        {
-            print("\nNo Doctors Currently Available");
-        }
-    }
+         }
+         else
+         {
+            print("\nNo Doctors Available");
+         }
+      }
 
-    private static LocalDate printDate(){
-        print("\nSelect the below Date to Book Appointments \n");
+      private LocalDate printDate(Department department){
+       
+        boolean flag=false;
         for(int i=0;i<7;i++){
-        print((i+1)+". "+LocalDate.now().plusDays(i)+" "+LocalDate.now().plusDays(i).getDayOfWeek());
+         
+          if(DoctorList.get(LocalDate.now().plusDays(i),department).size()!=0){
+          flag=true;
+          print((i+1)+". "+LocalDate.now().plusDays(i)+" "+LocalDate.now().plusDays(i).getDayOfWeek());
+          }
+          
         }
+        
+        if(!flag){
+          print("\nSorry No Doctors will be available for 7 days on "+department);
+ 
+        }
+        else{
+ 
+          print("\nSelect the Above Date to Book Appointments \n");
+ 
         switch(Input.getFromUser()){
+ 
+          case "1" :
+          {
+                 return LocalDate.now().plusDays(0);
+          }
+          case "2" :
+          {
+                 return LocalDate.now().plusDays(1);
+          }
+          case "3" :
+          {
+                 return LocalDate.now().plusDays(2);
+          }
+          case "4" :
+          {
+                 return LocalDate.now().plusDays(3);
+          }
+          case "5" :
+          {
+                 return LocalDate.now().plusDays(4);
+          }
+          case "6" :
+          {
+                 return LocalDate.now().plusDays(5);
+          }
+          case "7" :
+          {
+                 return LocalDate.now().plusDays(6);
+          }
+          default : {
+                 print("\nSelect valid option");
+          }
+        }
+       }
+       return null;
+     }
+ 
 
-        case "1" :
-        {
-                return LocalDate.now().plusDays(0);
-        }
-        case "2" :
-        {
-                return LocalDate.now().plusDays(1);
-        }
-        case "3" :
-        {
-                return LocalDate.now().plusDays(2);
-        }
-        case "4" :
-        {
-                return LocalDate.now().plusDays(3);
-        }
-        case "5" :
-        {
-                return LocalDate.now().plusDays(4);
-        }
-        case "6" :
-        {
-                return LocalDate.now().plusDays(5);
-        }
-        case "7" :
-        {
-                return LocalDate.now().plusDays(6);
-        }
-        default : {
-                print("\nSelect valid option");
-        }
-        }
-    return null;
-    }
-
-    private static int selectSlot(Doctor doctor,LocalDate date){
-    Appointment[] arr=Utils.getAppointment(doctor,date);
+    private int selectSlot(Doctor doctor,LocalDate date){
+    Appointment[] arr=doctor.ViewAppointment(date);
     
     boolean flag=false;
     print("\nAvailable Slots Are/is :");
@@ -340,10 +372,10 @@ public class PatientPage {
         
     }
 
-    private static void cancelAppointment(){
+    private void cancelAppointment(){
         print("\n---------------  CANCEL APPOINTMENT -------------------");
 
-        ArrayList<Appointment> appointlist= ((Patient) Account.user).viewAppointment();
+        ArrayList<Appointment> appointlist= Appointment.viewAppointment(user.getName());
         if(appointlist==null||appointlist.isEmpty()){
             print("\nNO APPOINTMENTS FOUND ");
         }
@@ -360,7 +392,8 @@ public class PatientPage {
                 Appointment appointment=appointlist.get(Integer.parseInt(choice)-1);
 
                 if(Input.CancelAppointment()){
-                ((Patient) Account.user).CancelAppointment(appointment.getDate(),appointment.getPatientId(),appointment.getTime(),appointment.getDoctorId());
+                    Appointment.CancelAppointment(appointment.getDate(),appointment.getPatientName(),appointment.getTime(),appointment.getDoctorId());
+
                 }
 
             }
@@ -369,10 +402,10 @@ public class PatientPage {
 
     }
 
-    private static void viewReport()
+    private void viewReport()
     {
     
-        ArrayList<Report> list=((Patient) Account.user).viewReports();
+        ArrayList<Report> list=user.viewReports();
         
         if(list.isEmpty()||list==null){
             print("\nNo Reports Available ");
@@ -407,7 +440,7 @@ public class PatientPage {
     
     }
 
-    private static  void printReport(Report report)
+    private  void printReport(Report report)
     {
         print("\n--------------- REPORT ---------------");
         print("\n\nReport ID          :"+report.getId());
@@ -416,11 +449,11 @@ public class PatientPage {
         print("\nDescription         :"+report.getdescription());
         print("\nTreatement Provided :"+report.getTreatementProvided());
         print("\nMedicine Prescribed :"+report.getMedicinePrescribed());
-        Home.printLine();
+        HomePage.printLine();
     }
 
 
-    private static void print(String value){
+    private void print(String value){
         System.out.println(value);
     }
 

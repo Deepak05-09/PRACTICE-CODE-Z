@@ -82,7 +82,7 @@ public class Validate {
 
     public static boolean onlyNumber(String value)
     {
-        return Pattern.matches(onlyNumber, value);
+        return Pattern.matches(onlyNumber, value)&&value.length()<5;
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
