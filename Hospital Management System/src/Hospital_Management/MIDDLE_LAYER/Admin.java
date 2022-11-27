@@ -1,6 +1,10 @@
 package Hospital_Management.MIDDLE_LAYER;
 
+import Hospital_Management.DATA_LAYER.BillDAO;
+import Hospital_Management.DATA_LAYER.DoctorDAO;
+import Hospital_Management.DATA_LAYER.PatientDAO;
 import Hospital_Management.DATA_LAYER.Storage;
+import Hospital_Management.DATA_LAYER.UserDAO;
 import Hospital_Management.UI.Input;
 
 import java.time.LocalDate;
@@ -10,14 +14,15 @@ import java.util.HashMap;
 
 public class Admin extends Employee
 {
-     static int id=2;
+     static int id=1;
+     
 
-    public static Admin mainAdmin=new Admin("Deepak", "AD1", "9999999999",  null, 21, Sex.MALE, "admin@gmail.com", "123,Chinniampalayam,Coimbatore", "B.E-ECE", "Admin123");
+    public static Admin mainAdmin=new Admin("Deepak", "9999999999",  null, 21, Sex.MALE, "admin@gmail.com", "123,Chinniampalayam,Coimbatore", "B.E-ECE", "Admin123");
     
-    public Admin(String name ,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
+    public Admin(String name ,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
         setName(name);
-        setId(id);
+        setId("AD"+id++);
         setAge(age);
         setPhnNo(ph_no);
         setDateJoined(LocalDate.now());
@@ -34,9 +39,9 @@ public class Admin extends Employee
     {
         if(Input.confirmation())
         {
-         Admin admin=new Admin(name ,"AD"+id,ph_no,dob,age,sex,mail,address,education,password);
+         Admin admin=new Admin(name ,ph_no,dob,age,sex,mail,address,education,password);
          Storage.storage.store(admin);
-         Storage.userDetails.add(new User(admin));
+         userDAO.add(new User(admin));
 
         }
 
@@ -46,9 +51,9 @@ public class Admin extends Employee
     {
         if(Input.confirmation())
         {
-         Doctor doctor=new Doctor(name,"DR"+Doctor.id++, ph_no, dob, age, sex, mail, address, education, speciality, password); 
-         Storage.userDetails.add(new User(doctor));
-         Storage.doctorList.add(doctor);
+         Doctor doctor=new Doctor(name, ph_no, dob, age, sex, mail, address, education, speciality, password); 
+         userDAO.add(new User(doctor));
+         doctorDAO.add(doctor);
         }
 
     }
@@ -58,7 +63,7 @@ public class Admin extends Employee
         if(Input.confirmation())
         {
          Receptionist receptionist=new Receptionist(name,"RE"+Receptionist.id++, ph_no, dob, age, sex, mail, address, education, password);
-         Storage.userDetails.add(new User(receptionist));
+         userDAO.add(new User(receptionist));
          Storage.storage.store(receptionist);
         }
 
@@ -69,7 +74,7 @@ public class Admin extends Employee
         if(Input.confirmation())
         {
          Cashier cashier=new Cashier(name,"CA"+Cashier.id++, ph_no, dob, age, sex, mail, address, education, password);
-         Storage.userDetails.add(new User(cashier));
+         userDAO.add(new User(cashier));
          Storage.storage.store(cashier);
         }
 
@@ -96,7 +101,7 @@ public class Admin extends Employee
 
     public Patient viewPatient(String id)
     {
-        return Storage.patientList.getPatient(id);
+        return patientDAO.getPatient(id);
     }
     
     public  ArrayList<Employee>viewAll()
@@ -121,13 +126,28 @@ public class Admin extends Employee
     }
 
     public ArrayList<Doctor> searchDoctor(String name){
-        return Storage.doctorList.getDoctor(name);
+        return doctorDAO.getDoctor(name);
     }
+    
+    public ArrayList<Bill> viewBill(String patientId){
+        return billDAO.get(patientId);
+    }
+    public double viewAmount(LocalDate date){
+        return billDAO.getAmmount(date);
+    }
+
+
     
     public String toString()
     {
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
+
+    private DoctorDAO doctorDAO=DoctorDAO.doctorDAO;
+    private BillDAO billDAO=BillDAO.billDAO;
+    private PatientDAO patientDAO=PatientDAO.patientDAO;
+    private UserDAO userDAO=UserDAO.userDAO;
+
 
    
 }

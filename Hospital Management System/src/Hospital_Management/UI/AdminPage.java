@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import Hospital_Management.MIDDLE_LAYER.Admin;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
+import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
 import Hospital_Management.MIDDLE_LAYER.Employee;
 
@@ -13,7 +14,7 @@ import Hospital_Management.MIDDLE_LAYER.Employee;
 
 public class AdminPage {
      
-   
+      
       public Admin user;
 
        public void adminFeatures()
@@ -21,7 +22,7 @@ public class AdminPage {
           
           HomePage.employeefeatures();
 
-          print("6. ADD ADMIN\n7. ADD DOCTOR\n8. ADD RECEPTIONIST\n9. ADD CASHIER\n10. REMOVE EMPLOYEE\n11. VIEW APPOINTMENT\n12.SEARCH EMPLOYEE\n13.VIEW ALL EMPLOYEE\n");
+          print("6. ADD ADMIN\n7. ADD DOCTOR\n8. ADD RECEPTIONIST\n9. ADD CASHIER\n10. REMOVE EMPLOYEE\n11. VIEW APPOINTMENT\n12.SEARCH EMPLOYEE\n13.VIEW ALL EMPLOYEE\n14.VIEW BILL");
           HomePage.printLine();
           choice();
 
@@ -119,6 +120,13 @@ public class AdminPage {
                 adminFeatures();
                 break;
              }
+
+             case "14" :
+             {
+                viewBill();
+                adminFeatures();
+                break;
+             }
             
              default : 
              {
@@ -166,7 +174,7 @@ public class AdminPage {
             String password=Input.password();
             print("\nRe-Type Your new Password :");
             if(password.equals(Input.getFromUser())){
-              user.changePassword(password);
+               user.changePassword(password);
                print("\nPassWord Changed Successfully");
             }
             else{
@@ -461,6 +469,22 @@ public class AdminPage {
          }
 
       
+   }
+
+   private void viewBill(){
+       print("\nEnter Patient Id to  view All Bill  ");
+       LocalDate.now();
+       String patientId=Input.getFromUser();
+       ArrayList<Bill> bills=user.viewBill(patientId);
+
+       if(bills!=null&&!bills.isEmpty()){
+           for(Bill bill:bills){
+              print("\n Date :"+bill.billGeneratedOn+" Time : "+bill.time+" Total fees "+bill.total);
+           }
+       }
+       else{
+         System.out.println("\nNo BIll records Found");
+       }
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 

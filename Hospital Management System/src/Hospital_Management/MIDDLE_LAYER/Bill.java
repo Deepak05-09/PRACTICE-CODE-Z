@@ -1,12 +1,14 @@
 package Hospital_Management.MIDDLE_LAYER;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Bill
 {   
     public String billId;
     public String patientId;
     public LocalDate billGeneratedOn;
+    public LocalTime time;
     public double roomFees;
     public double ConsultantFees;
     public double MedicineFees;
@@ -25,6 +27,7 @@ public class Bill
        this.MedicineFees=medicineFees;
        this.billGivenBy=billGivenBy;
        billGeneratedOn=LocalDate.now();
+       time=LocalTime.now();
        total=roomFees+consultantFees+medicineFees;
     }
 

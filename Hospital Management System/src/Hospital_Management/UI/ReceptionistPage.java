@@ -3,7 +3,6 @@ package Hospital_Management.UI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-//import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
 import Hospital_Management.MIDDLE_LAYER.Department;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
@@ -203,19 +202,12 @@ public class ReceptionistPage {
    }
   
 
-   public void viewPatientDetails(Patient patient)
+   public void viewPatientDetails(ArrayList<Patient> patients)
    {  
-      print("--------------- PATIENTS'S DETAILS -----------------");
-      print("\n01. Patient's ID          :"+patient.getId());
-      print("\n02. Patient's Name        :"+patient.getName());
-      print("\n03. Patient's Age         :"+patient.getAge());
-      print("\n04. Patient's Gender      :"+patient.getSex());
-      print("\n05. Patient's Blood Group :"+patient.getBloodtype());
-      print("\n06. Patient's Height      :"+patient.getHeight());
-      print("\n07. Patient's Weight      :"+patient.getWeight());
-      print("\n08. Patient's Phone No    :"+patient.getPh_no());
-      print("\n09. Patient's Allergy To  :"+patient.getAllergyTo());
-      HomePage.printLine();
+     for(Patient patient:patients){
+      System.out.println(patient.getName()+"  "+patient.getId()+"  "+patient.getPh_no());
+     }
+
    }
 
   
@@ -504,11 +496,17 @@ public class ReceptionistPage {
     private void cancelAppointment(){
          print("\n---------------  CANCEL APPOINTMENT -------------------");
          print("\nEnter Patient Name :");
-         String patientId=Input.getFromUser();
+         String patientName=Input.getFromUser();
           
-         ArrayList<Appointment> appointlist= Appointment.viewAppointment(user.search(patientId).getName());
+         ArrayList<Patient> patients=user.search(patientName);
+         ArrayList<Appointment> appointlist=new ArrayList<>();
+
+         for(Patient patient:patients){
+            appointlist.addAll(Appointment.viewAppointment(patient.getName()));
+         }
+
          if(appointlist==null||appointlist.isEmpty()){
-            print("\nNO APPOINTMENTS FOUND IN THAT ID");
+            print("\nNO APPOINTMENTS FOUND FOR THAT NAME");
          }
          else{
 
@@ -528,22 +526,20 @@ public class ReceptionistPage {
 
             }
          }
-         
-
     }
 
     private void search(){
          
         print("\nEnter Info");
-        String name=Input.name();
-        String mbl=Input.ph_no();
-        Patient patient= user.search(name, mbl);
+        String search=Input.getFromUser();
+       
+        ArrayList<Patient> patients= user.search(search);
 
-        if(patient==null){
+        if(patients==null||patients.isEmpty()){
             print("\nNO PATIENT FOUND");
         }
         else{
-            viewPatientDetails(patient);
+            viewPatientDetails(patients);
         }
     }
 

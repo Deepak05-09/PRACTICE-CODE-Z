@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 //import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
-import Hospital_Management.MIDDLE_LAYER.Checker;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
+import Hospital_Management.MIDDLE_LAYER.Patient;
 import Hospital_Management.MIDDLE_LAYER.Report;
 
 public class DoctorPage {
@@ -278,7 +278,7 @@ public class DoctorPage {
      {
          print("\nEnter Patient's Id to Generate report");
                String id=Input.getFromUser();
-               if(Checker.ispatientExists(id))
+               if(Patient.ispatientExists(id))
                {
               user.generatReport( id, Input.reason(), Input.treatementProvided(),Input.prescribe());
                print("\n\nReport Generated SuccessFully" );
@@ -296,7 +296,7 @@ public class DoctorPage {
       print("\nEnter ID to view Patient's Report");
       String id=Input.patientId();
          
-      if(Checker.ispatientExists(id))
+      if(Patient.ispatientExists(id))
       {
                ArrayList<Report> list=user.viewPatientReport(id);
                

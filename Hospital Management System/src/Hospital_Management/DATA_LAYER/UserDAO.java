@@ -1,54 +1,58 @@
 package Hospital_Management.DATA_LAYER;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-import Hospital_Management.MIDDLE_LAYER.Admin;
-import Hospital_Management.MIDDLE_LAYER.Cashier;
-import Hospital_Management.MIDDLE_LAYER.Doctor;
-import Hospital_Management.MIDDLE_LAYER.Patient;
-import Hospital_Management.MIDDLE_LAYER.Receptionist;
+
+
 import Hospital_Management.MIDDLE_LAYER.User;
 
 public class UserDAO {
     
-    private HashMap<String,User> userDetails;
+   
 
-     UserDAO(){
-        userDetails=new HashMap<>();
-        initialise();
+    private UserDAO(){
+        
+        
     }
+    public static UserDAO userDAO=new UserDAO();
 
     public void add(User user){
-        userDetails.put(user.getUsername(), user);
+        Storage.storage.userDetails.put(user.getUsername(), user);
     }
 
     public User getUser(String id){
-        return userDetails.get(id);
+        return Storage.storage.userDetails.get(id);
     }
 
     public boolean isUserExist(String id){
-        return userDetails.containsKey(id);
+        return Storage.storage.userDetails.containsKey(id);
     }
 
     public String getPassword(String id){
-        return userDetails.get(id).getPassword();
+        return Storage.storage.userDetails.get(id).getPassword();
     }
 
     public void remove(String id){
-        userDetails.remove(id);
+        Storage.storage.userDetails.remove(id);
     }
 
-    private void initialise(){
-       add(new User(Doctor.doc));
-       add(new User(Doctor.doc2));
-       add(new User(Doctor.doc3));
-       add(new User(Doctor.doc4));
-       add(new User(Doctor.doc5));
-       add(new User(Admin.mainAdmin));
-       add(new User(Receptionist.rec));
-       add(new User(Cashier.cashier2));
-       add(new User("123","Patient123",Patient.patient1));
+    public void changePassword(String username,String password){
+       User user=Storage.storage.userDetails.get(username);
+        user.setPassword(password);
+        Storage.storage.userDetails.replace(username,user);
     }
+
+    public boolean isIdConnected(String patientId){
+          ArrayList<User> list=new ArrayList<>(Storage.storage.userDetails.values());
+          for(User user:list){
+            if(user.getId().equals(patientId)){
+                return true;
+            }
+          }
+         return false; 
+    }
+
+   
    
    
 }

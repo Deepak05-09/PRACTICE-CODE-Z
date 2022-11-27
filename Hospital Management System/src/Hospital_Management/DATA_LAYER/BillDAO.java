@@ -1,39 +1,59 @@
 package Hospital_Management.DATA_LAYER;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import Hospital_Management.MIDDLE_LAYER.Bill;
 
 public class BillDAO {
     
-    HashMap<LocalDate,ArrayList<Bill>> billList;
+   
 
     BillDAO(){
-         billList=new HashMap<>();
+        
     }
+    public static BillDAO billDAO=new BillDAO();
 
     public HashMap<LocalDate, ArrayList<Bill>> getBillList() {
-        return billList;
+        return Storage.storage.billList;
     }
 
     public void add(LocalDate date,Bill bill){
 
-          if(billList.containsKey(date)){
-            ArrayList<Bill> list=billList.get(date);
+          if(Storage.storage.billList.containsKey(date)){
+            ArrayList<Bill> list=Storage.storage.billList.get(date);
             list.add(bill);
-            billList.replace(date,list);
+            Storage.storage.billList.replace(date,list);
           }
           else{
             ArrayList<Bill> list=new ArrayList<>();
             list.add(bill);
-            billList.put(date, list);
+            Storage.storage.billList.put(date, list);
           }
     }
 
-    public ArrayList<Bill> get(LocalDate date){
-        return billList.get(date);
+    public ArrayList<Bill> get(String patientId){
+        Collection<ArrayList<Bill>> bill=Storage.storage.billList.values();
+        
+        ArrayList<Bill> temp=new ArrayList<>();
+        for(ArrayList<Bill> bi: bill){
+            ArrayList<Bill> list=bi;
+            for(Bill b:list){
+               if(b.patientId.equals(patientId)){
+                list.add(b);
+               }
+            }
+        }
+        return temp;
+    }
+
+    public Double getAmmount(LocalDate date){
+        Double ammount=0.0;
+        for(Bill bill:Storage.storage.billList.get(date)){
+             ammount+=bill.total;
+        }
+        return ammount;
     }
 }

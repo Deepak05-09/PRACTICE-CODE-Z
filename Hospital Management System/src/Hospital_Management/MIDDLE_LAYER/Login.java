@@ -1,6 +1,8 @@
 package Hospital_Management.MIDDLE_LAYER;
 
+import Hospital_Management.DATA_LAYER.PatientDAO;
 import Hospital_Management.DATA_LAYER.Storage;
+import Hospital_Management.DATA_LAYER.UserDAO;
 import Hospital_Management.MIDDLE_LAYER.User.Role;
 import Hospital_Management.UI.AdminPage;
 import Hospital_Management.UI.CashierPage;
@@ -12,42 +14,42 @@ public class Login {
     
     public void login(String id){
         
-        Role role=Storage.userDetails.getUser(id).getRole();
+        Role role=userDAO.getUser(id).getRole();
     
             switch(role){
     
                 case ADMIN :{
-                    String Id=Storage.userDetails.getUser(id).getId();
+                    String Id=userDAO.getUser(id).getId();
                     AdminPage adminPage=new AdminPage();
                     adminPage.user=(Admin)Storage.storage.getEmployee(Id);
                     adminPage.adminFeatures();
                     break;
                 }
                 case DOCTOR :{
-                    String Id=Storage.userDetails.getUser(id).getId();
+                    String Id=userDAO.getUser(id).getId();
                     DoctorPage doctorPage=new DoctorPage();
                     doctorPage.user=(Doctor)Storage.storage.getEmployee(Id);
                     doctorPage.doctorFeatures();
                     break;
                 }
                 case RECEPTIONIST :{
-                    String Id=Storage.userDetails.getUser(id).getId();
+                    String Id=userDAO.getUser(id).getId();
                     ReceptionistPage receptionistPage=new ReceptionistPage();
                     receptionistPage.user=(Receptionist)Storage.storage.getEmployee(Id);
                     receptionistPage.receptionistFeatures();
                     break;
                 }
                 case CASHIER :{
-                    String Id=Storage.userDetails.getUser(id).getId();
+                    String Id=userDAO.getUser(id).getId();
                     CashierPage cashierPage=new CashierPage();
                     cashierPage.user=(Cashier)Storage.storage.getEmployee(Id);
                     cashierPage.cashierFeatures();
                     break;
                 }
                 case PATIENT :{
-                    String Id=Storage.userDetails.getUser(id).getId();
+                    String Id=userDAO.getUser(id).getId();
                     PatientPage patientPage=new PatientPage();
-                    patientPage.user=Storage.patientList.getPatient(Id);
+                    patientPage.user=patientDAO.getPatient(Id);
                     patientPage.menu();
                     break;
                 }
@@ -62,12 +64,13 @@ public class Login {
     }
 
     public boolean isIdExist(String id){
-        return Storage.userDetails.isUserExist(id);
+        return userDAO.isUserExist(id);
     }
 
     public boolean isPasswordCorrect(String id,String password){
-        return Storage.userDetails.getPassword(id).equals(password);
+        return userDAO.getPassword(id).equals(password);
     }
 
-    
+    private UserDAO userDAO=UserDAO.userDAO;
+    private PatientDAO patientDAO=PatientDAO.patientDAO;
 }

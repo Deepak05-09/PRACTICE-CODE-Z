@@ -4,6 +4,7 @@ package Hospital_Management.MIDDLE_LAYER;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import Hospital_Management.DATA_LAYER.PatientDAO;
 import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.UI.Input;
 
@@ -34,19 +35,19 @@ public class Receptionist extends Employee
         if(Input.confirmation())
         {
             Patient patient=new Patient(name, age, sex, bloodGroup, weight, height, ph_no,allergy);
-            Storage.patientList.add(patient);
+            patientDAO.add(patient);
         }
     }
     
    
 
-    public Patient search(String patientid)
-    {   
-        return Storage.patientList.getPatient(patientid);
-    }
+    // public Patient search(String patientid)
+    // {   
+    //     return patientDAO.getPatient(patientid);
+    // }
 
-    public Patient search(String name,String mbl_no){
-        return Storage.patientList.get(name, mbl_no);
+    public ArrayList<Patient> search(String search){
+        return patientDAO.get(search);
     }
 
     
@@ -68,5 +69,7 @@ public class Receptionist extends Employee
     {
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
+
+    private PatientDAO patientDAO=PatientDAO.patientDAO;
     
 }

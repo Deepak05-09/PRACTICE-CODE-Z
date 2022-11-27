@@ -2,8 +2,10 @@ package Hospital_Management.MIDDLE_LAYER;
 
 import java.util.ArrayList;
 
+import Hospital_Management.DATA_LAYER.PatientDAO;
 
-public class Patient
+
+public class Patient 
 {
     private String name;
     private String id;
@@ -26,7 +28,6 @@ public class Patient
 
     Patient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
     {
-
         this.id="PT"+p_id++;
         this.name=name;
         this.age=age;
@@ -124,5 +125,10 @@ public class Patient
         return this.report;
      }
 
+    public static boolean ispatientExists(String id){
+        return patientDAO.isExist(id);
+    }
+    
+    private static PatientDAO patientDAO=PatientDAO.patientDAO;
 
 }

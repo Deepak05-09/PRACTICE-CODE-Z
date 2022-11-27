@@ -1,5 +1,8 @@
 package Hospital_Management.MIDDLE_LAYER;
 
+
+import Hospital_Management.DATA_LAYER.UserDAO;
+
 public class User
 {
    private String username;
@@ -46,6 +49,10 @@ public class User
     id=patient.getId();
     role=Role.PATIENT;
    }
+   
+   public void setPassword(String password) {
+       this.password = password;
+   }
 
    public String getUsername() {
        return username;
@@ -63,6 +70,11 @@ public class User
        return role;
    }
 
+   public  void changePassword(String username,String password){
+       userDAO.changePassword(username,password);
+   }
+    
+   private UserDAO userDAO=UserDAO.userDAO;
 
    
 }

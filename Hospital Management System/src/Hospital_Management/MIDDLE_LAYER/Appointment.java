@@ -3,7 +3,9 @@ package Hospital_Management.MIDDLE_LAYER;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Hospital_Management.DATA_LAYER.Storage;
+import Hospital_Management.DATA_LAYER.AppointmentDAO;
+import Hospital_Management.DATA_LAYER.DoctorDAO;
+
 
 
 
@@ -48,28 +50,29 @@ public class Appointment {
     }
 
     public static ArrayList<Appointment> getAppointment(LocalDate date){
-        return Storage.appointmentList.getAppointment(date);
+        return appointmentDAO.getAppointment(date);
      }
 
      public static ArrayList<Appointment> viewAppointment(String name){
-        return Storage.appointmentList.getAppointment(name);
+        return appointmentDAO.getAppointment(name);
      } 
 
      public static void createAppointment(LocalDate date,String patientName,String mbl_no,String doctorId,int time)
      {  
-        Doctor doctor=Storage.doctorList.get(doctorId);
+        Doctor doctor=doctorDAO.get(doctorId);
         Appointment[]slot=doctor.appointments.get(date);
      
          Appointment appointment= new Appointment(patientName,mbl_no, doctorId, time,date);
         slot[time]=appointment;
         doctor.appointments.put(date, slot);
-        Storage.appointmentList.add(appointment);
+        appointmentDAO.add(appointment);
         
      }
      
      public static void CancelAppointment(LocalDate date,String name,String time,String doctorId) {
-       Storage.appointmentList.CancelAppointment(date, name, time,doctorId);
+        appointmentDAO.CancelAppointment(date, name, time,doctorId);
      }
 
-     
+     private static AppointmentDAO appointmentDAO=AppointmentDAO.appointmentDAO;
+     private static DoctorDAO doctorDAO=DoctorDAO.doctorDAO;
 }

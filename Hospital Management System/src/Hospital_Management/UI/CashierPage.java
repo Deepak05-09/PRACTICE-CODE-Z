@@ -3,7 +3,7 @@ package Hospital_Management.UI;
 
 import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Cashier;
-import Hospital_Management.MIDDLE_LAYER.Checker;
+import Hospital_Management.MIDDLE_LAYER.Patient;
 
 
 public class CashierPage {
@@ -247,7 +247,7 @@ public class CashierPage {
       print("\nEnter ID to generate Bill :");
       String id=Input.patientId();
 
-      if(Checker.ispatientExists(id)){
+      if(Patient.ispatientExists(id)){
 
          Bill bill=user.generateBill(id,Input.roomFees(),Input.consultantFees(),Input.medicineFees());
          

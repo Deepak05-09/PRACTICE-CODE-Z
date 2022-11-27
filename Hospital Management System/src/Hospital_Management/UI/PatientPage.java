@@ -198,6 +198,42 @@ public class PatientPage {
     }
 
     private void bookAppointment(){
+        System.out.println("\nSELECT \n1. DOCTOR\n2. DEPARTMENT");
+
+        switch(Input.getFromUser()){
+
+            case "1" :{
+               bookByDoctor();
+               break;
+            }
+            case "2":{
+              bookByDepartment();
+              break;
+            }
+            default :{
+                System.out.println("\nInvalid Input");
+            }
+        }
+    }
+
+    private void bookByDoctor(){
+        Doctor doc= selectDoctor();
+        if(doc!=null){
+            LocalDate date=printDate(doc.getSpeciality());
+            if(date!=null){
+                int slot=selectSlot(doc, date);
+                if(slot>0){
+                    Appointment.createAppointment(date,user.getName(), user.getPh_no(),doc.getId(),slot);
+                    print("\nAppointment created Successfully on "+date+" with doctor "+doc.getName());
+                }
+            }
+            else{
+            System.out.println("\nInvalid Input");
+            }
+        }
+    }
+
+    private void bookByDepartment(){
         
         Department department=selectDepartment();
 
@@ -216,9 +252,9 @@ public class PatientPage {
                    int slot=selectSlot(DoctorList.get(doctorId), date);
  
                       if(slot>=0){
- 
+                         
                          Appointment.createAppointment(date,user.getName(), user.getPh_no(),doctorId,slot);
-                         print("\nAppointment created Successfully on "+date);
+                         print("\nAppointment created Successfully on "+date+" with doctor "+DoctorList.get(doctorId).getName());
                       }
                       else{
                          print("\nSorry Cannot Book Appointment retry...");
@@ -244,6 +280,9 @@ public class PatientPage {
         if(Validate.onlyNumber(choice)&&Integer.parseInt(choice)!=0&&Integer.parseInt(choice)<=Department.values().length){
            return Department.values()[Integer.parseInt(choice)-1];
         }
+        else{
+            System.out.println("\nInvalid Choice");
+        }
         return null;
     }
 
@@ -257,6 +296,8 @@ public class PatientPage {
         }
         return false;
       }
+
+
 
       private void doctorAvailability(LocalDate date,Department department)
       {
@@ -399,6 +440,35 @@ public class PatientPage {
             }
         }
         
+
+    }
+
+    private Doctor selectDoctor(){
+        
+        System.out.println("\nEnter Doctor's Name to Book Appointment : ");
+        String name=Input.getFromUser();
+
+        ArrayList<Doctor> doctors=DoctorList.searchDoctor(name);
+
+        if(doctors.isEmpty()){
+            System.out.println("\nNO DOCTORS FOUND IN THAT NAME");
+        }
+        else{
+            for(int i=0;i<doctors.size();i++){
+                System.out.println((i+1)+". "+doctors.get(i).getName()+" Department :"+doctors.get(i).getSpeciality());
+            }
+
+            System.out.println("\nENTER YOUR CHOICE :");
+            String choice=Input.getFromUser();
+
+            if(Validate.onlyNumber(choice)&&Integer.parseInt(choice)<=doctors.size()&&Integer.parseInt(choice)>0){
+                return doctors.get(Integer.parseInt(choice)-1);
+            }
+            else{
+                System.out.println("\nInvalid Input");
+            }
+        }
+        return null;
 
     }
 

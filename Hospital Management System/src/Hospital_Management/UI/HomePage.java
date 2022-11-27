@@ -1,6 +1,7 @@
 package Hospital_Management.UI;
 
 import Hospital_Management.MIDDLE_LAYER.Login;
+import Hospital_Management.MIDDLE_LAYER.Patient;
 import Hospital_Management.MIDDLE_LAYER.Register;
 
 
@@ -65,10 +66,10 @@ public class HomePage {
    private static void register(){
         
         Register register=new Register();
-        print("\nEnter Username create an Account");
+        print("\nEnter Username to create an Account");
         String id=Input.getFromUser();
 
-        if(register.isIdExist(id)){
+        if(!register.isIdExist(id)){
           print("\nENTER PASSWORD: ");
           String password=Input.password();
           
@@ -99,12 +100,22 @@ public class HomePage {
 
       print("Enter your Patient Id :");
       String patiendId=Input.getFromUser();
-      if(register.isIdExist(patiendId)){
-         register.create(id, password, patiendId);
-         print("\nAccount restored successfully...");
-         HomePage.menu();
+      if(Patient.ispatientExists(patiendId)){
+
+         if(register.isIdConnectedToAcc(patiendId)){
+
+            print("\nOops....It seems that your Patient Id is Already Connected to an Account");
+            HomePage.menu();
+         }
+         else{
+
+            register.create(id, password, patiendId);
+            print("\nAccount restored successfully...\n\nPLEASE LOGIN TO USE YOUR ACCOUNT");
+            HomePage.menu();
+         }
       }
       else{
+
          print("No Details Available for that Id\n Do you want to create new one?\n1.YES\n2. NO ");
          switch(Input.getFromUser()){
             case "1" :{

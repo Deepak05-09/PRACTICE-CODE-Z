@@ -2,8 +2,7 @@ package Hospital_Management.MIDDLE_LAYER;
 
 import java.time.LocalDate;
 
-
-import Hospital_Management.DATA_LAYER.Storage;
+import Hospital_Management.DATA_LAYER.BillDAO;
 
 
 public class Cashier extends Employee 
@@ -35,8 +34,9 @@ public class Cashier extends Employee
     
     public Bill generateBill(String patientId,double roomFees,double consultantFees,double medicineFees)
     {   
-        
-        return new Bill(patientId, roomFees, consultantFees, medicineFees,this.getName() );
+        Bill bill=new Bill(patientId, roomFees, consultantFees, medicineFees,this.getName() );
+        billDAO.add(LocalDate.now(), bill);
+        return bill;
     }
     
     
@@ -45,4 +45,6 @@ public class Cashier extends Employee
     {
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
+
+    private BillDAO billDAO=BillDAO.billDAO;
 }
