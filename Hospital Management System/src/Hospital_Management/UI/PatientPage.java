@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 //import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
+import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Department;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
 import Hospital_Management.MIDDLE_LAYER.DoctorList;
@@ -18,7 +19,7 @@ public class PatientPage {
 
     public void menu(){
         HomePage.printLine();
-        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6.LOGOUT");
+        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6. VIEW BILL\n7.LOGOUT");
         HomePage.printLine();
         
         System.out.println("\nENTER YOUR CHOICE :");
@@ -48,11 +49,17 @@ public class PatientPage {
                 menu();
                 break;
             }
+            case "6":{
+                ViewBill();
+                menu();
+                break;
+            }
             
-            case "6" :{
+            case "7" :{
                user=null;
                 print("\n......LOGGED OUT.....");
-                HomePage.menu();
+                HomePage homePage=new HomePage();
+                homePage.menu();
                 break;
             }
             default :{
@@ -219,7 +226,21 @@ public class PatientPage {
     private void bookByDoctor(){
         Doctor doc= selectDoctor();
         if(doc!=null){
-            LocalDate date=printDate(doc.getSpeciality());
+            //LocalDate date=printDate(doc.getSpeciality());
+            ArrayList<LocalDate> dates=DoctorList.DoctorAvailabilityDate(doc);
+            if(!dates.isEmpty()){
+                for(int i=0;i<dates.size();i++){
+                    System.out.println((i+1)+". "+dates.get(i));
+                }
+                System.out.println("\nSELECT ABOVE DATE :");
+                String choice=Input.getFromUser();
+                 
+                LocalDate date=null;
+                if(Validate.onlyNumber(choice)&&Integer.parseInt(choice)<=dates.size()&&Integer.parseInt(choice)>0){
+                    date=dates.get(Integer.parseInt(choice)-1);
+                }
+               
+
             if(date!=null){
                 int slot=selectSlot(doc, date);
                 if(slot>0){
@@ -231,6 +252,10 @@ public class PatientPage {
             System.out.println("\nInvalid Input");
             }
         }
+        else{
+            System.out.println("\nSORRY...!!! \n DOCTOR WILL NOT AVAILABLE FOR 7 DAYS");
+        }
+    }
     }
 
     private void bookByDepartment(){
@@ -423,7 +448,7 @@ public class PatientPage {
         else{
 
             for(int i=0;i<appointlist.size();i++){
-                print((i+1)+". Doctor ID : "+appointlist.get(i).getDoctorId()+" Time : "+appointlist.get(i).getTime());
+                print("\n"+(i+1)+" Name :"+DoctorList.get(appointlist.get(i).getDoctorId())+". Doctor ID : "+appointlist.get(i).getDoctorId()+" Time : "+appointlist.get(i).getTime());
             }
 
             print("\nSELECT CHOICE TO CANCEL THAT APPOINTMENT");
@@ -455,7 +480,7 @@ public class PatientPage {
         }
         else{
             for(int i=0;i<doctors.size();i++){
-                System.out.println((i+1)+". "+doctors.get(i).getName()+" Department :"+doctors.get(i).getSpeciality());
+                System.out.println((i+1)+". "+doctors.get(i).getName()+" ID : "+doctors.get(i).getId()+" Department : "+doctors.get(i).getSpeciality());
             }
 
             System.out.println("\nENTER YOUR CHOICE :");
@@ -520,6 +545,119 @@ public class PatientPage {
         print("\nTreatement Provided :"+report.getTreatementProvided());
         print("\nMedicine Prescribed :"+report.getMedicinePrescribed());
         HomePage.printLine();
+    }
+
+    private void ViewBill(){
+        System.out.println("\n1. VIEW ALL BILL\n2. VIEW PENDING \n\nOR \nPRESS ANY KEY TO EXIT");
+        String choice=Input.getFromUser();
+        switch(choice){
+            case "1":{
+                allBills();
+                break;
+            }
+            case "2":{
+                viewPendingBill();
+                break;
+            }
+            default:{
+                System.out.println("\nTHANK YOU");
+            }
+        }
+
+    }
+
+    private void allBills(){
+        ArrayList<Bill> bills=user.viewBill();
+        
+        if(bills.isEmpty()){
+            System.out.println("\nNO BILL HISTORY AVAILABLE");
+        }
+        else{
+            for(int i=0;i<bills.size();i++){
+                Bill bill=bills.get(i);
+                String s;
+
+                if(bill.status==true){
+                s="PAID";
+                }
+                else{
+                    s="PENDING";
+                }
+
+                System.out.println((i+1)+". date : "+bill.date+" total amount : "+bill.total+" status : "+s);
+            }
+        }
+    }
+
+    private void viewPendingBill(){
+        ArrayList<Bill> bills=user.viewBill();
+        ArrayList<Bill> temp=new ArrayList<>();
+
+        if(!bills.isEmpty()){
+            for(Bill bill:bills){
+                if(bill.status==false){
+                    temp.add(bill);
+                }
+            }
+        }
+        if(!temp.isEmpty()){
+            System.out.println("\nPENDING BILLS");
+            for(int i=0;i<temp.size();i++){
+                Bill b=temp.get(i);
+                System.out.println((i+1)+". Date: "+b.date+" Total fees :"+b.total);
+            }
+            String choice=Input.getFromUser();
+
+            if(Validate.onlyNumber(choice)&&Integer.parseInt(choice)<=temp.size()&&Integer.parseInt(choice)>0){
+               Bill bill=temp.get(Integer.parseInt(choice)-1);
+               viewBill(bill);
+               
+            }
+            else{
+                System.out.println("\nInvalid Input");
+            }
+        }
+        else{
+            System.out.println("\nHurray....!!!\n\nNO PENDING BILLS TO PAY");
+        }
+
+
+    }
+
+    private void viewBill(Bill bill){
+        print("\n----------------------------- BILL -----------------------------");
+        print("\n\nBill id           : "+bill.billId);
+        print("\nPatient Id        :"+bill.patientId);
+        print("\nGenerated on      :"+bill.billGeneratedOn);
+        print("\nGenerated by      : "+bill.billGivenBy);
+        print("\nConsultant fees   :"+bill.ConsultantFees+"/-");
+        print("\nRoom fees         :"+bill.roomFees+"/-");
+        print("\nMedicine fees     :"+bill.MedicineFees+"/-");
+        print("\n================================================================");
+        print("\nTotal fees        : Rs."+bill.total+"/- Only");
+        print("\n================================================================");
+        payBill(bill);
+    }
+
+    private void payBill(Bill bill){
+        System.out.println("\nPRESS ANY KEY TO EXIT \n1.PAY BILL ");
+        String input=Input.getFromUser();
+        if(input.equals("1")){
+             payementMode(bill);
+        }
+        else{
+            System.out.println("\nThank You...");
+        }
+    }
+
+    private void payementMode(Bill bill){
+        System.out.println("\nCHOOSE YOUR PAYEMENT TYPE\n1. NET BANKING\n2. GPAY\n3. CARD\n4. EXIT");
+        String input=Input.getFromUser();
+        if(input.equals("1")||input.equals("2")||input.equals("3")){
+            bill.status=true;
+            System.out.println("\nPAYEMENT SUCCESSFULL\nTHANK YOU");
+        }
+
     }
 
 

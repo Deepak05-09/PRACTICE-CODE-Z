@@ -42,7 +42,7 @@ public class BillDAO {
             ArrayList<Bill> list=bi;
             for(Bill b:list){
                if(b.patientId.equals(patientId)){
-                list.add(b);
+                temp.add(b);
                }
             }
         }

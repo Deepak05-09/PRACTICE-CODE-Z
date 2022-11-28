@@ -28,7 +28,8 @@ public class DoctorPage {
             {  
                user=null;
                print("\n......THANK YOU.....");
-               HomePage.menu();
+               HomePage homePage=new HomePage();
+                  homePage.menu();
                break;
             }
 

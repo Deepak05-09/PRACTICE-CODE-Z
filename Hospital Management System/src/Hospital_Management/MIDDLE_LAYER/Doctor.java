@@ -39,11 +39,6 @@ public class Doctor extends Employee
         appointments=new HashMap<>();
     }
 
-    public static Doctor doc=new Doctor("Deepak", "9984362576", null, 27, Sex.MALE, "doctor@gmail.com", "address", "edu ca ti on", Department.NEUROLOGIST, "Doctor123");
-    public static Doctor doc2=new Doctor("Dharshu", "6396370162", null, 28, Sex.FEMALE, "dharsu@gmail.com", "address", "edu ca ti on", Department.ONCOLOGIST, "Doctor123");
-    public static Doctor doc3=new Doctor("Deva", "9034762798", null, 40, Sex.MALE, "deva@gmail.com", "address", "edu ca ti on", Department.DENTIST, "Doctor123");
-    public static Doctor doc4=new Doctor("Kaviya", "9443661043", null, 33, Sex.FEMALE, "kaviya@gmail.com", "address", "edu ca ti on", Department.SPORTS_MEDICINE, "Doctor123");
-    public static Doctor doc5=new Doctor("Ram", "9563986498", null, 45, Sex.MALE, "ram@gmail.com", "address", "edu ca ti on", Department.PSYCHIATRIST, "Doctor123");
 
 
     public void setSpeciality(Department speciality){
@@ -56,13 +51,17 @@ public class Doctor extends Employee
 
     public void setNonAvailable(LocalDate date){
        
-        ArrayList<Doctor> list=doctorDAO.getAvailableDoctors(date);
-        if(list!=null){
-        list.remove(this);
+        ArrayList<Doctor> list=new ArrayList<>();
+        
+            for(Doctor doctor :doctorDAO.getAvailableDoctors(date)){
+                if(!doctor.equals(this)){
+                    list.add(doctor);
+                }
+            }
+
         doctorDAO.setDoctorAvailability(date, list);
         }
         
-    }
 
     public void generatReport(String patientId,String description,String treatementProvided,String medicine)
     {   

@@ -7,7 +7,7 @@ import Hospital_Management.MIDDLE_LAYER.Register;
 
 public class HomePage {
    
-   public static void start()
+   public  void start()
    {
       print("\n******* WELCOME *******\n");
       menu();
@@ -15,7 +15,7 @@ public class HomePage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   static void menu()
+    void menu()
    {
       print("\nplease select below options\n\n1. LOGIN\n2. REGISTER\n3. EXIT");
       printLine();
@@ -33,7 +33,7 @@ public class HomePage {
    }
 
 
-   static void login()
+    void login()
    {
       Login login=new Login();
       print("\nENTER YOUR ID :");
@@ -63,7 +63,7 @@ public class HomePage {
 
    }
 
-   private static void register(){
+   private  void register(){
         
         Register register=new Register();
         print("\nEnter Username to create an Account");
@@ -85,7 +85,7 @@ public class HomePage {
             }
             default :{
                print("Invalid option...");
-               HomePage.menu();
+               menu();
             }
           }
 
@@ -96,7 +96,7 @@ public class HomePage {
         }
    }
 
-   private static void oldPatient(String id,String password,Register register){
+   private  void oldPatient(String id,String password,Register register){
 
       print("Enter your Patient Id :");
       String patiendId=Input.getFromUser();
@@ -105,13 +105,13 @@ public class HomePage {
          if(register.isIdConnectedToAcc(patiendId)){
 
             print("\nOops....It seems that your Patient Id is Already Connected to an Account");
-            HomePage.menu();
+            menu();
          }
          else{
 
             register.create(id, password, patiendId);
             print("\nAccount restored successfully...\n\nPLEASE LOGIN TO USE YOUR ACCOUNT");
-            HomePage.menu();
+            menu();
          }
       }
       else{
@@ -123,16 +123,16 @@ public class HomePage {
             }
             default :{
                print("\nThank You");
-               HomePage.menu();
+               menu();
             }
          }
       }
    }
 
-   private static void newPatient(String id,String password,Register register){
+   private  void newPatient(String id,String password,Register register){
       register.create(id,password,Input.name(),Input.age(),Input.sex(), Input.bloodGroup(), Input.weight(), Input.height(), Input.ph_no(),Input.allergies());
       print("\nAccount Created Successfully");
-      HomePage.menu();
+      menu();
    }
  //---------------------------------------------------------------------------------------------------------------------------------------//
   
@@ -163,13 +163,13 @@ public class HomePage {
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   private static void passwordIncorrect()
+   private  void passwordIncorrect()
    {
       print("\nYOU HAVE ENTERED WRONG PASSWORD , PLEASE TRY AGAIN\n");
    }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-   private static void accountNotFound()
+   private  void accountNotFound()
    {
       print("\nACCOUNT DOESN'T EXIST\n\nTHANK YOU");
    }

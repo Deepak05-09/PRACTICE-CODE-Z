@@ -7,13 +7,13 @@ import Hospital_Management.DATA_LAYER.BillDAO;
 
 public class Cashier extends Employee 
 {   
-    static int id=2;
+    static int id=1;
     
     
-    Cashier(String name,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
+    public Cashier(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
         setName(name);
-        setId(id);
+        setId("CA"+id++);
         setAge(age);
         setPhnNo(ph_no);
         setDateJoined(LocalDate.now());
@@ -25,7 +25,6 @@ public class Cashier extends Employee
         changePassword(password);
         setRole("Cashier");
     }
-    public static Cashier cashier2=new Cashier("Cashier", "CA1", "6666666666", null, 34, Sex.FEMALE, "cashier@gmail.com", "addressbndnbd", "B.com", "Cashier123");
     
     public Cashier() 
     {

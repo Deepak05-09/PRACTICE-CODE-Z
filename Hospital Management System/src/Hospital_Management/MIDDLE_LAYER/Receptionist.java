@@ -10,12 +10,12 @@ import Hospital_Management.UI.Input;
 
 public class Receptionist extends Employee 
 {   
-    static int id=2;
+    static int id=1;
 
 
-    Receptionist(String name,String id,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String Password){
+    public Receptionist(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String Password){
         setName(name);
-        setId(id);
+        setId("RE"+id++);
         setAge(age);
         setPhnNo(ph_no);
         setDateJoined(LocalDate.now());
@@ -27,7 +27,6 @@ public class Receptionist extends Employee
         setRole("Receptionist");
         changePassword(Password);
     }
-    public static Receptionist rec=new Receptionist("Rec name", "RE1", "7777777777",null, 34, Sex.FEMALE, "receptionist@gmail.com", "rec address", "12th", "Receptionist123");
    
 
     public void addPatient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
@@ -38,19 +37,11 @@ public class Receptionist extends Employee
             patientDAO.add(patient);
         }
     }
-    
-   
-
-    // public Patient search(String patientid)
-    // {   
-    //     return patientDAO.getPatient(patientid);
-    // }
 
     public ArrayList<Patient> search(String search){
         return patientDAO.get(search);
     }
 
-    
 
     public void addVisitors()
     {

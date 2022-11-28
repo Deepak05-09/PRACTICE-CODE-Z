@@ -28,7 +28,8 @@ public class ReceptionistPage {
          {
             print("\n......THANK YOU.....");
             user=null;
-            HomePage.menu(); 
+            HomePage homePage=new HomePage();
+            homePage.menu(); 
             break;
          }
 

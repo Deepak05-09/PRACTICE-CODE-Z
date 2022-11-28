@@ -17,7 +17,6 @@ public class Admin extends Employee
      static int id=1;
      
 
-    public static Admin mainAdmin=new Admin("Deepak", "9999999999",  null, 21, Sex.MALE, "admin@gmail.com", "123,Chinniampalayam,Coimbatore", "B.E-ECE", "Admin123");
     
     public Admin(String name ,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
@@ -62,7 +61,7 @@ public class Admin extends Employee
     {
         if(Input.confirmation())
         {
-         Receptionist receptionist=new Receptionist(name,"RE"+Receptionist.id++, ph_no, dob, age, sex, mail, address, education, password);
+         Receptionist receptionist=new Receptionist(name, ph_no, dob, age, sex, mail, address, education, password);
          userDAO.add(new User(receptionist));
          Storage.storage.store(receptionist);
         }
@@ -73,7 +72,7 @@ public class Admin extends Employee
     {
         if(Input.confirmation())
         {
-         Cashier cashier=new Cashier(name,"CA"+Cashier.id++, ph_no, dob, age, sex, mail, address, education, password);
+         Cashier cashier=new Cashier(name, ph_no, dob, age, sex, mail, address, education, password);
          userDAO.add(new User(cashier));
          Storage.storage.store(cashier);
         }

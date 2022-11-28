@@ -2,6 +2,7 @@ package Hospital_Management.DATA_LAYER;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import Hospital_Management.MIDDLE_LAYER.Department;
@@ -22,8 +23,16 @@ public class DoctorDAO {
         Storage.storage.doctorList.put(doctor.getId(), doctor);
     }
 
+    public Collection<Doctor> values(){
+        return Storage.storage.doctorList.values();
+    }
+
     public Doctor get(String id){
         return Storage.storage.doctorList.get(id);
+    }
+
+    public ArrayList<Doctor> getAvailableDoctors(LocalDate date){
+        return Storage.storage.availableDoctors.get(date);
     }
 
     public boolean isExist(String id){
@@ -57,9 +66,10 @@ public class DoctorDAO {
         Storage.storage.availableDoctors.replace(date, doctor);
     }
 
-    public ArrayList<Doctor> getAvailableDoctors(LocalDate date){
-        return Storage.storage.availableDoctors.get(date);
+    public Collection<ArrayList<Doctor>> getAvailableDoctors(){
+       return Storage.storage.availableDoctors.values();
     }
+
 
     public ArrayList<Doctor> getAvailableDoctors(LocalDate date,Department department){
         ArrayList<Doctor> list=new ArrayList<>();

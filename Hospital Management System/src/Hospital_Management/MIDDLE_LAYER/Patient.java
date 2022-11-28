@@ -2,6 +2,7 @@ package Hospital_Management.MIDDLE_LAYER;
 
 import java.util.ArrayList;
 
+import Hospital_Management.DATA_LAYER.BillDAO;
 import Hospital_Management.DATA_LAYER.PatientDAO;
 
 
@@ -26,7 +27,7 @@ public class Patient
        this.password=password;
     }
 
-    Patient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
+    public Patient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
     {
         this.id="PT"+p_id++;
         this.name=name;
@@ -40,14 +41,6 @@ public class Patient
         report=new ArrayList<>();
         password=ph_no;
     }
-   
-   
-
-    public static Patient patient1=new Patient("Guhan", 23, Sex.MALE, BloodGroup.O_POSITIVE, 67, 167, "9999999999", "Nil");
-    public static Patient patient2=new Patient("Naveen", 26, Sex.MALE, BloodGroup.B_POSITIVE, 61, 170, "9876543210", "peanut");
-    public static Patient patient3=new Patient("Nagul", 50, Sex.MALE, BloodGroup.AB_POSITIVE, 80, 187, "8967532864", "Nil");
-    
-
     
     /*-----------------SETTERS--------------------------*/
     public void setName(String name) {
@@ -128,7 +121,11 @@ public class Patient
     public static boolean ispatientExists(String id){
         return patientDAO.isExist(id);
     }
+
+    public ArrayList<Bill> viewBill(){
+        return billDAO.get(id);
+    }
     
     private static PatientDAO patientDAO=PatientDAO.patientDAO;
-
+    private BillDAO billDAO=BillDAO.billDAO;
 }

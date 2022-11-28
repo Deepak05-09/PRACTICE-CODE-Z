@@ -22,7 +22,8 @@ public class CashierPage {
             {
                 print("\n......THANK YOU.....");
                 user=null;
-                HomePage.menu();
+                HomePage homePage=new HomePage();
+                homePage.menu();
                  break;
             } 
 
@@ -262,12 +263,35 @@ public class CashierPage {
          print("\n================================================================");
          print("\nTotal fees        : Rs."+bill.total+"/- Only");
          print("\n================================================================");
+
+         System.out.println("\nUPDATE BILL STATUS\n1. PENDING\n2. PAID");
+         billStatus(bill);
+
       }
       else{
          print("\nOops.....! There is No Patient in that ID");
       }
-
    }
+
+   private void billStatus(Bill bill){
+      switch(Input.getFromUser()){
+         case "1":{
+               bill.status=false;
+               System.out.println("\nUPADATED SUCCESSFULLY");
+               break;
+         }
+         case "2":{
+            bill.status=true;
+            System.out.println("\nUPADATED SUCCESSFULLY");
+            break;
+         }
+         default :{
+            System.out.println("Enter valid Input");
+         }
+      }
+   }
+      
+   
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
        private void print(String string)

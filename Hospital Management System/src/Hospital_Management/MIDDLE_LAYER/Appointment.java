@@ -23,6 +23,7 @@ public class Appointment {
        this.doctorId=doctorId;
        this.time=slot[time];
        this.date=date;
+       Pmbl_no=mbl_no;
     }
 
     public String getPatientName() {

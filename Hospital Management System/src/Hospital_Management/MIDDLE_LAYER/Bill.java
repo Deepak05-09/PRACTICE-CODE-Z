@@ -9,11 +9,13 @@ public class Bill
     public String patientId;
     public LocalDate billGeneratedOn;
     public LocalTime time;
+    public LocalDate date;
     public double roomFees;
     public double ConsultantFees;
     public double MedicineFees;
     public String billGivenBy;
     public double total;
+    public boolean status=false;
     
     static int id=1;
     int n01=(int)Math.random()*100;
@@ -28,6 +30,7 @@ public class Bill
        this.billGivenBy=billGivenBy;
        billGeneratedOn=LocalDate.now();
        time=LocalTime.now();
+       date=LocalDate.now();
        total=roomFees+consultantFees+medicineFees;
     }
 
