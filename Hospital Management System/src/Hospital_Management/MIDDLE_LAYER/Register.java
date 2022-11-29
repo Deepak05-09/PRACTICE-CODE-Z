@@ -26,7 +26,7 @@ public class Register {
         return userDAO.isIdConnected(id);
     }
 
-    private UserDAO userDAO=UserDAO.userDAO;
-    private PatientDAO patientDAO=PatientDAO.patientDAO;
+    private UserDAO userDAO=new UserDAO();
+    private PatientDAO patientDAO=new PatientDAO();
 
 }

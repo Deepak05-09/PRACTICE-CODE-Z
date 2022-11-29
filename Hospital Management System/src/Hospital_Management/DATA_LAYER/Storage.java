@@ -10,19 +10,20 @@ import Hospital_Management.MIDDLE_LAYER.*;
 public class Storage
 {   
    
-     HashMap<String,Admin> adminList;
-     HashMap<String,Receptionist> receptionistList;
-      HashMap<String,Cashier> cashiersList;
-      HashMap<String,Doctor> doctorList;
-    public HashMap<LocalDate,ArrayList<Doctor>> availableDoctors;
-      HashMap<LocalDate,ArrayList<Attendance>> AttendanceReport;
-     HashMap<String,User> userDetails;
-     HashMap<String,Patient> patientList;
-      ArrayList<Visitors> visitorList;
-     HashMap<String,Report> reportsList;
-     HashMap<LocalDate,ArrayList<Appointment>> appointmentList;
-     HashMap<LocalDate,ArrayList<Bill>> billList;
-
+    HashMap<String,Admin> adminList;
+    HashMap<String,Receptionist> receptionistList;
+    HashMap<String,Cashier> cashiersList;
+    HashMap<String,Doctor> doctorList;
+    HashMap<LocalDate,ArrayList<Doctor>> availableDoctors;
+    HashMap<LocalDate,ArrayList<Attendance>> AttendanceReport;
+    HashMap<String,User> userDetails;
+    HashMap<String,Patient> patientList;
+    ArrayList<Visitors> visitorList;
+    HashMap<String,Report> reportsList;
+    HashMap<LocalDate,ArrayList<Appointment>> appointmentList;
+    HashMap<LocalDate,ArrayList<Bill>> billList;
+    
+     
     private Storage(){
        
         adminList=new HashMap<>();
@@ -37,9 +38,8 @@ public class Storage
         AttendanceReport=new HashMap<>();
         reportsList=new HashMap<>();
         billList=new HashMap<>();
-        characterInitialise();
+        characterInitialise();     
         setAvailableDoctors();
-        
     }
 
     public static Storage storage=new Storage();
@@ -234,7 +234,7 @@ public class Storage
         adminList.put(admin.getId(), admin);
         userDetails.put(admin.getMail(),new User(admin));
 
-        Cashier cashier=new Cashier("Cashier", "6666666666", null, 34, Sex.FEMALE, "cashier@gmail.com", "addressbndnbd", "B.com", "Cashier123");
+        Cashier cashier=new Cashier("Cashier", "6666666666", null, 37, Sex.FEMALE, "cashier@gmail.com", "addressbndnbd", "B.com", "Cashier123");
         cashiersList.put(cashier.getId(), cashier);
         userDetails.put(cashier.getMail(), new User(cashier));
 

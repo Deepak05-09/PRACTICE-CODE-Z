@@ -6,17 +6,15 @@ import java.util.ArrayList;
 
 import Hospital_Management.MIDDLE_LAYER.Appointment;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
+import Hospital_Management.MIDDLE_LAYER.Slot;
 
 public class AppointmentDAO {
     
    
 
-    private AppointmentDAO(){
+    public AppointmentDAO(){
        
     }
-
-    public static AppointmentDAO appointmentDAO=new AppointmentDAO();
-
 
     public void add(Appointment appointment){
         ArrayList<Appointment> list= Storage.storage.appointmentList.get(appointment.getDate());
@@ -78,10 +76,11 @@ public class AppointmentDAO {
         Storage.storage.appointmentList.replace(date, list);
 
        Doctor doctor= Storage.storage.doctorList.get(doctorId);
-       Appointment[]slot=doctor.appointments.get(date);
-       for(int i=0;i<Appointment.slot.length;i++){
-             if(Appointment.slot[i].equals(time)){
-                slot[i]=null;
+       Slot[] slot=doctor.ViewAppointment(date);
+       for(int i=0;i<slot.length;i++){
+          String T[]=time.split("-");
+             if(slot[i].startTime.equals(T[0])&&slot[i].endTime.equals(T[1])){
+                slot[i].appointment=null;
                 break;
              }
        }

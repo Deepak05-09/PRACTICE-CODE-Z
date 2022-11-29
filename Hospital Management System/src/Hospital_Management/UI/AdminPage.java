@@ -6,142 +6,149 @@ import java.util.HashMap;
 
 import Hospital_Management.MIDDLE_LAYER.Admin;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
+import Hospital_Management.MIDDLE_LAYER.AppointmentList;
 import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
 import Hospital_Management.MIDDLE_LAYER.Employee;
+import Hospital_Management.MIDDLE_LAYER.Login;
+import Hospital_Management.MIDDLE_LAYER.Slot;
 
 
 
 public class AdminPage {
-     
+   
+      private String id;
+      private Admin user;
       
-      public Admin user;
+      public AdminPage(String id,Admin admin){
+      this.id=id;
+      user=admin;
+      }
+      public void adminFeatures()
+      {
+         
+         HomePage.employeefeatures();
 
-       public void adminFeatures()
-        {
-          
-          HomePage.employeefeatures();
+         print("6. ADD ADMIN\n7. ADD DOCTOR\n8. ADD RECEPTIONIST\n9. ADD CASHIER\n10. REMOVE EMPLOYEE\n11. VIEW APPOINTMENT\n12.SEARCH EMPLOYEE\n13.VIEW ALL EMPLOYEE\n14.VIEW BILL");
+         HomePage.printLine();
+         choice();
 
-          print("6. ADD ADMIN\n7. ADD DOCTOR\n8. ADD RECEPTIONIST\n9. ADD CASHIER\n10. REMOVE EMPLOYEE\n11. VIEW APPOINTMENT\n12.SEARCH EMPLOYEE\n13.VIEW ALL EMPLOYEE\n14.VIEW BILL");
-          HomePage.printLine();
-          choice();
-
-           switch(Input.getFromUser())
-           {
-              case "1":
-              {
+         switch(input.getFromUser())
+         {
+            case "1":
+            {
                   print("\n......THANK YOU.....");
                   user=null;
                   HomePage homePage=new HomePage();
                   homePage.menu();
                   break;
-              } 
+            } 
 
-             case "2":
-             {
+            case "2":
+            {
                   checkIn();
                   adminFeatures();
                   break;
-             }
+            }
 
-             case "3":
-             {
+            case "3":
+            {
                   checkOut();
                   adminFeatures();
                   break;
-             }
+            }
 
-             case "4":
-             {
+            case "4":
+            {
                   ViewProfile();
                   break;
-             }
+            }
 
-             case "5" :
-             {
+            case "5" :
+            {
                   changePassword();
                   adminFeatures();
                   break;
-             }
+            }
 
-              case "6":
-              {
-                 user.createNewAdmin(Input.name(),Input.ph_no(),Input.dateOfBirth(),Input.employeeAge(),Input.sex(),Input.mail(),Input.address(),Input.education(),Input.password());
+            case "6":
+            {
+               user.createNewAdmin(input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.password());
                   adminFeatures();
                   break;
-              }
+            }
 
-             case  "7":
-             {
-                 user.addDoctor(Input.name(),Input.ph_no(),Input.dateOfBirth(),Input.employeeAge(),Input.sex(),Input.mail(),Input.address(),Input.education(),Input.speciality(),Input.password()); 
+            case  "7":
+            {
+               user.addDoctor( input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.speciality(), input.password()); 
                   adminFeatures();
                   break;
-             }
+            }
 
-             case  "8":
-             {
-                 user.addReceptionist(Input.name(),Input.ph_no(),Input.dateOfBirth(),Input.employeeAge(),Input.sex(),Input.mail(),Input.address(),Input.education(),Input.password());
+            case  "8":
+            {
+               user.addReceptionist( input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.password());
                   adminFeatures();
                   break;
-             }
+            }
 
-             case  "9":
-             {
-                 user.addCashier(Input.name(),Input.ph_no(),Input.dateOfBirth(),Input.employeeAge(),Input.sex(),Input.mail(),Input.address(),Input.education(),Input.password());
+            case  "9":
+            {
+               user.addCashier( input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.password());
                   adminFeatures();
-             }
+            }
 
-             case  "10":
-             {
+            case  "10":
+            {
                   if(viewAll())
                   {
                   print("\nENTER EMPLOYEE ID TO REMOVE");
-                  print(user.removeEmployee(Input.getFromUser()));
+                  print(user.removeEmployee( input.getFromUser()));
                   }
                   adminFeatures();
                   break;
-             }
+            }
 
-             case  "11":
-             {
+            case  "11":
+            {
                   viewAppointments();
                   break;
-             }
+            }
 
-             case  "12":
-             {
+            case  "12":
+            {
                   search();
                   adminFeatures();
                   break;
-             }
+            }
 
-             case "13":
-             {
-                viewAll();
-                adminFeatures();
-                break;
-             }
+            case "13":
+            {
+               viewAll();
+               adminFeatures();
+               break;
+            }
 
-             case "14" :
-             {
-                viewBill();
-                adminFeatures();
-                break;
-             }
+            case "14" :
+            {
+               viewBill();
+               adminFeatures();
+               break;
+            }
             
-             default : 
-             {
+            default : 
+            {
                   print("\nInvalid choice......!");
                   adminFeatures();
-             }
+            }
 
-           }
+         }
 
-        }
+      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private  void checkIn()
-       {
+      private  void checkIn()
+      {
          if(user.checkIn())
          {
             print("\nSuccessfully Checked In\n");
@@ -151,11 +158,11 @@ public class AdminPage {
                print("\nYOU HAVE ALREADY CHECKED IN\n");
          }
 
-       }
- //---------------------------------------------------------------------------------------------------------------------------------------//
+      }
+//---------------------------------------------------------------------------------------------------------------------------------------//
       
-       private  void checkOut()
-       {
+      private  void checkOut()
+      {
          if(user.checkOut())
          {
             print("\nSuccessfully Checked Out");
@@ -165,17 +172,19 @@ public class AdminPage {
             print("\nplease Check In to Check Out");
          }
 
-       }
+      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
       
       private  void changePassword(){
+         Login login=new Login();
          print("\nEnter Your Current Password : ");
-         if(user.getPassword().equals(Input.getFromUser())){
+         if(login.isPasswordCorrect(id, input.getFromUser())){
             print("\nEnter new Password :");
-            String password=Input.password();
+            String password= input.password();
             print("\nRe-Type Your new Password :");
-            if(password.equals(Input.getFromUser())){
-               user.changePassword(password);
+            if(password.equals( input.getFromUser())){
+            
+               login.changePassword(id, password);
                print("\nPassWord Changed Successfully");
             }
             else{
@@ -190,10 +199,10 @@ public class AdminPage {
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private  void search()
-       {
+      private  void search()
+      {
          print("\nENTER EMPLOYEE ID TO SEARCH : \n");
-         Employee employee=user.viewEmployee(Input.getFromUser());
+         Employee employee=user.viewEmployee( input.getFromUser());
 
          if(employee==null)
          {
@@ -204,27 +213,27 @@ public class AdminPage {
             print(employee.toString());
          }
 
-       }
+      }
 
 
-       private  boolean viewAll()
-       {
+      private  boolean viewAll()
+      {
          ArrayList<Employee> list=user.viewAll();
-                if(list.isEmpty()){
+               if(list.isEmpty()){
                   print("\nNO EMPLOYEE");
                   return false;
-                }
-                else{
+               }
+               else{
                   for(Employee employee:list)
                   {
                      print(employee.toString());
                   }
                   return true;
-                }
-       }
+               }
+      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-  
-       private  void ViewProfile()
+
+      private  void ViewProfile()
       {
       HomePage.printLine();
       print("\n01. Name            : "+user.getName());
@@ -241,7 +250,7 @@ public class AdminPage {
       print("\nSELECT\n\n1. EDIT PROFILE\n2. BACK");
       HomePage.printLine();
 
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "1":editProfile();break;
 
@@ -256,13 +265,13 @@ public class AdminPage {
    {  print("\n\"ID, Date Joined & Role\" Cannot be Edited");
       print("\nSELECT OPTION FROM PROFILE TO EDIT  OR PRESS \"0\" TO BACK");
 
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "0":adminFeatures();break;
 
          case "1":
          {
-           user.setName(Input.name());
+         user.setName( input.name());
             print("\nName Updated Successfully....");
             editProfile();
             break;
@@ -277,7 +286,7 @@ public class AdminPage {
 
          case "3":
          {
-           user.setMail(Input.mail());
+         user.setMail( input.mail());
             print("\nMail Updated Successfully....");
             editProfile();
             break;
@@ -285,7 +294,7 @@ public class AdminPage {
 
          case "4":
          {
-           user.setPhnNo(Input.ph_no());
+         user.setPhnNo( input.ph_no());
             print("\nPhone number Updated Successfully....");
             editProfile();
             break;
@@ -293,15 +302,15 @@ public class AdminPage {
 
          case "5":
          {
-           user.setDateOfBirth(Input.dateOfBirth());
+         user.setDateOfBirth( input.dateOfBirth());
             print("\nDate.Of.Birth Updated Successfully....");
             editProfile();
             break;
          }
-          
+         
          case "6":
          {
-           user.setAge(Input.employeeAge());;
+         user.setAge( input.employeeAge());;
             print("\nAge Updated Successfully....");
             editProfile();
             break;
@@ -309,7 +318,7 @@ public class AdminPage {
 
          case "7":
          {
-           user.setSex(Input.sex());;
+         user.setSex( input.sex());;
             print("\nGender Updated Successfully....");
             editProfile();
             break;
@@ -331,7 +340,7 @@ public class AdminPage {
 
          case "10":
          {
-           user.setAddress(Input.address());;
+         user.setAddress( input.address());;
             print("\nAddress Updated Successfully....");
             editProfile();
             break;
@@ -339,7 +348,7 @@ public class AdminPage {
 
          case "11":
          {
-           user.setEducation(Input.education());;
+         user.setEducation( input.education());;
             print("\nEducation Updated Successfully....");
             editProfile();
             break;
@@ -353,7 +362,7 @@ public class AdminPage {
       print("\n----------------- VIEW APPOINTMENTS --------------------");
       print("\n1.DATE\n2.DOCTOR\n3.BACK");
       choice();
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "1" :
          {
@@ -369,8 +378,8 @@ public class AdminPage {
          }
          case "3":
          {
-             adminFeatures();
-             break;
+            adminFeatures();
+            break;
          }
          default :
          {
@@ -381,28 +390,28 @@ public class AdminPage {
    }
 
    private  void searchByDate(){
-        print("\n------ Enter The Date -------");
+      print("\n------ Enter The Date -------");
       
-       LocalDate.now();
-       LocalDate date=LocalDate.of(Input.year(), Input.month(), Input.date());
-        ArrayList<Appointment> appointment=Appointment.getAppointment(date);
+      LocalDate.now();
+      LocalDate date=LocalDate.of( input.year(),  input.month(),  input.date());
+      ArrayList<Appointment> appointment=appointmentList.getAppointment(date);
 
-       if(appointment==null||appointment.isEmpty())
-       {
+      if(appointment==null||appointment.isEmpty())
+      {
          print("\nNO APPOINTMENTS ON THAT DAY");
          viewAppointments();
-       }
-       else{
-           System.out.printf("%-10s %-10s %-10s %-10s/n","DOCTOR-ID","PATIENT-NAME","MOBILE ","TIME");
-           for(int i=0;i<appointment.size();i++){
+      }
+      else{
+         System.out.printf("%-10s %-10s %-10s %-10s/n","DOCTOR-ID","PATIENT-NAME","MOBILE ","TIME");
+         for(int i=0;i<appointment.size();i++){
                System.out.printf(" %-10s %-10s %-10s/n ",appointment.get(i).getDoctorId(),appointment.get(i).getPatientName(),appointment.get(i).getPmbl_no(),appointment.get(i).getTime());
-           }
-       }
+         }
+      }
    }
 
    private  void searchByDoctor(){
       print("\nENTER DOCTOR NAME :");
-         String name=Input.getFromUser();
+         String name= input.getFromUser();
          ArrayList<Doctor> list=user.searchDoctor(name);
 
          if(list==null||list.isEmpty()){
@@ -418,29 +427,29 @@ public class AdminPage {
                System.out.printf("%-20s %-20s %-20s","\n"+(i+1)+". ",doc.getName(),doc.getId(),doc.getSpeciality());
             }
 
-            String choice=Input.getFromUser();
+            String choice= input.getFromUser();
 
-            if(!Validate.onlyNumber(choice)&&Integer.parseInt(choice)>=list.size()){
+            if(!  validate.onlyNumber(choice)&&Integer.parseInt(choice)>=list.size()){
                print("\nEnter Valid choice :");
                searchByDoctor();
             }
             else{
                Doctor doctor=list.get(Integer.parseInt(choice)-1);
-               HashMap<LocalDate, Appointment[]> AppointDate=doctor.viewAppointments();
-          
+               HashMap<LocalDate,Slot[]> AppointDate=doctor.viewAppointments();
+         
                ArrayList<LocalDate> datelist=new ArrayList<>();
-             
+            
                for(int i=0;i<7;i++){
                   LocalDate d=LocalDate.now().plusDays(i);
 
-                 if(AppointDate.containsKey(d))
-                 {
+               if(AppointDate.containsKey(d))
+               {
                      datelist.add(d);
-                 }
+               }
                }
                
                if(datelist.isEmpty()||datelist==null){
-                print("\n No Appointments for 7 days");
+               print("\n No Appointments for 7 days");
                }
                else
                {
@@ -448,17 +457,18 @@ public class AdminPage {
                   for(int i=0;i<datelist.size();i++){
                      print((i+1)+". "+datelist.get(i));
                   }
-                  String choice1=Input.getFromUser();
+                  String choice1= input.getFromUser();
 
-                  if(!Validate.onlyNumber(choice1)&&Integer.parseInt(choice1)>=datelist.size()){
+                  if(!  validate.onlyNumber(choice1)&&Integer.parseInt(choice1)>=datelist.size()){
                      print("\nEnter Valid choice :");
                      viewAppointments();
                   }
                   else{
                      LocalDate date=datelist.get(Integer.parseInt(choice1)-1);
-                     Appointment[] appoint=doctor.ViewAppointment(date);
+                     Slot[] appoint=doctor.ViewAppointment(date);
 
-                     for(Appointment a:appoint){
+                     for(Slot s:appoint){
+                        Appointment a=s.appointment;
                         if(a!=null){
                            print("Patient id : "+a.getPatientName()+" Mobile no :"+a.getPmbl_no()+" Time : "+a.getTime());
                         }
@@ -473,33 +483,33 @@ public class AdminPage {
    }
 
    private void viewBill(){
-       print("\nEnter Patient Id to  view All Bill  ");
-       LocalDate.now();
-       String patientId=Input.getFromUser();
-       ArrayList<Bill> bills=user.viewBill(patientId);
+      print("\nEnter Patient Id to  view All Bill  ");
+      LocalDate.now();
+      String patientId= input.getFromUser();
+      ArrayList<Bill> bills=user.viewBill(patientId);
 
-       if(bills!=null&&!bills.isEmpty()){
-           for(Bill bill:bills){
-              print("\n Date :"+bill.billGeneratedOn+" Time : "+bill.time+" Total fees "+bill.total);
-           }
-       }
-       else{
+      if(bills!=null&&!bills.isEmpty()){
+         for(Bill bill:bills){
+            print("\n Date :"+bill.billGeneratedOn+" Time : "+bill.time+" Total fees "+bill.total);
+         }
+      }
+      else{
          System.out.println("\nNo BIll records Found");
-       }
+      }
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private  void print(String string)
-       {
-        System.out.println(string);
-       }
+      private  void print(String string)
+      {
+      System.out.println(string);
+      }
       
 
-       private  void choice()
-       {
-        print("\nEnter Your Choice :\n");
-       }
-//---------------------------------------------------------------------------------------------------------------------------------------//
+      private  void choice()
+      {
+      print("\nEnter Your Choice :\n");
+      }
 
-       
+      private AppointmentList appointmentList=new AppointmentList();
+      private  Input  input=new Input();
+      private Validate validate=new Validate();
 }

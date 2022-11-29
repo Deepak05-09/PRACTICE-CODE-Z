@@ -1,20 +1,20 @@
 package Hospital_Management.MIDDLE_LAYER;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 import Hospital_Management.DATA_LAYER.DoctorDAO;
 
 public class DoctorList {
     
 
-     public static Doctor get(String doctorId){
+     public  Doctor get(String doctorId){
         return doctorDAO.get(doctorId);
      }
      
-     public static ArrayList<Doctor> get(LocalDate date,Department department){
+     public  ArrayList<Doctor> get(LocalDate date,Department department){
       ArrayList<Doctor> list=new ArrayList<>();
 
       for(Doctor doctor : doctorDAO.getAvailableDoctors(date)){
@@ -25,7 +25,7 @@ public class DoctorList {
       return list;
      }
      
-     public static ArrayList<Doctor> searchDoctor(String name){
+     public  ArrayList<Doctor> searchDoctor(String name){
 
       ArrayList<Doctor> list=new ArrayList<>(doctorDAO.values());
       ArrayList<Doctor> temp=new ArrayList<>();
@@ -40,7 +40,7 @@ public class DoctorList {
       return temp;
     }
 
-    public static ArrayList<LocalDate> DoctorAvailabilityDate(Doctor doc){
+    public  ArrayList<LocalDate> DocAvailDatePatient(Doctor doc){
         
       ArrayList<LocalDate> list=new ArrayList<>();
        for(int i=0;i<7;i++){
@@ -52,6 +52,19 @@ public class DoctorList {
        return list;
     }
 
+    public  ArrayList<LocalDate> DocAvailDateDoctor(Doctor doc){
+        
+      ArrayList<LocalDate> list=new ArrayList<>();
+       for(int i=7;i<14;i++){
+          ArrayList<Doctor> doctors= doctorDAO.getAvailableDoctors(LocalDate.now().plusDays(i));
+          if(doctors.contains(doc)){
+             list.add(LocalDate.now().plusDays(i));
+          }
+       }
+       return list;
+    }
+
+
     
-    private static DoctorDAO doctorDAO=DoctorDAO.doctorDAO;
+    private  DoctorDAO doctorDAO=new DoctorDAO();
 }

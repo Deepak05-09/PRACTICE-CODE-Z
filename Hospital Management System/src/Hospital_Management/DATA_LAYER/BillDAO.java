@@ -11,10 +11,10 @@ public class BillDAO {
     
    
 
-    BillDAO(){
+    public BillDAO(){
         
     }
-    public static BillDAO billDAO=new BillDAO();
+    
 
     public HashMap<LocalDate, ArrayList<Bill>> getBillList() {
         return Storage.storage.billList;

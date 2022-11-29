@@ -27,11 +27,11 @@ public class Receptionist extends Employee
         setRole("Receptionist");
         changePassword(Password);
     }
-   
+
 
     public void addPatient(String name,int age,Sex sex,BloodGroup bloodGroup,int weight,int height,String ph_no,String allergy)
     {
-        if(Input.confirmation())
+        if(input.confirmation())
         {
             Patient patient=new Patient(name, age, sex, bloodGroup, weight, height, ph_no,allergy);
             patientDAO.add(patient);
@@ -43,9 +43,9 @@ public class Receptionist extends Employee
     }
 
 
-    public void addVisitors()
+    public void addVisitors(String name,int age,String mbl,String address,String id)
     {
-        Visitors visitor=new Visitors(Input.name(),Input.age(), Input.ph_no(),Input.address(),Input.patientId());
+        Visitors visitor=new Visitors(name, age, mbl, address, id);
         Storage.storage.store(visitor);
     }
 
@@ -61,6 +61,6 @@ public class Receptionist extends Employee
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
 
-    private PatientDAO patientDAO=PatientDAO.patientDAO;
-    
+    private PatientDAO patientDAO=new PatientDAO();
+    private Input input=new Input();
 }

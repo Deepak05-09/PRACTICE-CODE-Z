@@ -21,7 +21,7 @@ public class HomePage {
       printLine();
       print("\nEnter Your Choice :\n");
 
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "1" :login();break;
          case "2" :register();break;
@@ -38,13 +38,13 @@ public class HomePage {
       Login login=new Login();
       print("\nENTER YOUR ID :");
 
-      String id=Input.getFromUser();
+      String id= input.getFromUser();
 
       if(login.isIdExist(id))
       {
          print("\nENTER YOUR PASSWORD : ");
 
-         if(login.isPasswordCorrect(id,Input.getFromUser()))
+         if(login.isPasswordCorrect(id, input.getFromUser()))
          {
             print("\n*...SUCCESSFULLY LOGGED IN *");
             login.login(id);
@@ -67,14 +67,14 @@ public class HomePage {
         
         Register register=new Register();
         print("\nEnter Username to create an Account");
-        String id=Input.getFromUser();
+        String id= input.getFromUser();
 
         if(!register.isIdExist(id)){
           print("\nENTER PASSWORD: ");
-          String password=Input.password();
+          String password= input.password();
           
           print("\nDo you have a patient Id ?\n\n1. YES\n2. NO");
-          switch(Input.getFromUser())
+          switch( input.getFromUser())
           {
             case "1": {
                oldPatient(id, password,register);
@@ -99,7 +99,7 @@ public class HomePage {
    private  void oldPatient(String id,String password,Register register){
 
       print("Enter your Patient Id :");
-      String patiendId=Input.getFromUser();
+      String patiendId= input.getFromUser();
       if(Patient.ispatientExists(patiendId)){
 
          if(register.isIdConnectedToAcc(patiendId)){
@@ -117,7 +117,7 @@ public class HomePage {
       else{
 
          print("No Details Available for that Id\n Do you want to create new one?\n1.YES\n2. NO ");
-         switch(Input.getFromUser()){
+         switch( input.getFromUser()){
             case "1" :{
                newPatient(patiendId, password,register);
             }
@@ -130,49 +130,44 @@ public class HomePage {
    }
 
    private  void newPatient(String id,String password,Register register){
-      register.create(id,password,Input.name(),Input.age(),Input.sex(), Input.bloodGroup(), Input.weight(), Input.height(), Input.ph_no(),Input.allergies());
+      register.create(id,password, input.name(), input.age(), input.sex(),  input.bloodGroup(),  input.weight(),  input.height(),  input.ph_no(), input.allergies());
       print("\nAccount Created Successfully");
       menu();
    }
- //---------------------------------------------------------------------------------------------------------------------------------------//
   
    static void employeefeatures()
    {  
       printLine();
-      print("\n\nMENU\n\nPlease select the below options\n\n1.LOGOUT\n2. CHECKIN\n3. CHECKOUT\n4. VIEW PROFILE\n5. CHANGE PASSWORD");
+      System.out.println("\n\nMENU\n\nPlease select the below options\n\n1.LOGOUT\n2. CHECKIN\n3. CHECKOUT\n4. VIEW PROFILE\n5. CHANGE PASSWORD");
    }
- //---------------------------------------------------------------------------------------------------------------------------------------//
  
-   private static void print(String string)
+   private  void print(String string)
    {
       System.out.println(string);
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
    static void printLine()
    {
       System.out.print("____________________________________________________________________________________\n");
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
-   private static void exit()
+
+   private  void exit()
    {
       print("\n******************** THANK YOU ************************\n\n");
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
    private  void passwordIncorrect()
    {
       print("\nYOU HAVE ENTERED WRONG PASSWORD , PLEASE TRY AGAIN\n");
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
    private  void accountNotFound()
    {
       print("\nACCOUNT DOESN'T EXIST\n\nTHANK YOU");
    }
-//---------------------------------------------------------------------------------------------------------------------------------------//
+
+   private  Input input=new Input();
 
 }

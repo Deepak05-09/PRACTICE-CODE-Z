@@ -45,5 +45,5 @@ public class Cashier extends Employee
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
 
-    private BillDAO billDAO=BillDAO.billDAO;
+    private BillDAO billDAO=new BillDAO();
 }

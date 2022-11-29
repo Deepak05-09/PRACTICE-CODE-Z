@@ -10,15 +10,15 @@ import Hospital_Management.MIDDLE_LAYER.Sex;
 
 public class Input {
     
-    static Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    public static String name()
+    public  String name()
     {
         print("\nEnter Name :\t");
 
         String name=getFromUser();
 
-        if(Validate.name(name))
+        if(  validate.name(name))
         {
             return name;
         }
@@ -31,15 +31,15 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String employeeId()
+    public  String employeeId()
     {
         print("\nEnter employee ID :\n");
 
-       return Input.getFromUser();
+       return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String password()
+    public  String password()
     {
         print("\nPassword must contains at least 8 characters and at most 20 characters");
         print("\nMust contains at least one digit");
@@ -49,7 +49,7 @@ public class Input {
 
         String password=getFromUser();
 
-        if(Validate.password(password))
+        if(  validate.password(password))
         {
             return password;
         }
@@ -61,13 +61,13 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String ph_no()
+    public  String ph_no()
     {
         print("\nEnter Phone Number :");
 
         String ph_no=getFromUser();
 
-        if(Validate.ph_no(ph_no))
+        if(  validate.ph_no(ph_no))
         {
             return ph_no;
         }
@@ -80,7 +80,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static LocalDate dateOfBirth()
+    public  LocalDate dateOfBirth()
     {
         print("\nEnter Date Of Birth :");
         
@@ -89,7 +89,7 @@ public class Input {
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static LocalDate DateJoined()
+    public  LocalDate DateJoined()
     {
         print("\nEnter Date Of Joining :");
         LocalDate.now();
@@ -98,12 +98,12 @@ public class Input {
         return date;
     }
 
-    public static int date(){
+    public  int date(){
 
         print("\nEnter date : ");
-        String date=Input.getFromUser();
+        String date=getFromUser();
 
-        if(Validate.onlyNumber(date)){
+        if(  validate.onlyNumber(date)){
             if(Integer.parseInt(date)<=31&&Integer.parseInt(date)>0){
                 return Integer.parseInt(date);
             }
@@ -118,12 +118,12 @@ public class Input {
         return date();
     }
      
-    public static int month(){
+    public  int month(){
 
         print("Enter Month : ");
-        String month=Input.getFromUser();
+        String month=getFromUser();
 
-        if(Validate.onlyNumber(month)){
+        if(  validate.onlyNumber(month)){
             if(Integer.parseInt(month)<=31&&Integer.parseInt(month)>0){
                 return Integer.parseInt(month);
             }
@@ -137,12 +137,12 @@ public class Input {
         return month();
     }
 
-    public static int year(){
+    public  int year(){
 
         print("Enter Year : ");
-        String year=Input.getFromUser();
+        String year=getFromUser();
 
-        if(Validate.onlyNumber(year)){
+        if(  validate.onlyNumber(year)){
             if(Integer.parseInt(year)<=9999&&Integer.parseInt(year)>0){
                 return Integer.parseInt(year);
             }
@@ -158,13 +158,13 @@ public class Input {
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public  static int employeeAge()
+    public   int employeeAge()
     {
         print("\nEnter Age :");
 
         String age=getFromUser();
 
-        if(Validate.employeeAge(age))
+        if(  validate.employeeAge(age))
         {
             return Integer.parseInt(age);
         }
@@ -177,13 +177,13 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public  static int age()
+    public   int age()
     {
         print("\nEnter Age :");
 
         String age=getFromUser();
 
-        if(Validate.patientAge(age))
+        if(  validate.patientAge(age))
         {
             return Integer.parseInt(age);
         }
@@ -196,7 +196,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static Sex sex()
+    public  Sex sex()
     {
         print("\nSelect Sex :");
 
@@ -223,13 +223,13 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String mail()
+    public  String mail()
     {
         print("\nEnter Mail Id :");
 
         String mail=getFromUser();
 
-        if(Validate.email(mail))
+        if(  validate.email(mail))
         {
             return mail;
         }
@@ -242,7 +242,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String address()
+    public  String address()
     {
         print("\n----Enter Address---");
         String address=doorNo()+", "+addressLine1()+", "+city()+", "+state()+", "+country()+" Zip code : "+postCode();
@@ -250,30 +250,30 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
     
-    private static String doorNo(){
+    private  String doorNo(){
         print("\nEnter door no :");
        return getFromUser();
     }
-    private static String addressLine1(){
+    private  String addressLine1(){
         print("\nEnter Address First Line :");
         return getFromUser();
     }
-    private static String city(){
+    private  String city(){
         print("\nEnter City : ");
         return getFromUser();
     }
-    private static String state(){
+    private  String state(){
         print("\nEnter state : ");
         return getFromUser();
     }
-    private static String country(){
+    private  String country(){
         print("\nEnter Country : ");
         return getFromUser();
     }
-    private static String postCode(){
+    private  String postCode(){
         print("\nEnter Zip Code :");
         String code=getFromUser();
-        if(Validate.onlyNumber(code)&&code.length()==6){
+        if(  validate.onlyNumber(code)&&code.length()==6){
             return code;
         }
         else{
@@ -287,7 +287,7 @@ public class Input {
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String  education()
+    public  String  education()
     {
         print("\nEnter Education Details :");
         String edu=getFromUser();
@@ -296,7 +296,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static Department speciality()
+    public  Department speciality()
     {
         print("\nChoose Doctor's Speciality ");
         for(int i=0;i<Department.values().length;i++){
@@ -304,7 +304,7 @@ public class Input {
         }
         String speciality=getFromUser();
 
-        if(Validate.onlyNumber(speciality)&&Integer.parseInt(speciality)!=0&&Integer.parseInt(speciality)<=Department.values().length)
+        if(  validate.onlyNumber(speciality)&&Integer.parseInt(speciality)!=0&&Integer.parseInt(speciality)<=Department.values().length)
         {
             return Department.values()[Integer.parseInt(speciality)-1];
         }
@@ -317,7 +317,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String patientId()
+    public  String patientId()
     {
         print("\nEnter Patient's Id :");
 
@@ -325,21 +325,21 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String doctorId()
+    public  String doctorId()
     {
         print("\nEnter Doctor's's Id to book appoinment:");
 
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-    public static String prescribe()
+    public  String prescribe()
     {
         print("Prescribe Medicine(s) :");
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String time()
+    public  String time()
     {
         print("Enter Time to book appointment");
 
@@ -347,12 +347,12 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static double roomFees()
+    public  double roomFees()
     {
         print("\nEnter Room Fees :");
         String fees=getFromUser();
 
-        if(Validate.onlyNumber(fees))
+        if(  validate.onlyNumber(fees))
         {
             return Double.parseDouble(fees);
         }
@@ -365,12 +365,12 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static double consultantFees()
+    public  double consultantFees()
     {
         print("\nEnter Consultant Fees :");
         String fees=getFromUser();
 
-        if(Validate.onlyNumber(fees))
+        if(  validate.onlyNumber(fees))
         {
             return Double.parseDouble(fees);
         }
@@ -382,12 +382,12 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static double medicineFees()
+    public  double medicineFees()
     {
         print("\nEnter Medicine Fees :");
         String fees=getFromUser();
 
-        if(Validate.onlyNumber(fees))
+        if(  validate.onlyNumber(fees))
         {
             return Double.parseDouble(fees);
         }
@@ -400,7 +400,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static BloodGroup bloodGroup()
+    public  BloodGroup bloodGroup()
     {
         print("\nSelect Blood Group :");
 
@@ -438,7 +438,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static int height()
+    public  int height()
     {
         print("\nEnter Height :");
         String height=getFromUser();
@@ -455,7 +455,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static int weight()
+    public  int weight()
     {
         print("\nEnter weight :");
         String weight=getFromUser();
@@ -472,35 +472,35 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String allergies()
+    public  String allergies()
     {
         print("\nEnter Allergies :");
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String reason()
+    public  String reason()
     {
         print("\nEnter Reason :");
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String treatementNeeded()
+    public  String treatementNeeded()
     {
         print("\nEnter Treatment(s) Needed :");
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String treatementProvided()
+    public  String treatementProvided()
     {
         print("\nEnter Treatment(s) Provided :");
         return getFromUser();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static Boolean needRoom()
+    public  Boolean needRoom()
     {
         print("\nDoes Patient Need To Admit ?\nPRESS\n1--->YES\n2--->NO");
 
@@ -518,7 +518,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static Boolean confirmation()
+    public  Boolean confirmation()
     {
         print ("\nplease confirm to Save\nPRESS\n1--->YES\n2--->NO");
 
@@ -535,7 +535,7 @@ public class Input {
         return confirmation();
     }
 
-    public static Boolean CancelAppointment()
+    public  Boolean CancelAppointment()
     {
         print ("\nplease confirm Cancel Appointment\nPRESS\n1--->YES\n2--->NO");
 
@@ -553,16 +553,16 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public  static void print(String string)
+    public   void print(String string)
     {
         System.out.println(string);
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-    public static String getFromUser(){
+    public String getFromUser(){
             return scanner.nextLine();
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-  
+  private Validate validate=new Validate();
     
 }

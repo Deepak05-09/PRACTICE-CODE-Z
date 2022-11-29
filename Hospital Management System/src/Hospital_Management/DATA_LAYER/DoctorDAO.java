@@ -13,11 +13,11 @@ public class DoctorDAO {
    
     
 
-    DoctorDAO(){
+    public DoctorDAO(){
 
     }
 
-    public static DoctorDAO doctorDAO=new DoctorDAO();
+    
 
     public void add(Doctor doctor){
         Storage.storage.doctorList.put(doctor.getId(), doctor);

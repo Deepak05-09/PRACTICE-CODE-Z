@@ -13,8 +13,7 @@ public class PatientDAO {
        
     }
 
-    public static PatientDAO patientDAO=new PatientDAO();
-
+    
     public void add(Patient patient){
         Storage.storage.patientList.put(patient.getId(), patient);
     }

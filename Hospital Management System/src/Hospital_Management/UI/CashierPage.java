@@ -3,120 +3,128 @@ package Hospital_Management.UI;
 
 import Hospital_Management.MIDDLE_LAYER.Bill;
 import Hospital_Management.MIDDLE_LAYER.Cashier;
+import Hospital_Management.MIDDLE_LAYER.Login;
 import Hospital_Management.MIDDLE_LAYER.Patient;
 
 
 public class CashierPage {
+   
+   private String id;
+   private Cashier user;
+   
+   public CashierPage(String id,Cashier cashier){
+      this.id=id;
+      user=cashier;
+   }
+   public void cashierFeatures(){
 
-   public Cashier user;
+      HomePage.employeefeatures();
+      print("6. GENERATE BILL\n");
+      HomePage.printLine();
 
-    public void cashierFeatures(){
-
-        HomePage.employeefeatures();
-        print("6. GENERATE BILL\n");
-        HomePage.printLine();
-
-        switch(Input.getFromUser())
-        {
+      switch( input.getFromUser())
+      {
             case "1":
             {
-                print("\n......THANK YOU.....");
-                user=null;
-                HomePage homePage=new HomePage();
-                homePage.menu();
-                 break;
+               print("\n......THANK YOU.....");
+               user=null;
+               HomePage homePage=new HomePage();
+               homePage.menu();
+               break;
             } 
 
             case "2":
             {
-                checkIn();
-                cashierFeatures();
-                break;
+               checkIn();
+               cashierFeatures();
+               break;
             }
             
             case "3":
             {
-                checkOut();
-                cashierFeatures();
-                break;
+               checkOut();
+               cashierFeatures();
+               break;
             }
 
             case "4":
             {
-                ViewProfile(); 
-                cashierFeatures();
-                break;
+               ViewProfile(); 
+               cashierFeatures();
+               break;
             }
             
             case "5" :
-             {
+            {
                   changePassword();
                   cashierFeatures();
                   break;
-             }
+            }
             case "6":
             {
-                printBill();
-                cashierFeatures();
-                break;
+               printBill();
+               cashierFeatures();
+               break;
             }
 
             default : {
                print("Invalid Choice");
                cashierFeatures();
             }
-        }
+      }
 
-       }
+      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private void checkIn()
-       {
-        if(user.checkIn())
-        {
-           print("\nSuccessfully Checked In\n");
-        }
-        else
-        {
-           print("\nYOU HAVE ALREADY CHECKED IN\n");
-        }
+      private void checkIn()
+      {
+      if(user.checkIn())
+      {
+         print("\nSuccessfully Checked In\n");
+      }
+      else
+      {
+         print("\nYOU HAVE ALREADY CHECKED IN\n");
+      }
 
-       }
+      }
 //---------------------------------------------------------------------------------------------------------------------------------------//
-    
+   
       private void checkOut()
       {
-        if(user.checkOut())
-        {
-           print("\nSuccessfully Checked Out");
-        }
-        else
-        {
-              print("\nplease Check In to Check Out");
-        }
+      if(user.checkOut())
+      {
+         print("\nSuccessfully Checked Out");
+      }
+      else
+      {
+            print("\nplease Check In to Check Out");
+      }
 
       }
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-      private void changePassword(){
-         print("\nEnter Your Current Password : ");
-         if(user.getPassword().equals(Input.getFromUser())){
-            print("\nEnter new Password :");
-            String password=Input.password();
-            print("\nRe-Type Your new Password :");
-            if(password.equals(Input.getFromUser())){
-               user.changePassword(password);
-               print("\nPassWord Changed Successfully");
-            }
-            else{
-               print("\nPassword Doesn't Match");
-            }
-
-         }
-         else{
-            print("\nPassword is InCorrect");
-         }
+private  void changePassword(){
+   Login login=new Login();
+   print("\nEnter Your Current Password : ");
+   if(login.isPasswordCorrect(id, input.getFromUser())){
+      print("\nEnter new Password :");
+      String password= input.password();
+      print("\nRe-Type Your new Password :");
+      if(password.equals( input.getFromUser())){
+      
+         login.changePassword(id, password);
+         print("\nPassWord Changed Successfully");
       }
+      else{
+         print("\nPassword Doesn't Match");
+      }
+
+   }
+   else{
+      print("\nPassword is InCorrect");
+   }
+}
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
       private void ViewProfile(){
@@ -135,7 +143,7 @@ public class CashierPage {
       print("\nSELECT\n\n1. EDIT PROFILE\n2. BACK");
       HomePage.printLine();
 
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "1":editProfile();break;
 
@@ -150,13 +158,13 @@ public class CashierPage {
       print("\n\"ID, Date Joined & Role\" Cannot be Edited");
       print("\nSELECT OPTION FROM PROFILE TO EDIT  OR PRESS \"0\" TO BACK");
 
-      switch(Input.getFromUser())
+      switch( input.getFromUser())
       {
          case "0":cashierFeatures();break;
 
          case "1":
          {
-            user.setName(Input.name());
+            user.setName( input.name());
             print("\nName Updated Successfully....");
             editProfile();
             break;
@@ -171,7 +179,7 @@ public class CashierPage {
 
          case "3":
          {
-            user.setMail(Input.mail());
+            user.setMail( input.mail());
             print("\nMail Updated Successfully....");
             editProfile();
             break;
@@ -179,7 +187,7 @@ public class CashierPage {
 
          case "4":
          {
-            user.setPhnNo(Input.ph_no());
+            user.setPhnNo( input.ph_no());
             print("\nPhone number Updated Successfully....");
             editProfile();
             break;
@@ -187,15 +195,15 @@ public class CashierPage {
 
          case "5":
          {
-            user.setDateOfBirth(Input.dateOfBirth());
+            user.setDateOfBirth( input.dateOfBirth());
             print("\nDate.Of.Birth Updated Successfully....");
             editProfile();
             break;
          }
-          
+         
          case "6":
          {
-            user.setAge(Input.employeeAge());;
+            user.setAge( input.employeeAge());;
             print("\nAge Updated Successfully....");
             editProfile();
             break;
@@ -203,7 +211,7 @@ public class CashierPage {
 
          case "7":
          {
-            user.setSex(Input.sex());;
+            user.setSex( input.sex());;
             print("\nGender Updated Successfully....");
             editProfile();
             break;
@@ -225,7 +233,7 @@ public class CashierPage {
 
          case "10":
          {
-            user.setAddress(Input.address());;
+            user.setAddress( input.address());;
             print("\nAddress Updated Successfully....");
             editProfile();
             break;
@@ -233,7 +241,7 @@ public class CashierPage {
 
          case "11":
          {
-            user.setEducation(Input.education());;
+            user.setEducation( input.education());;
             print("\nEducation Updated Successfully....");
             editProfile();
             break;
@@ -246,11 +254,11 @@ public class CashierPage {
    public void printBill(){
       
       print("\nEnter ID to generate Bill :");
-      String id=Input.patientId();
+      String id= input.patientId();
 
       if(Patient.ispatientExists(id)){
 
-         Bill bill=user.generateBill(id,Input.roomFees(),Input.consultantFees(),Input.medicineFees());
+         Bill bill=user.generateBill(id, input.roomFees(), input.consultantFees(), input.medicineFees());
          
          print("\n----------------------------- BILL -----------------------------");
          print("\n\nBill id           : "+bill.billId);
@@ -274,7 +282,7 @@ public class CashierPage {
    }
 
    private void billStatus(Bill bill){
-      switch(Input.getFromUser()){
+      switch( input.getFromUser()){
          case "1":{
                bill.status=false;
                System.out.println("\nUPADATED SUCCESSFULLY");
@@ -286,18 +294,17 @@ public class CashierPage {
             break;
          }
          default :{
-            System.out.println("Enter valid Input");
+            System.out.println("Enter valid  input");
          }
       }
    }
       
    
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
-       private void print(String string)
-       {
-        System.out.println(string);
-       }
-//---------------------------------------------------------------------------------------------------------------------------------------//
-
+      private void print(String string)
+      {
+      System.out.println(string);
+      }
+   
+      private Input input=new Input();
 }

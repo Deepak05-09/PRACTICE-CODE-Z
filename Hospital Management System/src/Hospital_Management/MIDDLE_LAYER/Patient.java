@@ -126,6 +126,6 @@ public class Patient
         return billDAO.get(id);
     }
     
-    private static PatientDAO patientDAO=PatientDAO.patientDAO;
-    private BillDAO billDAO=BillDAO.billDAO;
+    private static PatientDAO patientDAO=new PatientDAO();
+    private BillDAO billDAO=new BillDAO();
 }

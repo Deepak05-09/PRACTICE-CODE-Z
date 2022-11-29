@@ -74,7 +74,7 @@ public class User
        userDAO.changePassword(username,password);
    }
     
-   private UserDAO userDAO=UserDAO.userDAO;
+   private UserDAO userDAO=new UserDAO();
 
    
 }

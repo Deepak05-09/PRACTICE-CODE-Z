@@ -10,11 +10,11 @@ public class UserDAO {
     
    
 
-    private UserDAO(){
+    public UserDAO(){
         
         
     }
-    public static UserDAO userDAO=new UserDAO();
+   
 
     public void add(User user){
         Storage.storage.userDetails.put(user.getUsername(), user);

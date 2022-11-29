@@ -36,7 +36,7 @@ public class Admin extends Employee
     
     public void createNewAdmin(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
-        if(Input.confirmation())
+        if(input.confirmation())
         {
          Admin admin=new Admin(name ,ph_no,dob,age,sex,mail,address,education,password);
          Storage.storage.store(admin);
@@ -48,7 +48,7 @@ public class Admin extends Employee
 
     public void addDoctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password)
     {
-        if(Input.confirmation())
+        if(input.confirmation())
         {
          Doctor doctor=new Doctor(name, ph_no, dob, age, sex, mail, address, education, speciality, password); 
          userDAO.add(new User(doctor));
@@ -59,7 +59,7 @@ public class Admin extends Employee
 
     public void addReceptionist(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
-        if(Input.confirmation())
+        if(input.confirmation())
         {
          Receptionist receptionist=new Receptionist(name, ph_no, dob, age, sex, mail, address, education, password);
          userDAO.add(new User(receptionist));
@@ -70,7 +70,7 @@ public class Admin extends Employee
 
     public void addCashier(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,String password)
     {
-        if(Input.confirmation())
+        if(input.confirmation())
         {
          Cashier cashier=new Cashier(name, ph_no, dob, age, sex, mail, address, education, password);
          userDAO.add(new User(cashier));
@@ -85,7 +85,7 @@ public class Admin extends Employee
 
         if(employee!=null)
         {
-         Input.print(Storage.storage.getEmployee(id).toString());
+         input.print(Storage.storage.getEmployee(id).toString());
          Storage.storage.removeEmployee(id);
          return "Successfully removed";
         }
@@ -142,11 +142,11 @@ public class Admin extends Employee
         return "Name :"+getName()+"  ID: "+getId()+" Role :"+getRole()+"\n";
     }
 
-    private DoctorDAO doctorDAO=DoctorDAO.doctorDAO;
-    private BillDAO billDAO=BillDAO.billDAO;
-    private PatientDAO patientDAO=PatientDAO.patientDAO;
-    private UserDAO userDAO=UserDAO.userDAO;
-
+    private DoctorDAO doctorDAO=new DoctorDAO();
+    private BillDAO billDAO=new BillDAO();
+    private PatientDAO patientDAO=new PatientDAO();
+    private UserDAO userDAO=new UserDAO();
+    private Input input=new Input();
 
    
 }
