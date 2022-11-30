@@ -1,7 +1,10 @@
 package Hospital_Management.UI;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 //import Hospital_Management.DATA_LAYER.Storage;
 import Hospital_Management.MIDDLE_LAYER.Appointment;
@@ -11,12 +14,13 @@ import Hospital_Management.MIDDLE_LAYER.Department;
 import Hospital_Management.MIDDLE_LAYER.Doctor;
 import Hospital_Management.MIDDLE_LAYER.DoctorList;
 import Hospital_Management.MIDDLE_LAYER.Login;
+
 import Hospital_Management.MIDDLE_LAYER.Patient;
 import Hospital_Management.MIDDLE_LAYER.Report;
 import Hospital_Management.MIDDLE_LAYER.Slot;
 
 
-public class PatientPage {
+public class PatientPage  {
     
     private String id;
     private Patient user;
@@ -28,7 +32,7 @@ public class PatientPage {
 
     public void menu(){
         HomePage.printLine();
-        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6. VIEW BILL\n7.LOGOUT");
+        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6. VIEW BILL\n7. GIVE REVIEW\n8. LOGOUT");
         HomePage.printLine();
         
         System.out.println("\nENTER YOUR CHOICE :");
@@ -63,8 +67,13 @@ public class PatientPage {
                 menu();
                 break;
             }
+            case "7":{
+                giveReview();
+                menu();
+                break;
+            }
             
-            case "7" :{
+            case "8" :{
             user=null;
                 print("\n......LOGGED OUT.....");
                 HomePage homePage=new HomePage();
@@ -254,9 +263,12 @@ public class PatientPage {
 
             if(date!=null){
                 int slot=selectSlot(doc, date);
-                if(slot>0){
+                if(slot>=0){
                     appointmentList.createAppointment(date,user.getName(), user.getPh_no(),doc.getId(),slot);
                     print("\nAppointment created Successfully on "+date+" with doctor "+doc.getName());
+                }
+                else{
+                    System.out.println("Slot= "+slot);
                 }
             }
             else{
@@ -426,6 +438,7 @@ public class PatientPage {
         }
         if(!flag){
         print("\nSorry..! Currently No Slots Are Available For This Doctor");
+        return -1;
         }
         else{
         print("\nEnter Slot Number :");
@@ -435,9 +448,10 @@ public class PatientPage {
         }
         else{
             print("\nEnter Valid Slot Number");
+            return -1;
         }
         }
-        return -1;
+        
         
     }
 
@@ -451,7 +465,7 @@ public class PatientPage {
         else{
 
             for(int i=0;i<appointlist.size();i++){
-                print("\n"+(i+1)+" Name :"+doctorList.get(appointlist.get(i).getDoctorId()).getName()+". Doctor ID : "+appointlist.get(i).getDoctorId()+" Time : "+appointlist.get(i).getTime());
+                print("\n"+(i+1)+" Name :"+doctorList.get(appointlist.get(i).getDoctorId()).getName()+" Doctor ID : "+appointlist.get(i).getDoctorId()+" Time : "+appointlist.get(i).getTime());
             }
 
             print("\nSELECT CHOICE TO CANCEL THAT APPOINTMENT");
@@ -661,6 +675,82 @@ public class PatientPage {
             System.out.println("\nPAYEMENT SUCCESSFULL\nTHANK YOU");
         }
 
+    }
+
+    private void giveReview(){
+        ArrayList<Appointment> appointlist= appointmentList.viewAppointment(user.getName());
+        
+        if(!appointlist.isEmpty()){
+
+            Set<Doctor> temp=new LinkedHashSet<>();
+            for(Appointment appointment: appointlist){
+                if(appointment.getStatus()){
+                    temp.add(doctorList.get(appointment.getDoctorId()));
+                }
+            }
+
+            ArrayList<Doctor> doctors=new ArrayList<>(temp);
+            for(int i=0;i<doctors.size();i++){
+                Doctor doctor=doctors.get(i);
+                System.out.println("\n"+(i+1)+". Name : "+doctor.getName()+"  Department :"+doctor.getSpeciality());
+            }
+
+            System.out.println("\nSELECT ABOVE DOCTOR TO GIVE REVIEW ABOUT THEM :");
+            String choice=input.getFromUser();
+            if( validate.onlyNumber(choice)&&Integer.parseInt(choice)<=doctors.size()&&Integer.parseInt(choice)>0){
+                Doctor doctor=doctors.get(Integer.parseInt(choice)-1);
+                 createReview(doctor);
+                }
+        }
+        else{
+            System.out.println("\nConsult Doctors to Give Review");
+        }
+
+
+
+
+    }
+
+    private void createReview(Doctor doctor){
+          
+           String name=revieweeName();
+           int rating=ratings();
+           if(rating!=-1){
+           System.out.println("\nGIVE YOUR PROS ABOUT THE DOCTOR :");
+           String pros=input.getFromUser();
+           System.out.println("\nGIVE YOUR CONS ABOUT THE DOCTOR :");
+           String cons=input.getFromUser();
+           System.out.println("\nENTER YOUR EXPERIENCE WITH THE DOCTOR :");
+           String experience=input.getFromUser();
+
+           user.giveReview(doctor.getId(),doctor.getName(),name,LocalDateTime.now(), rating,pros,cons,experience);
+           System.out.println("\nREVIEW GIVEN SUCCESSFULLY");
+           }
+           else{
+            System.out.println("\nEXITED...");
+           }
+
+    }
+    
+    private String revieweeName(){
+        System.out.println("\nDO YOU WANT TO GIVE REVIEW AS ANONYMOUS ?\n1.YES \n2.NO");
+        if(input.getFromUser().equals("2")){
+          return user.getName();
+        }
+        else{
+         return "Anonymous";
+        }
+    }
+
+    private int ratings(){
+        System.out.println("\nGIVE YOUR RATINGS FOR THE DOCTOR \n1 2 3 4 5\n");
+        String rating=input.getFromUser();
+        if(validate.onlyNumber(rating)&&Integer.parseInt(rating)>0&&Integer.parseInt(rating)<=5){
+            return Integer.parseInt(rating);
+        }
+        else{
+            return -1;
+        }
     }
 
 

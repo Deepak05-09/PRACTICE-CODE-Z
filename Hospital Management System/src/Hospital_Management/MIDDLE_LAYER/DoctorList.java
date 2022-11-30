@@ -64,6 +64,10 @@ public class DoctorList {
        return list;
     }
 
+    public void addReview(Review review){
+      get(review.getDocId()).addReview(review);
+    }
+
 
     
     private  DoctorDAO doctorDAO=new DoctorDAO();

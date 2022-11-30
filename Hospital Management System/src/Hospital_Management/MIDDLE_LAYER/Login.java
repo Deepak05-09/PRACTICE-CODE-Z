@@ -15,45 +15,25 @@ public class Login {
     public void login(String id){
         
         Role role=userDAO.getUser(id).getRole();
-    
-            switch(role){
-    
-                case ADMIN :{
-                    String Id=userDAO.getUser(id).getId();
-                    AdminPage adminPage=new AdminPage(id, (Admin)Storage.storage.getEmployee(Id));
-                    adminPage.adminFeatures();
-                    break;
-                }
-                case DOCTOR :{
-                    String Id=userDAO.getUser(id).getId();
-                    DoctorPage doctorPage=new DoctorPage(id, (Doctor)Storage.storage.getEmployee(Id));
-                    doctorPage.doctorFeatures();
-                    break;
-                }
-                case RECEPTIONIST :{
-                    String Id=userDAO.getUser(id).getId();
-                    ReceptionistPage receptionistPage=new ReceptionistPage(id, (Receptionist)Storage.storage.getEmployee(Id));
-                    receptionistPage.receptionistFeatures();
-                    break;
-                }
-                case CASHIER :{
-                    String Id=userDAO.getUser(id).getId();
-                    CashierPage cashierPage=new CashierPage(id, (Cashier)Storage.storage.getEmployee(Id));
-                    cashierPage.cashierFeatures();
-                    break;
-                }
-                case PATIENT :{
-                    String Id=userDAO.getUser(id).getId();
-                    PatientPage patientPage=new PatientPage(id,patientDAO.getPatient(Id) );
-                    patientPage.menu();
-                    break;
-                }
-                default :{
-                    System.out.println("\nError Occured");
-                }
-    
+        String Id=userDAO.getUser(id).getId();
+        
+        switch(role){
+
+            case ADMIN : new AdminPage(id, (Admin)Storage.storage.getEmployee(Id)).adminFeatures(); break;
+            
+            case DOCTOR : new DoctorPage(id, (Doctor)Storage.storage.getEmployee(Id)).doctorFeatures(); break;
+            
+            case RECEPTIONIST : new ReceptionistPage(id, (Receptionist)Storage.storage.getEmployee(Id)).receptionistFeatures(); break;
+            
+            case CASHIER : new CashierPage(id, (Cashier)Storage.storage.getEmployee(Id)).cashierFeatures(); break;
+            
+            case PATIENT : new PatientPage(id,patientDAO.getPatient(Id)).menu(); break;
+            
+            default :  System.out.println("\nError Occured");
+            
         }
     }
+    
     public void changePassword(String username,String password){
         userDAO.changePassword(username, password);
     }

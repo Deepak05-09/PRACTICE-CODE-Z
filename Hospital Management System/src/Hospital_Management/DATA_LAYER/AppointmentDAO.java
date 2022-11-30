@@ -28,7 +28,7 @@ public class AppointmentDAO {
         Storage.storage.appointmentList.put(appointment.getDate(), list);
      }
 
-      //get all appoinments booked by a single patient
+     
     public ArrayList<Appointment> getAppointment(String patientName){
         ArrayList<Appointment> tempList=new ArrayList<>();
         for(int i=0;i<7;i++){
@@ -44,12 +44,12 @@ public class AppointmentDAO {
         return tempList;
     }
     
-    //get all appointments in a specified date
+    
     public ArrayList<Appointment> getAppointment(LocalDate date){
            return  Storage.storage.appointmentList.get(date);
     }
     
-    //get appointment by date and name
+    
     public ArrayList<Appointment> getAppointment(LocalDate date,String patientName){
         ArrayList<Appointment> list= Storage.storage.appointmentList.get(date);
 

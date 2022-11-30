@@ -11,6 +11,7 @@ import Hospital_Management.MIDDLE_LAYER.DoctorList;
 import Hospital_Management.MIDDLE_LAYER.Login;
 import Hospital_Management.MIDDLE_LAYER.Patient;
 import Hospital_Management.MIDDLE_LAYER.Report;
+import Hospital_Management.MIDDLE_LAYER.Review;
 import Hospital_Management.MIDDLE_LAYER.Slot;
 
 public class DoctorPage {
@@ -25,7 +26,7 @@ public class DoctorPage {
    public void doctorFeatures()
    {
       HomePage.employeefeatures();
-      print("6. GENERATE REPORT\n7. VIEW PATIENT REPORT\n8. STATUS\n9. VIEW APPOINTMENTS\n10. SLOT CHANGE");
+      print("6. GENERATE REPORT\n7. VIEW PATIENT REPORT\n8. STATUS\n9. VIEW APPOINTMENTS\n10. SLOT CHANGE\n11. VIEW REVIEWS");
       HomePage.printLine();
 
       choice();
@@ -95,6 +96,11 @@ public class DoctorPage {
             }
             case "10" :{
                slotChange();
+               doctorFeatures();
+               break;
+            }
+            case "11":{
+               viewReviews();
                doctorFeatures();
                break;
             }
@@ -519,6 +525,36 @@ private  void changePassword(){
          else{
             System.out.println("\nInvalid  input");
          }
+   }
+
+   private void viewReviews(){
+     
+      ArrayList<Review> reviews=user.viewReviews();
+      if(reviews.isEmpty()){
+         System.out.println("\nNO REVIEWS HAS POSTED");
+      }
+      for(Review review: reviews){
+         printReview(review);
+      }
+   }
+
+   private void printReview(Review review){
+        System.out.println("\n"+review.getrName()+"\n");
+        System.out.print("\nRATINGS : ");
+        for(int i=1;i<=review.getStar();i++){
+         System.out.print("* ");
+        }
+        
+        if(!review.getPros().equals("")){
+         System.out.println("\nPROS :"+review.getPros());
+        }
+        if(!review.getCons().equals("")){
+         System.out.println("\nCONS :"+review.getCons());
+        }
+        if(!review.getDescription().equals("")){
+         System.out.println("\nTHOUGHT :"+review.getDescription());
+        }
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
    }
 
 //---------------------------------------------------------------------------------------------------------------------------------------//

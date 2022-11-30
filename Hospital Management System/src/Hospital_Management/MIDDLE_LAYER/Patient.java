@@ -1,5 +1,6 @@
 package Hospital_Management.MIDDLE_LAYER;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import Hospital_Management.DATA_LAYER.BillDAO;
@@ -117,13 +118,20 @@ public class Patient
     public ArrayList<Report> viewReports() {
         return this.report;
      }
-
-    public static boolean ispatientExists(String id){
-        return patientDAO.isExist(id);
+    
+    public void giveReview(String docId,String docName,String rName,LocalDateTime dateTime,int star,String pros,String cons,String description){
+        Review review=new Review(docId, docName, rName, dateTime,star, pros, cons, description);
+        DoctorList doctorList=new DoctorList();
+        doctorList.addReview(review);
     }
+    
 
     public ArrayList<Bill> viewBill(){
         return billDAO.get(id);
+    }
+
+    public static boolean ispatientExists(String id){
+        return patientDAO.isExist(id);
     }
     
     private static PatientDAO patientDAO=new PatientDAO();

@@ -14,18 +14,8 @@ public class Doctor extends Employee
    
     private Department speciality;
     private HashMap<LocalDate,Slot[]> appointments;
+    private ArrayList<Review> reviews;
     private int slot=5;
-     
-
-    public void setSlot(int slot) {
-        this.slot = slot;
-    }
-    public int getSlot() {
-        return slot;
-    }
-    public void setAppointments(LocalDate date, Slot[] slot) {
-       appointments.put(date, slot);
-    }
    
     
     static int id=1;
@@ -46,8 +36,8 @@ public class Doctor extends Employee
         setSpeciality(speciality);
         changePassword(password);
         setRole("Doctor");
-        //Availability=true;
         appointments=new HashMap<>();
+        reviews=new ArrayList<>();
     }
 
 
@@ -58,6 +48,24 @@ public class Doctor extends Employee
    
     public Department getSpeciality(){
         return speciality;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+    public int getSlot() {
+        return slot;
+    }
+    public void setAppointments(LocalDate date, Slot[] slot) {
+       appointments.put(date, slot);
+    }
+
+    public void addReview(Review review){
+        reviews.add(review);
+    }
+
+    public ArrayList<Review> viewReviews(){
+        return reviews;
     }
 
     public void changeAvailability(LocalDate date){

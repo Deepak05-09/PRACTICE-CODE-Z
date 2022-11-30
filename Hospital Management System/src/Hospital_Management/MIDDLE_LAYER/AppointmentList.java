@@ -21,9 +21,8 @@ public class AppointmentList {
         Doctor doctor=doctorDAO.get(doctorId);
         Slot[]slot=doctor.ViewAppointment(date);
      
-         Appointment appointment= new Appointment(patientName,mbl_no, doctorId,slot[time].startTime+"-"+slot[time].endTime,date);
-         slot[time].appointment=appointment;
-        // slot[time].appointment=appointment;
+        Appointment appointment= new Appointment(patientName,mbl_no, doctorId,slot[time].startTime+"-"+slot[time].endTime,date);
+        slot[time].appointment=appointment;
         doctor.setAppointments(date, slot);
         appointmentDAO.add(appointment);
         

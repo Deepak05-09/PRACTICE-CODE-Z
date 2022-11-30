@@ -12,6 +12,7 @@ public class Appointment {
     private String doctorId;
     private String time;
     private LocalDate date;
+    private Boolean status;
     
     
     public Appointment(String patientName,String mbl_no,String doctorId,String time,LocalDate date){
@@ -20,6 +21,14 @@ public class Appointment {
        this.time=time;
        this.date=date;
        Pmbl_no=mbl_no;
+       status=true;
+    }
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Boolean getStatus() {
+        return status;
     }
 
     public String getPatientName() {
