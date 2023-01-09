@@ -169,26 +169,26 @@ public class Storage
 
     private void characterInitialise(){
 
-        Doctor doc1=new Doctor("Eren Yeager", "9462946793", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "doctor@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123");
-        Doctor doc2=new Doctor("Roronoa Zoro", "8956289465", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "zoro@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123");
-        Doctor doc3=new Doctor("Edward Elric", "7453219087", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "edward@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123");
-        Doctor doc4=new Doctor("Ichigo Kurosaki", "9989768340", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "ichigo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123");
-        Doctor doc5=new Doctor("Katsuki Bakugo", "8734426720", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "bakugo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123");
-        Doctor doc6=new Doctor("Satorou Gojo", "8352718936", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "gojo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123");
-        Doctor doc7=new Doctor("Erza Scarlet", "8642576486", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "erza@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123");
-        Doctor doc8=new Doctor("Itachi Uchiha", "9743666227", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "itachi@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123");
-        Doctor doc9=new Doctor("Nishimiya", "9994466260", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nishi@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123");
-        Doctor doc10=new Doctor("Nezuko kamado", "8978654325", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nezuko@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123");
-        Doctor doc11=new Doctor("Himiko Toga", "9361334787", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "toga@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123");
-        Doctor doc12=new Doctor("Nico Robin", "9876543768", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nicorobin@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123");
-        Doctor doc13=new Doctor("Mikasa Ackerman", "9872578965", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "mikasa@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123");
-        Doctor doc14=new Doctor("Madara Uchiha", "9436787609", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "madara@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123");
-        Doctor doc15=new Doctor("Kaneki Ken", "9555988840", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "kaneki@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123");
-        Doctor doc16=new Doctor("Goku", "9995447879", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "goku@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123");
-        Doctor doc17=new Doctor("Rukia Kuchiki", "6398668812", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "rukia@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123");
-        Doctor doc18=new Doctor("Saitama", "9368712985", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "saitama@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123");
-        Doctor doc19=new Doctor("Dazai Osamu", "9846879467", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "dazai@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123");
-        Doctor doc20=new Doctor("Yami sukehiro", "9095048371", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "yami@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123");
+        Doctor doc1=new Doctor("Eren Yeager", "9462946793", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "doctor@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123",2);
+        Doctor doc2=new Doctor("Roronoa Zoro", "8956289465", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "zoro@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123",4);
+        Doctor doc3=new Doctor("Edward Elric", "7453219087", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "edward@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123",3);
+        Doctor doc4=new Doctor("Ichigo Kurosaki", "9989768340", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "ichigo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123",2);
+        Doctor doc5=new Doctor("Katsuki Bakugo", "8734426720", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "bakugo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123",7);
+        Doctor doc6=new Doctor("Satorou Gojo", "8352718936", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "gojo@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123",6);
+        Doctor doc7=new Doctor("Erza Scarlet", "8642576486", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "erza@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123",4);
+        Doctor doc8=new Doctor("Itachi Uchiha", "9743666227", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "itachi@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123",3);
+        Doctor doc9=new Doctor("Nishimiya", "9994466260", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nishi@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123",1);
+        Doctor doc10=new Doctor("Nezuko kamado", "8978654325", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nezuko@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123",10);
+        Doctor doc11=new Doctor("Himiko Toga", "9361334787", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "toga@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123",9);
+        Doctor doc12=new Doctor("Nico Robin", "9876543768", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "nicorobin@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123",8);
+        Doctor doc13=new Doctor("Mikasa Ackerman", "9872578965", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "mikasa@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123",5);
+        Doctor doc14=new Doctor("Madara Uchiha", "9436787609", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "madara@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123",6);
+        Doctor doc15=new Doctor("Kaneki Ken", "9555988840", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "kaneki@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123",4);
+        Doctor doc16=new Doctor("Goku", "9995447879", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "goku@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.CARDIOLOGIST, "Doctor123",5);
+        Doctor doc17=new Doctor("Rukia Kuchiki", "6398668812", LocalDate.of(1993, 5, 16), 28, Sex.FEMALE, "rukia@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.NEUROLOGIST, "Doctor123",7);
+        Doctor doc18=new Doctor("Saitama", "9368712985", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "saitama@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PATHOLOGIST, "Doctor123",3);
+        Doctor doc19=new Doctor("Dazai Osamu", "9846879467", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "dazai@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.PSYCHIATRIST, "Doctor123",12);
+        Doctor doc20=new Doctor("Yami sukehiro", "9095048371", LocalDate.of(1993, 5, 16), 28, Sex.MALE, "yami@gmail.com", "40\\1,sivagankai,thirukonam,630611", "MBBS", Department.DENTIST, "Doctor123",5);
         doctorList.put(doc1.getId(),doc1);
         doctorList.put(doc2.getId(),doc2);
         doctorList.put(doc3.getId(),doc3);

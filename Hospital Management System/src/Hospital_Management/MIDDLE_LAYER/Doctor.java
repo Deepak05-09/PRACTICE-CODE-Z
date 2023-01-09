@@ -13,6 +13,7 @@ public class Doctor extends Employee
 {
    
     private Department speciality;
+    private int experience;
     private HashMap<LocalDate,Slot[]> appointments;
     private ArrayList<Review> reviews;
     private int slot=5;
@@ -21,7 +22,7 @@ public class Doctor extends Employee
     static int id=1;
     
    
-    public Doctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password)
+    public Doctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password,int experience)
     {
         setName(name);
         setId("DR"+id++);
@@ -35,6 +36,7 @@ public class Doctor extends Employee
         setEducation(education);
         setSpeciality(speciality);
         changePassword(password);
+        this.experience=experience;
         setRole("Doctor");
         appointments=new HashMap<>();
         reviews=new ArrayList<>();
@@ -56,6 +58,11 @@ public class Doctor extends Employee
     public int getSlot() {
         return slot;
     }
+
+    public int getExperience() {
+        return experience;
+    }
+    
     public void setAppointments(LocalDate date, Slot[] slot) {
        appointments.put(date, slot);
     }

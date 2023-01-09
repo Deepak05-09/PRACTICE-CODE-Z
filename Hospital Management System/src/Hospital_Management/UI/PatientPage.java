@@ -30,9 +30,27 @@ public class PatientPage  {
         user=patient;
     }
 
+    enum disease{
+
+        COLD(Department.PATHOLOGIST), STOMACH_PAIN(Department.PATHOLOGIST),DIARRHOEA(Department.PATHOLOGIST),
+        FEVER(Department.PATHOLOGIST),PNEUMONIA(Department.PATHOLOGIST),TUBERCULOSIS(Department.PATHOLOGIST),
+         HEART_PROBLEMS(Department.CARDIOLOGIST),CHEST_PAIN(Department.CARDIOLOGIST)
+        , DENTAL(Department.DENTIST), HEADACHE(Department.NEUROLOGIST), BRAIN(Department.NEUROLOGIST),
+         NERVES(Department.NEUROLOGIST), SPINE(Department.NEUROLOGIST);
+
+      private Department department; 
+      disease(Department name){
+        department=name;
+      }
+      public Department getDepartment() {
+          return department;
+      }
+    }
+
     public void menu(){
         HomePage.printLine();
-        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n5.VIEW REPORT\n6. VIEW BILL\n7. GIVE REVIEW\n8. LOGOUT");
+        print("\n1.VIEW PROFILE\n2.CHANGE PASSWORD\n3.BOOK APPOINTMENT\n4.CANCEL APPOINTMENT\n"+
+        "5.VIEW REPORT\n6.VIEW BILL\n7.VIEW HISTORY\n8.GIVE REVIEW\n9.LOGOUT");
         HomePage.printLine();
         
         System.out.println("\nENTER YOUR CHOICE :");
@@ -68,12 +86,18 @@ public class PatientPage  {
                 break;
             }
             case "7":{
+                viewHistory();
+                menu();
+                break;
+            }
+
+            case "8":{
                 giveReview();
                 menu();
                 break;
             }
             
-            case "8" :{
+            case "9" :{
             user=null;
                 print("\n......LOGGED OUT.....");
                 HomePage homePage=new HomePage();
@@ -225,7 +249,7 @@ public class PatientPage  {
     }
 
     private void bookAppointment(){
-        System.out.println("\nSELECT \n1. DOCTOR\n2. DEPARTMENT");
+        System.out.println("\nSELECT \n1. DOCTOR\n2. DEPARTMENT\n3. DISEASE");
 
         switch( input.getFromUser()){
 
@@ -237,6 +261,11 @@ public class PatientPage  {
             bookByDepartment();
             break;
             }
+            case "3":{
+            bookByDisease();
+            break;
+            }
+
             default :{
                 System.out.println("\nInvalid  input");
             }
@@ -286,7 +315,28 @@ public class PatientPage  {
         Department department=selectDepartment();
 
         if(department!=null){
+          selectDateAndBook(department);
+        }
+        else{
+            print("\nInvalid  input.");
+        }
+    
+    }
 
+    private void bookByDisease() {
+
+        Department department=selectDisese();
+        if(department!=null){
+
+            selectDateAndBook(department);
+          }
+          else{
+              print("\nInvalid  input.");
+          }
+
+    }
+
+    private void selectDateAndBook(Department department){
         LocalDate date=printDate(department);
 
         if(date!=null){
@@ -309,11 +359,25 @@ public class PatientPage  {
                     }
                 }
                 }
+    }
+
+    private Department selectDisese(){
+        disease []names=disease.values();
+        print("\n");
+        for(int i=0;i<names.length;i++){
+            print(i+1+". "+names[i]);
+        }
+        print("\nSELECT YOUR PROBLEM");
+
+        String choice= input.getFromUser();
+        
+        if(  validate.onlyNumber(choice)&&Integer.parseInt(choice)!=0&&Integer.parseInt(choice)<=names.length){
+        return names[Integer.parseInt(choice)-1].getDepartment();
         }
         else{
-            print("\nInvalid  input.");
+            System.out.println("\nInvalid Choice");
         }
-    
+        return null;
     }
 
     private Department selectDepartment(){
@@ -357,7 +421,7 @@ public class PatientPage  {
 
             for(Doctor doctor:list)
             {
-            print("ID: "+doctor.getId()+" Name : "+doctor.getName());
+            print("ID: "+doctor.getId()+"   Name : "+doctor.getName()+"   Experience :"+doctor.getExperience()+"-Years");
             }
         }
         else
@@ -677,12 +741,40 @@ public class PatientPage  {
 
     }
 
+    private void viewHistory(){
+        ArrayList<Appointment> appointlist= appointmentList.viewAppointment(user.getName());
+
+        if(!appointlist.isEmpty()){
+            for(Appointment appointment:appointlist){
+                String status;
+                if(appointment.getStatus()){
+                  status="completed";
+                }
+                else{
+                    status="Incompleted";
+                }
+
+                print("Date        :"+appointment.getDate()+
+                    "\nTime        :"+appointment.getTime()+
+                    "\nDoctor Id   :"+appointment.getDoctorId()+
+                    "\nDoctor Name :"+doctorList.get(appointment.getDoctorId()).getName()+
+                    "\nDepartment  :"+doctorList.get(appointment.getDoctorId()).getSpeciality()+
+                    "\nStatus      :"+status+
+                    "\n\n");
+            }
+        }
+        else{
+            print("\nNO HISTORY AVAILABLE");
+        }
+    }
+
     private void giveReview(){
         ArrayList<Appointment> appointlist= appointmentList.viewAppointment(user.getName());
         
         if(!appointlist.isEmpty()){
 
             Set<Doctor> temp=new LinkedHashSet<>();
+
             for(Appointment appointment: appointlist){
                 if(appointment.getStatus()){
                     temp.add(doctorList.get(appointment.getDoctorId()));

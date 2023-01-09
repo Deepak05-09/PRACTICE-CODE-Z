@@ -81,7 +81,7 @@ public class AdminPage {
 
             case  "7":
             {
-               user.addDoctor( input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.speciality(), input.password()); 
+               user.addDoctor( input.name(), input.ph_no(), input.dateOfBirth(), input.employeeAge(), input.sex(), input.mail(), input.address(), input.education(), input.speciality(), input.password(),input.experience()); 
                   adminFeatures();
                   break;
             }

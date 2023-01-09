@@ -46,11 +46,11 @@ public class Admin extends Employee
 
     }
 
-    public void addDoctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password)
+    public void addDoctor(String name,String ph_no,LocalDate dob,int age,Sex sex,String mail,String address,String education,Department speciality,String password,int experience)
     {
         if(input.confirmation())
         {
-         Doctor doctor=new Doctor(name, ph_no, dob, age, sex, mail, address, education, speciality, password); 
+         Doctor doctor=new Doctor(name, ph_no, dob, age, sex, mail, address, education, speciality, password,experience); 
          userDAO.add(new User(doctor));
          doctorDAO.add(doctor);
         }

@@ -157,6 +157,20 @@ public class Input {
     }
 
 //---------------------------------------------------------------------------------------------------------------------------------------//
+    public int experience() {
+        print("Enter years of Experience :");
+
+        String experience=getFromUser();
+
+        if(validate.onlyNumber(experience)){
+            return Integer.parseInt(experience);
+        }
+        else{
+            print("Enter valid input only numbers");
+            
+        }
+        return experience();
+    }
 
     public   int employeeAge()
     {
@@ -564,5 +578,7 @@ public class Input {
     }
 //---------------------------------------------------------------------------------------------------------------------------------------//
   private Validate validate=new Validate();
+
+
     
 }

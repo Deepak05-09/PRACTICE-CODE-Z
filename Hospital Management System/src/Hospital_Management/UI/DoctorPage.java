@@ -64,9 +64,9 @@ public class DoctorPage {
             
             case "5" :
             {
-                  changePassword();
-                  doctorFeatures();
-                  break;
+               changePassword();
+               doctorFeatures();
+               break;
             }
 
             case "6":
@@ -120,11 +120,11 @@ public class DoctorPage {
    {
       if(user.checkIn())
       {
-            print("\nSuccessfully Checked In\n");
+         print("\nSuccessfully Checked In\n");
       }
       else
       {
-            print("\nYOU HAVE ALREADY CHECKED IN\n");
+         print("\nYOU HAVE ALREADY CHECKED IN\n");
       }
 
    }
@@ -134,11 +134,11 @@ public class DoctorPage {
    {
       if(user.checkOut())
       {
-            print("\nSuccessfully Checked Out");
+         print("\nSuccessfully Checked Out");
       }
       else
       {
-            print("\nplease Check In to Check Out");
+         print("\nplease Check In to Check Out");
       }
 
    }
