@@ -1,5 +1,6 @@
 import Cocoa
-var val=[
+var logs=[
+    "TRANSACTIONS_MAP":[
     [
       "modified_time" : 1628286549662,
       "record_id" : nil,
@@ -54,8 +55,8 @@ var val=[
       "lookup_label" : "CONTACTID_LOOKUP",
       "lookup_column" : "CONTACTID_LOOKUP"
     ]
-  ]
-var values = [
+  ],
+    "TRANSACTIONS" : [
     [
       "module_name" : "Accounts",
       "transaction_id" : "NEW1628286549659",
@@ -155,14 +156,17 @@ var values = [
       "operation_type" : 2
     ]
   ]
+    ]
 
 
-class Transaction : CustomStringConvertible{
-    let transaction_id:String
-    let module_name:String
-    let transaction_time:String
+
+struct Transaction : CustomStringConvertible{
+    let transaction_id,module_name,transaction_time,error_message:String
     let operation_type:Int
-    let error_message:String
+    
+    var description: String{
+       return transaction_id+"\t"+module_name+"\t\t\t"+String(operation_type)+"\t\t\t\t"+transaction_time+"\t\t"+error_message
+    }
     
     init(transaction_id:String,module_name:String,transaction_time:String,operation_type:Int,error_message:String){
         self.transaction_id=transaction_id
@@ -172,20 +176,15 @@ class Transaction : CustomStringConvertible{
         self.error_message=error_message
     }
     
-    var description: String{
-       return transaction_id+"\t"+module_name+"\t\t\t"+String(operation_type)+"\t\t\t\t"+transaction_time
+    enum Sort{
+        case transaction_id,module_name,transaction_time,operation_type,error_message
     }
-    
 }
 
-class TransactionMap: CustomStringConvertible{
-    let transaction_id:String
-    let lookup_id:String
-    let lookup_column:String
-    let lookup_label:String
+
+struct TransactionMap: CustomStringConvertible{
+    let transaction_id,lookup_id,lookup_column,lookup_label,table_name,modified_time:String
     let record_id:String?
-    let table_name:String
-    let modified_time:String
     
     init(transaction_id:String,lookup_id:String,lookup_column:String,
          lookup_label:String,record_id:String?,table_name:String,modified_time:String) {
@@ -199,122 +198,146 @@ class TransactionMap: CustomStringConvertible{
     }
     
     var description: String{
-        let id:String
-        if let record_id{
-          id=record_id
+            return transaction_id+"\t"+lookup_id+"\t"+lookup_column+"\t\t"+lookup_label+"\t\t\t"+(record_id ?? "-")+"\t\t"+table_name+"\t\t"+modified_time
+    }
+    
+    enum Sort{
+        case TRANSACTION_ID,LOOKUP_ID,LOOKUP_COLUMN,LOOKUP_LABEL,RECORD_ID,TABLE_NAME,MODIFIED_TIME
+    }
+}
+
+
+struct Logs{
+    
+    var transactionMap=[TransactionMap]()
+    var transactions=[Transaction]()
+    
+    init(logs :[String:[[String:Any?]]]) {
+        self.transactionMap=create(array:logs["TRANSACTIONS_MAP"]!, operation:OperationForTransactionMap)
+        self.transactions=create(array:logs["TRANSACTIONS"]! , operation:OperationForTransaction)
+    }
+    
+    private var OperationForTransactionMap:([String:Any])->AnyObject={ transactionMap in
+         let id=transactionMap["transaction_id"] as! String
+         let l_id=transactionMap["lookup_id"] as! String
+         let l_column=transactionMap["lookup_column"] as! String
+         let l_label=transactionMap["lookup_label"] as! String
+         let record=transactionMap["record_id"] ?? "-"
+         let table=transactionMap["table_name"] as! String
+         let time={
+             let date = Date(timeIntervalSince1970:Double(transactionMap["modified_time"] as! Int) / 1000.0)
+
+             let formatter = DateFormatter()
+             formatter.dateStyle = .medium
+             formatter.timeStyle = .medium
+             return formatter.string(from: date)
+         }
+         return TransactionMap(transaction_id: id, lookup_id: l_id, lookup_column: l_column, lookup_label: l_label, record_id: record as? String  , table_name: table, modified_time: time()) as AnyObject
+     }
+    
+    private func OperationForTransaction(transaction:[String:Any])->AnyObject{
+        let id=transaction["transaction_id"] as! String
+        let name=transaction["module_name"] as! String
+        
+        let time={
+            let date = Date(timeIntervalSince1970:Double(transaction["transaction_time"] as! Int) / 1000.0)
+
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .medium
+            return formatter.string(from: date)
         }
-        else{
-            id="-"
+        
+        let op=transaction["operation_type"] as! Int
+        let msg=transaction["error_message"] as! String
+       var error:(String)->String={ value in
+           if(value==""){
+               for trans in transactionMap{
+                   if(trans.transaction_id==id){
+                       return "Account-\(trans.lookup_id) - is the Parent"
+                   }
+               }
+               return "-"
+           }
+           else{
+               return String(value[value.firstIndex(of: "\"")!..<value.firstIndex(of: ",")!]).replacing("\"", with: "")
+           }
+           
+       }
+        
+        return Transaction(transaction_id: id, module_name: name, transaction_time:time(), operation_type: op, error_message:error(msg)) as AnyObject
+    }
+    
+    
+    mutating func create<T>(array:[[String:Any?]],operation:([String:Any?])->AnyObject)->[T]{
+        
+        var transactions=[T]()
+        
+            for transaction in array{
+                let item=operation(transaction)
+                if( item is T){
+                    transactions.append(item as! T)
+                }
+            }
+            return transactions
+        
+    }
+    
+    func details(){
+        var transaction="S.NO\tTRANSACTION ID\tMODULE NAME\t\tOPERATION TYPE\tTRANSACTION TIME\t\t\tERROR"
+        var transactionMap="S.NO\tTRANSACTION_ID\tLOOKUP_ID\t\t\tLOOKUP_COLUMN\tLOOKUP_LABEL\tRECORD_ID\tTABLE_NAME\tMODIFIED_TIME"
+        
+        func output<T>(text:String ,array:[T]){
+            print(text)
+            for i in 0..<array.count{
+                print("\(i+1)\t\(array[i])")
+            }
         }
-       return transaction_id+"\t"+lookup_id+"\t"+lookup_column+"\t\t"+lookup_label+"\t\t\t"+id+"\t\t"+table_name+"\t\t"+modified_time
+        print("\nTRANSACTION\n")
+        output(text: transaction, array:self.transactions)
+        print("\nTRANSACTION-MAP\n")
+        output(text: transactionMap, array: self.transactionMap)
     }
-}
-
-enum Sort{
-    case transaction_id,module_name,transaction_time,operation_type
-}
-enum SortMap{
-    case TRANSACTION_ID,LOOKUP_ID,LOOKUP_COLUMN,LOOKUP_LABEL,RECORD_ID,TABLE_NAME,MODIFIED_TIME
-}
-
-func create<T>(array:[[String:Any?]],obj:([String:Any?])->AnyObject)->[T]{
     
-    var transactions=[T]()
-    
-    for transaction in array{
-        let item=obj(transaction)
-        if( item is T){
-            transactions.append(item as! T)
+   mutating func sortTransactions(by type:Transaction.Sort){
+        switch type{
+        case .transaction_id:
+            transactions.sort(by: {$0.transaction_id<$1.transaction_id})
+        case .module_name:
+            transactions.sort(by: {$0.module_name<$1.module_name})
+        case .transaction_time:
+            transactions.sort(by: {$0.transaction_time<$1.transaction_time})
+        case .operation_type:
+            transactions.sort(by: {$0.operation_type<$1.operation_type})
+        case .error_message:
+            transactions.sort(by: {$0.error_message<$1.error_message})
         }
     }
-    return transactions
-}
-
-func sort(array:inout[Transaction] , by type:Sort){
-    switch type{
-    case .transaction_id:
-        array.sort(by: {$0.transaction_id<$1.transaction_id})
-    case .module_name:
-        array.sort(by: {$0.module_name<$1.module_name})
-    case .transaction_time:
-        array.sort(by: {$0.transaction_time<$1.transaction_time})
-    case .operation_type:
-        array.sort(by: {$0.operation_type<$1.operation_type})
-    }
-}
-
-func sortMap(array:inout[TransactionMap],by type:SortMap){
-    switch type{
-    case .TRANSACTION_ID:
-        array.sort(by:{ $0.transaction_id<$1.transaction_id})
-    case .LOOKUP_ID:
-        array.sort(by: {$0.lookup_id<$1.lookup_id})
-    case .LOOKUP_COLUMN:
-        array.sort(by: {$0.lookup_column<$1.lookup_column})
-    case .LOOKUP_LABEL:
-        array.sort(by: {$0.lookup_label<$1.lookup_label})
-    case .RECORD_ID:
-        array.sort(by: {$0.record_id!<$1.record_id!})
-    case .TABLE_NAME:
-        array.sort(by: {$0.table_name<$1.table_name})
-    case .MODIFIED_TIME:
-        array.sort(by: {$0.modified_time<$1.modified_time})
-    }
-}
-
-func Output<T>(text:String ,array:[T]){
-    print(text)
-    for i in 0..<array.count{
-        print("\(i+1)\t\(array[i])")
-    }
-}
-
-var obj:([String:Any])->AnyObject={ transaction in
-    let id=transaction["transaction_id"] as! String
-    let name=transaction["module_name"] as! String
     
-    let time={
-        let date = Date(timeIntervalSince1970:Double(transaction["transaction_time"] as! Int) / 1000.0)
-
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
-        return formatter.string(from: date)
+   mutating func sortTransactionMap(by type:TransactionMap.Sort){
+        switch type{
+        case .TRANSACTION_ID:
+            transactionMap.sort(by:{ $0.transaction_id<$1.transaction_id})
+        case .LOOKUP_ID:
+            transactionMap.sort(by: {$0.lookup_id<$1.lookup_id})
+        case .LOOKUP_COLUMN:
+            transactionMap.sort(by: {$0.lookup_column<$1.lookup_column})
+        case .LOOKUP_LABEL:
+            transactionMap.sort(by: {$0.lookup_label<$1.lookup_label})
+        case .RECORD_ID:
+            transactionMap.sort(by: {$0.record_id!<$1.record_id!})
+        case .TABLE_NAME:
+            transactionMap.sort(by: {$0.table_name<$1.table_name})
+        case .MODIFIED_TIME:
+            transactionMap.sort(by: {$0.modified_time<$1.modified_time})
+        }
     }
     
-    let op=transaction["operation_type"] as! Int
-    let msg=transaction["error_message"] as! String
-    
-    return Transaction(transaction_id: id, module_name: name, transaction_time:time(), operation_type: op, error_message: msg) as AnyObject
 }
 
+var log=Logs(logs:logs)
+log.sortTransactions(by: .module_name)
+log.sortTransactionMap(by: .TABLE_NAME)
+log.details()
 
-var obj2:([String:Any])->AnyObject={ transactionMap in
-    let id=transactionMap["transaction_id"] as! String
-    let l_id=transactionMap["lookup_id"] as! String
-    let l_column=transactionMap["lookup_column"] as! String
-    let l_label=transactionMap["lookup_label"] as! String
-    let record=transactionMap["record_id"] ?? "-"
-    let table=transactionMap["table_name"] as! String
-    let time={
-        let date = Date(timeIntervalSince1970:Double(transactionMap["modified_time"] as! Int) / 1000.0)
-
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
-        return formatter.string(from: date)
-    }
-    return TransactionMap(transaction_id: id, lookup_id: l_id, lookup_column: l_column, lookup_label: l_label, record_id: record as? String  , table_name: table, modified_time: time()) as AnyObject
-}
-
-var text="S.NO\tTRANSACTION ID\tMODULE NAME\t\tOPERATION TYPE\tTRANSACTION TIME"
-var text2="S.NO\tTRANSACTION_ID\tLOOKUP_ID\t\t\tLOOKUP_COLUMN\tLOOKUP_LABEL\tRECORD_ID\tTABLE_NAME\tMODIFIED_TIME"
-
-var transactions:[Transaction]=create(array: values, obj: obj)
-sort(array: &transactions, by: .module_name)
-Output(text: text, array: transactions)
-print("\n")
-var transactionMap:[TransactionMap]=create(array: val , obj: obj2)
-sortMap(array: &transactionMap, by: .TABLE_NAME)
-Output(text: text2, array: transactionMap)
 
