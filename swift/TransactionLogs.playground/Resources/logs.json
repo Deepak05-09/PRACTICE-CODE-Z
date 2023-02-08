@@ -1,0 +1,158 @@
+{
+  "TRANSACTIONS_MAP" : [
+    {
+      "modified_time" : 1628286549662,
+      "record_id" : null,
+      "transaction_id" : "NEW1628286549661",
+      "lookup_column" : "SEID_LOOKUP",
+      "table_name" : "TasksRecords_641867043",
+      "lookup_id" : "NEW1628286549659",
+      "lookup_label" : "SEID_LOOKUP"
+    },
+    {
+      "table_name" : "TasksRecords_641867043",
+      "lookup_label" : "SEID_LOOKUP",
+      "record_id" : null,
+      "lookup_id" : "NEW1628286549659",
+      "lookup_column" : "SEID_LOOKUP",
+      "modified_time" : 1628286550079,
+      "transaction_id" : "NEW1628286550078"
+    },
+    {
+      "lookup_label" : "SEID_LOOKUP",
+      "transaction_id" : "NEW1628286550076",
+      "lookup_column" : "SEID_LOOKUP",
+      "record_id" : null,
+      "table_name" : "TasksRecords_641867043",
+      "lookup_id" : "NEW1628286549659",
+      "modified_time" : 1628286550077
+    },
+    {
+      "lookup_id" : "NEW1628286551561",
+      "table_name" : "ContactsRecords_641867043",
+      "transaction_id" : "NEW1628286551565",
+      "lookup_label" : "ACCOUNTID_LOOKUP",
+      "record_id" : null,
+      "modified_time" : 1628286551567,
+      "lookup_column" : "ACCOUNTID_LOOKUP"
+    },
+    {
+      "table_name" : "EventsRecords_641867043",
+      "transaction_id" : "NEW1628286551568",
+      "lookup_id" : "NEW1628286551561",
+      "record_id" : null,
+      "lookup_label" : "SEID_LOOKUP",
+      "lookup_column" : "SEID_LOOKUP",
+      "modified_time" : 1628286551569
+    },
+    {
+      "lookup_id" : "NEW1628286551565",
+      "modified_time" : 1628286551569,
+      "record_id" : null,
+      "table_name" : "EventsRecords_641867043",
+      "transaction_id" : "NEW1628286551568",
+      "lookup_label" : "CONTACTID_LOOKUP",
+      "lookup_column" : "CONTACTID_LOOKUP"
+    }
+  ],
+  "TRANSACTIONS" : [
+    {
+      "module_name" : "Accounts",
+      "transaction_id" : "NEW1628286549659",
+      "transaction_time" : 1628286549660,
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={\"Account_Name\"=\"GraniteStateLunchBox\";Owner={id=2366450000004838045;name=\"LindaWilliams\";zuid=693323309;};id=2366450000006996240;};id=2366450000006996240;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1628783203274;};}",
+      "operation_type" : 1
+    },
+    {
+      "transaction_time" : 1628286549662,
+      "operation_type" : 1,
+      "module_name" : "Tasks",
+      "transaction_id" : "NEW1628286549661",
+      "error_message" : ""
+    },
+    {
+      "module_name" : "Tasks",
+      "operation_type" : 1,
+      "transaction_time" : 1628286550079,
+      "transaction_id" : "NEW1628286550078",
+      "error_message" : ""
+    },
+    {
+      "error_message" : "",
+      "module_name" : "Tasks",
+      "operation_type" : 1,
+      "transaction_time" : 1628286550077,
+      "transaction_id" : "NEW1628286550076"
+    },
+    {
+      "operation_type" : 1,
+      "transaction_id" : "NEW1628286550763",
+      "transaction_time" : 1628286550764,
+      "module_name" : "Accounts",
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000000166015;name=\"SalesDepartment\";zuid=643501550;};id=2366450000006990259;};id=2366450000006990259;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1636640982773;};}"
+    },
+    {
+      "module_name" : "Accounts",
+      "operation_type" : 1,
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000037692018;name=\"RobertNorton\";zuid=749073708;};id=2366450000059074189;};id=2366450000059074189;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1657119214448;};}",
+      "transaction_id" : "NEW1628286551561",
+      "transaction_time" : 1628286551562
+    },
+    {
+      "module_name" : "Contacts",
+      "transaction_id" : "NEW1628286551565",
+      "error_message" : "",
+      "transaction_time" : 1628286551567,
+      "operation_type" : 1
+    },
+    {
+      "operation_type" : 1,
+      "error_message" : "",
+      "transaction_time" : 1628286551569,
+      "transaction_id" : "NEW1628286551568",
+      "module_name" : "Events"
+    },
+    {
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000004803110;name=\"NickJarvis\";zuid=693114560;};id=2366450000006997722;};id=2366450000006997722;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1661983345983;};}",
+      "transaction_time" : 1628286552244,
+      "operation_type" : 1,
+      "transaction_id" : "NEW1628286552243",
+      "module_name" : "Accounts"
+    },
+    {
+      "transaction_id" : "NEW1628286552249",
+      "module_name" : "Accounts",
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000000166015;name=\"SalesDepartment\";zuid=643501550;};id=2366450000062134245;};id=2366450000062134245;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1662502894689;};}",
+      "transaction_time" : 1628286552250,
+      "operation_type" : 1
+    },
+    {
+      "transaction_id" : "NEW1628286552399",
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000000166015;name=\"SalesDepartment\";zuid=643501550;};id=2366450000003065168;};id=2366450000003065168;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1665087994556;};}",
+      "transaction_time" : 1628286552400,
+      "operation_type" : 1,
+      "module_name" : "Accounts"
+    },
+    {
+      "module_name" : "Accounts",
+      "transaction_id" : "NEW1628286552709",
+      "operation_type" : 1,
+      "transaction_time" : 1628286552710,
+      "error_message" : "{error=(\"crmDUPLICATE_DATA\",\"duplicatedata\");info={details={\"api_name\"=\"Account_Name\";\"duplicate_record\"={Owner={id=2366450000000166015;name=\"SalesDepartment\";zuid=643501550;};id=2366450000014405182;};id=2366450000014405182;\"json_path\"=\"$.data[0].Account_Name\";\"more_records\"=0;};module=Accounts;servertime=1669406950938;};}"
+    },
+    {
+      "transaction_id" : "2366450000069084003",
+      "error_message" : "{error=(\"crmINVALID_DATA\",\"theidgivenseemstobeinvalid\");info={details={\"api_name\"=id;\"json_path\"=\"$.data[0].id\";};module=Tasks;servertime=1654045169765;};}",
+      "module_name" : "Tasks",
+      "operation_type" : 2,
+      "transaction_time" : 1628286551119
+    },
+    {
+      "module_name" : "Tasks",
+      "transaction_time" : 1628286551200,
+      "transaction_id" : "2366450000075309136",
+      "error_message" : "{error=(\"crmINVALID_DATA\",\"theidgivenseemstobeinvalid\");info={details={\"api_name\"=id;\"json_path\"=\"$.data[0].id\";};module=Tasks;servertime=1654712609726;};}",
+      "operation_type" : 2
+    }
+  ]
+}
